@@ -30,14 +30,29 @@
                                     <action selector="handleTapAdd:" destination="BYZ-38-t0r" eventType="touchUpInside" id="X9e-jg-v2p"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iFs-pz-0u1">
+                                <rect key="frame" x="710" y="980" width="80" height="80"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="5ag-hW-U15"/>
+                                    <constraint firstAttribute="width" constant="80" id="P8N-jz-iDz"/>
+                                </constraints>
+                                <state key="normal" title="Reset"/>
+                                <connections>
+                                    <action selector="handleTapAdd:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rGf-1q-EjZ"/>
+                                    <action selector="handleTapReset:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ikb-Ca-DxC"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="iFs-pz-0u1" secondAttribute="trailing" constant="20" id="8jd-iI-S9N"/>
                             <constraint firstItem="dS1-Et-LwD" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="ARR-GN-WjZ"/>
                             <constraint firstItem="7PO-bd-1R8" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Ehe-Kx-hQg"/>
                             <constraint firstItem="dS1-Et-LwD" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="MDl-6l-UYU"/>
                             <constraint firstItem="dS1-Et-LwD" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Qs7-Do-ilP"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="7PO-bd-1R8" secondAttribute="bottom" constant="20" id="arM-X7-0eS"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="iFs-pz-0u1" secondAttribute="bottom" constant="20" id="isW-0G-Lte"/>
                             <constraint firstItem="dS1-Et-LwD" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="zKj-vD-Jj6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
