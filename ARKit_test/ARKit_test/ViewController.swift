@@ -92,11 +92,11 @@ class ViewController: UIViewController {
         node.position = SCNVector3(0, 0, -0.3)
          */
         
+        /* Relative positions
         node.geometry = SCNPyramid(width: 0.1, height: 0.1, length: 0.1)
         node.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
         node.geometry?.firstMaterial?.specular.contents = UIColor.white
         node.position = SCNVector3(0, 0, -0.3)
-        self.sceneView.scene.rootNode.addChildNode(node)
         
         let relative_node = SCNNode(geometry: SCNCylinder(
             radius: 0.05,
@@ -106,7 +106,17 @@ class ViewController: UIViewController {
         relative_node.geometry?.firstMaterial?.specular.contents = UIColor.white
         relative_node.position = SCNVector3(0.1, 0.1, 0)
         node.addChildNode(relative_node)
+         */
         
+        /* Rotations
+        node.geometry = SCNPyramid(width: 0.1, height: 0.1, length: 0.1)
+        node.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
+        node.geometry?.firstMaterial?.specular.contents = UIColor.white
+        node.position = SCNVector3(0, 0, -0.3)
+        node.eulerAngles = SCNVector3(Float.pi/2.0,0,0)
+         */
+        
+        self.sceneView.scene.rootNode.addChildNode(node)
     }
     
     @IBAction func handleTapReset(_ sender: Any) {
