@@ -21,6 +21,7 @@ class ViewController: UIViewController {
             ARSCNDebugOptions.showWorldOrigin
         ]
         self.sceneView.session.run(configuration)
+        self.sceneView.automaticallyUpdatesLighting = true;
     }
 
     @IBAction func handleTapAdd(_ sender: Any) {
@@ -30,7 +31,11 @@ class ViewController: UIViewController {
                                length: 0.1,
                                chamferRadius: 0)
         node.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
-        node.position = SCNVector3(0, 0, 0)
+        node.geometry?.firstMaterial?.specular.contents = UIColor.white
+        let x = randomNumbers(firstNum: -0.3, secondNum: 0.3)
+        let y = randomNumbers(firstNum: -0.3, secondNum: 0.3)
+        let z = randomNumbers(firstNum: -0.3, secondNum: 0.3)
+        node.position = SCNVector3(x, y, z)
         self.sceneView.scene.rootNode.addChildNode(node)
     }
     
@@ -49,6 +54,11 @@ class ViewController: UIViewController {
                                     .resetTracking,
                                     .removeExistingAnchors
                                     ])
+    }
+    
+    func randomNumbers(firstNum: CGFloat, secondNum: CGFloat) -> CGFloat {
+        return CGFloat(arc4random()) / CGFloat(UINT32_MAX) * abs(firstNum - secondNum) +
+        min(firstNum, secondNum)
     }
     
 }
