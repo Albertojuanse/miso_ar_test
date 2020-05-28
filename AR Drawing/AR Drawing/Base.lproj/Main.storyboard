@@ -28,9 +28,6 @@
                                     <constraint firstAttribute="height" constant="45" id="xE6-Ty-qXF"/>
                                 </constraints>
                                 <state key="normal" title="Draw"/>
-                                <connections>
-                                    <action selector="handleButtonDraw:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qOk-Nx-aep"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>

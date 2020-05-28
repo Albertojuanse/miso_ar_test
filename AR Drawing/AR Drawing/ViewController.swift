@@ -68,5 +68,5 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 func +(left: SCNVector3, right: SCNVector3) -> SCNVector3 {
     return SCNVector3Make(left.x + right.x,
                           left.y + right.y,
-                          left.x + right.x)
+                          left.z + right.z)
 }
