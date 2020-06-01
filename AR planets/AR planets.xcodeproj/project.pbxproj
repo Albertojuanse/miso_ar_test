@@ -1,0 +1,351 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		425E2DBA2484E4CC00057C0C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42A8EA3A2482CDD400D8F14E /* Assets.xcassets */; };
+		425E2DBE2484E83400057C0C /* earth.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 425E2DBD2484E83400057C0C /* earth.jpg */; };
+		425E2DC02484FEEE00057C0C /* sun.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 425E2DBF2484FEEE00057C0C /* sun.jpg */; };
+		42A8EA322482CDD300D8F14E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A8EA312482CDD300D8F14E /* AppDelegate.swift */; };
+		42A8EA342482CDD300D8F14E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A8EA332482CDD300D8F14E /* SceneDelegate.swift */; };
+		42A8EA362482CDD300D8F14E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A8EA352482CDD300D8F14E /* ViewController.swift */; };
+		42A8EA392482CDD300D8F14E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42A8EA372482CDD300D8F14E /* Main.storyboard */; };
+		42A8EA3E2482CDD400D8F14E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42A8EA3C2482CDD400D8F14E /* LaunchScreen.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		425E2DBD2484E83400057C0C /* earth.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = earth.jpg; sourceTree = "<group>"; };
+		425E2DBF2484FEEE00057C0C /* sun.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sun.jpg; sourceTree = "<group>"; };
+		42A8EA2E2482CDD300D8F14E /* AR planets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR planets.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		42A8EA312482CDD300D8F14E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		42A8EA332482CDD300D8F14E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		42A8EA352482CDD300D8F14E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		42A8EA382482CDD300D8F14E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		42A8EA3A2482CDD400D8F14E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		42A8EA3D2482CDD400D8F14E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		42A8EA3F2482CDD400D8F14E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		42A8EA2B2482CDD300D8F14E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		42A8EA252482CDD300D8F14E = {
+			isa = PBXGroup;
+			children = (
+				42A8EA302482CDD300D8F14E /* AR planets */,
+				42A8EA2F2482CDD300D8F14E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		42A8EA2F2482CDD300D8F14E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				42A8EA2E2482CDD300D8F14E /* AR planets.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		42A8EA302482CDD300D8F14E /* AR planets */ = {
+			isa = PBXGroup;
+			children = (
+				42A8EA312482CDD300D8F14E /* AppDelegate.swift */,
+				42A8EA332482CDD300D8F14E /* SceneDelegate.swift */,
+				42A8EA352482CDD300D8F14E /* ViewController.swift */,
+				42A8EA372482CDD300D8F14E /* Main.storyboard */,
+				42A8EA3A2482CDD400D8F14E /* Assets.xcassets */,
+				42A8EA3C2482CDD400D8F14E /* LaunchScreen.storyboard */,
+				42A8EA3F2482CDD400D8F14E /* Info.plist */,
+				425E2DBD2484E83400057C0C /* earth.jpg */,
+				425E2DBF2484FEEE00057C0C /* sun.jpg */,
+			);
+			path = "AR planets";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		42A8EA2D2482CDD300D8F14E /* AR planets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 42A8EA422482CDD400D8F14E /* Build configuration list for PBXNativeTarget "AR planets" */;
+			buildPhases = (
+				42A8EA2A2482CDD300D8F14E /* Sources */,
+				42A8EA2B2482CDD300D8F14E /* Frameworks */,
+				42A8EA2C2482CDD300D8F14E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "AR planets";
+			productName = "AR planets";
+			productReference = 42A8EA2E2482CDD300D8F14E /* AR planets.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		42A8EA262482CDD300D8F14E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1130;
+				LastUpgradeCheck = 1130;
+				ORGANIZATIONNAME = MISO;
+				TargetAttributes = {
+					42A8EA2D2482CDD300D8F14E = {
+						CreatedOnToolsVersion = 11.3.1;
+					};
+				};
+			};
+			buildConfigurationList = 42A8EA292482CDD300D8F14E /* Build configuration list for PBXProject "AR planets" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 42A8EA252482CDD300D8F14E;
+			productRefGroup = 42A8EA2F2482CDD300D8F14E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				42A8EA2D2482CDD300D8F14E /* AR planets */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		42A8EA2C2482CDD300D8F14E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				425E2DBE2484E83400057C0C /* earth.jpg in Resources */,
+				42A8EA3E2482CDD400D8F14E /* LaunchScreen.storyboard in Resources */,
+				425E2DC02484FEEE00057C0C /* sun.jpg in Resources */,
+				425E2DBA2484E4CC00057C0C /* Assets.xcassets in Resources */,
+				42A8EA392482CDD300D8F14E /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		42A8EA2A2482CDD300D8F14E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				42A8EA362482CDD300D8F14E /* ViewController.swift in Sources */,
+				42A8EA322482CDD300D8F14E /* AppDelegate.swift in Sources */,
+				42A8EA342482CDD300D8F14E /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		42A8EA372482CDD300D8F14E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				42A8EA382482CDD300D8F14E /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		42A8EA3C2482CDD400D8F14E /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				42A8EA3D2482CDD400D8F14E /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		42A8EA402482CDD400D8F14E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		42A8EA412482CDD400D8F14E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		42A8EA432482CDD400D8F14E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = TEAF832HEC;
+				INFOPLIST_FILE = "AR planets/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.miso.AR-planets";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		42A8EA442482CDD400D8F14E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = TEAF832HEC;
+				INFOPLIST_FILE = "AR planets/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.miso.AR-planets";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		42A8EA292482CDD300D8F14E /* Build configuration list for PBXProject "AR planets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				42A8EA402482CDD400D8F14E /* Debug */,
+				42A8EA412482CDD400D8F14E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		42A8EA422482CDD400D8F14E /* Build configuration list for PBXNativeTarget "AR planets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				42A8EA432482CDD400D8F14E /* Debug */,
+				42A8EA442482CDD400D8F14E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 42A8EA262482CDD300D8F14E /* Project object */;
+}
