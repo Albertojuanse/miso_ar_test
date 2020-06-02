@@ -13,6 +13,9 @@
 		42B0AC832486F24B00A56CD9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42B0AC812486F24B00A56CD9 /* Main.storyboard */; };
 		42B0AC852486F24D00A56CD9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42B0AC842486F24D00A56CD9 /* Assets.xcassets */; };
 		42B0AC882486F24D00A56CD9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42B0AC862486F24D00A56CD9 /* LaunchScreen.storyboard */; };
+		42C3102D2486FCE9000A16A6 /* Jellyfish.dae in Resources */ = {isa = PBXBuildFile; fileRef = 42C3102C2486FCE9000A16A6 /* Jellyfish.dae */; };
+		42C3102F2486FCF3000A16A6 /* Jellyfish.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C3102E2486FCF3000A16A6 /* Jellyfish.png */; };
+		42C310312486FDC2000A16A6 /* Jellyfish.scn in Resources */ = {isa = PBXBuildFile; fileRef = 42C310302486FDC2000A16A6 /* Jellyfish.scn */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		42B0AC842486F24D00A56CD9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		42B0AC872486F24D00A56CD9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		42B0AC892486F24D00A56CD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		42C3102C2486FCE9000A16A6 /* Jellyfish.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = Jellyfish.dae; sourceTree = "<group>"; };
+		42C3102E2486FCF3000A16A6 /* Jellyfish.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Jellyfish.png; sourceTree = "<group>"; };
+		42C310302486FDC2000A16A6 /* Jellyfish.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = Jellyfish.scn; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +69,9 @@
 				42B0AC842486F24D00A56CD9 /* Assets.xcassets */,
 				42B0AC862486F24D00A56CD9 /* LaunchScreen.storyboard */,
 				42B0AC892486F24D00A56CD9 /* Info.plist */,
+				42C3102C2486FCE9000A16A6 /* Jellyfish.dae */,
+				42C3102E2486FCF3000A16A6 /* Jellyfish.png */,
+				42C310302486FDC2000A16A6 /* Jellyfish.scn */,
 			);
 			path = "AR Hiting jellyfish";
 			sourceTree = "<group>";
@@ -125,9 +134,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42C3102F2486FCF3000A16A6 /* Jellyfish.png in Resources */,
 				42B0AC882486F24D00A56CD9 /* LaunchScreen.storyboard in Resources */,
 				42B0AC852486F24D00A56CD9 /* Assets.xcassets in Resources */,
+				42C310312486FDC2000A16A6 /* Jellyfish.scn in Resources */,
 				42B0AC832486F24B00A56CD9 /* Main.storyboard in Resources */,
+				42C3102D2486FCE9000A16A6 /* Jellyfish.dae in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

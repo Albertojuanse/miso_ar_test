@@ -38,12 +38,20 @@ class ViewController: UIViewController {
     }
     
     func addNode() {
+        /*
         let node = SCNNode(geometry: SCNBox(width: 0.2,
                                             height: 0.2,
                                             length: 0.2,
                                             chamferRadius: 0.0))
         node.position = SCNVector3(0,0,-1)
         self.sceneView.scene.rootNode.addChildNode(node)
+         */
+        let jellyfishScene = SCNScene(named: "Jellyfish.scn")
+        let jellyfishNode = jellyfishScene?.rootNode.childNode(
+            withName:"Jellyfish",
+            recursively: false)
+        jellyfishNode?.position = SCNVector3(0,0,-1)
+        self.sceneView.scene.rootNode.addChildNode(jellyfishNode!)
     }
     
     @objc func handleTap(sender: UIGestureRecognizer) {
