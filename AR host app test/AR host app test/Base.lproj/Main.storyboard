@@ -25,14 +25,39 @@
                                     <action selector="handleButtonAR:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9Mo-cX-Vpa"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Param 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ndu-nw-1Gm">
+                                <rect key="frame" x="374.5" y="623" width="61" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="61" id="7lp-NK-SpU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hyJ-kE-rDJ">
+                                <rect key="frame" x="305" y="652" width="200" height="34"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="ter-zN-amj"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="hyJ-kE-rDJ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5Xw-rf-utb"/>
+                            <constraint firstItem="ndu-nw-1Gm" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="70N-ds-pyc"/>
                             <constraint firstItem="qBs-7D-8yq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="QLA-aQ-OPK"/>
+                            <constraint firstItem="hyJ-kE-rDJ" firstAttribute="top" secondItem="ndu-nw-1Gm" secondAttribute="bottom" constant="8" id="maj-tA-cAe"/>
+                            <constraint firstItem="ndu-nw-1Gm" firstAttribute="top" secondItem="qBs-7D-8yq" secondAttribute="bottom" constant="8" id="uP9-Cb-XmJ"/>
                             <constraint firstItem="qBs-7D-8yq" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="ztR-aC-3IE"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="textParam1" destination="hyJ-kE-rDJ" id="ko7-j9-5Zh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

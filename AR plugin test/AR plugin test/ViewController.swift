@@ -13,6 +13,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var sceneView: ARSCNView!
     @IBOutlet weak var buttonBack: UIButton!
+    @IBOutlet weak var labelParam1: UILabel!
     
     let configuration = ARWorldTrackingConfiguration()
     
@@ -26,11 +27,20 @@ class ViewController: UIViewController {
         self.sceneView.session.run(configuration)
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        print("[PLUG-IN] AppDelegate provided param1: \(appDelegate.param1).")
+        self.labelParam1.text = appDelegate.param1
+    }
 
     @IBAction func handleBackButton(_ sender: Any) {
         
-        print("[PLUG-IN] The plug-in app will ask the resource arhost:resourcePath?firstParam=1.")
-        if let appURL = URL(string: "arhost:resourcePath?firstParam=1") {
+        let param1 = self.labelParam1.text!
+        let url = "arhost:resourcePath?firstParam=\(param1)"
+        print("[PLUG-IN] The host app will ask the resource \(url).")
+        
+        if let appURL = URL(string: url) {
             UIApplication.shared.open(appURL) { success in
                 if success {
                     print("[PLUG-IN] The URL was delivered successfully.")

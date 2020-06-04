@@ -57,6 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("[HOST] The URL asks the resource: \(resourcePath).")
         
         if let firstParam = params.first(where: { $0.name == "firstParam" })?.value {
+            print("[HOST] param1 in URL is \(firstParam).")
             return true
         } else {
             print("[HOST] FirstParam was missing.")

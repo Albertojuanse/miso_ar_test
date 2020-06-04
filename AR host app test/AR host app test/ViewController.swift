@@ -10,6 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var textParam1: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -18,8 +20,11 @@ class ViewController: UIViewController {
 
     @IBAction func handleButtonAR(_ sender: Any) {
         
-        print("[HOST] The host app will ask the resource arplugin:resourcePath?firstParam=1.")
-        if let appURL = URL(string: "arplugin:resourcePath?firstParam=1") {
+        let param1 = self.textParam1.text!
+        let url = "arplugin:resourcePath?firstParam=\(param1)"
+        print("[HOST] The host app will ask the resource \(url).")
+        
+        if let appURL = URL(string: url) {
             UIApplication.shared.open(appURL) { success in
                 if success {
                     print("[HOST] The URL was delivered successfully.")

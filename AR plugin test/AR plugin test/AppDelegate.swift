@@ -10,8 +10,8 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
+    
+    var param1 = String()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -57,6 +57,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("[PLUG-IN] The URL asks the resource: \(resourcePath).")
         
         if let firstParam = params.first(where: { $0.name == "firstParam" })?.value {
+            print("[PLUG-IN] param1 in URL is \(firstParam).")
+            self.param1 = firstParam
             return true
         } else {
             print("[PLUG-IN] FirstParam was missing.")
