@@ -54,6 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("[PLUG-IN] This URL scheme was invalid.")
                 return false
         }
+        print("[PLUG-IN] The URL asks the resource: \(resourcePath).")
         
         if let firstParam = params.first(where: { $0.name == "firstParam" })?.value {
             return true

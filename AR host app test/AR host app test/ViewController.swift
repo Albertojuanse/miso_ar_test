@@ -18,12 +18,17 @@ class ViewController: UIViewController {
 
     @IBAction func handleButtonAR(_ sender: Any) {
         
-        let url = URL(string: "arplugin:method?firstParam=1")
-               
-        UIApplication.shared.open(url!) { (result) in
-            if result {
-               // The URL was delivered successfully!
+        print("[HOST] The host app will ask the resource arplugin:resourcePath?firstParam=1.")
+        if let appURL = URL(string: "arplugin:resourcePath?firstParam=1") {
+            UIApplication.shared.open(appURL) { success in
+                if success {
+                    print("[HOST] The URL was delivered successfully.")
+                } else {
+                    print("[HOST] The URL failed to open.")
+                }
             }
+        } else {
+            print("[HOST] Invalid URL specified.")
         }
         
     }

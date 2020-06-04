@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        NSLog("[HOST] The plug-in app did finish launching.")
+        NSLog("[HOST] The host app did finish launching.")
         return true
     }
     
@@ -37,6 +37,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillTerminate(_ application: UIApplication) {
         NSLog("[HOST] The host app will terminate.")
+    }
+    
+    func application(_ application: UIApplication,
+                     open url: URL,
+                     options: [UIApplication.OpenURLOptionsKey : Any] = [:] ) -> Bool {
+        
+        // Determine who sent the URL.
+        let sendingAppID = options[.sourceApplication]
+        print("[HOST] This app was awoken using an URL sent by = \(sendingAppID ?? "Unknown")")
+        
+        // Process the URL.
+        guard let components = NSURLComponents(url: url, resolvingAgainstBaseURL: true),
+            let resourcePath = components.path,
+            let params = components.queryItems else {
+                print("[HOST] This URL scheme was invalid.")
+                return false
+        }
+        print("[HOST] The URL asks the resource: \(resourcePath).")
+        
+        if let firstParam = params.first(where: { $0.name == "firstParam" })?.value {
+            return true
+        } else {
+            print("[HOST] FirstParam was missing.")
+            return false
+        }
     }
     
     // MARK: UISceneSession Lifecycle
