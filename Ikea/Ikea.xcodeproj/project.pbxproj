@@ -15,6 +15,7 @@
 		42C919E12486F4980080EC00 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42C919DF2486F4980080EC00 /* LaunchScreen.storyboard */; };
 		42C919E92486F82F0080EC00 /* itemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C919E82486F82F0080EC00 /* itemCell.swift */; };
 		42C919F52486FFAA0080EC00 /* Models.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 42C919F42486FFAA0080EC00 /* Models.scnassets */; };
+		42E7384524A3B31400A68F37 /* metamodel.json in Resources */ = {isa = PBXBuildFile; fileRef = 42E7384424A3B31400A68F37 /* metamodel.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		42C919E22486F4980080EC00 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		42C919E82486F82F0080EC00 /* itemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = itemCell.swift; sourceTree = "<group>"; };
 		42C919F42486FFAA0080EC00 /* Models.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = Models.scnassets; sourceTree = "<group>"; };
+		42E7384424A3B31400A68F37 /* metamodel.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = metamodel.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +46,7 @@
 		42C919C82486F4960080EC00 = {
 			isa = PBXGroup;
 			children = (
+				42E7384624A3B4DC00A68F37 /* External */,
 				42C919D32486F4960080EC00 /* Ikea */,
 				42C919D22486F4960080EC00 /* Products */,
 			);
@@ -71,6 +74,14 @@
 				42C919E82486F82F0080EC00 /* itemCell.swift */,
 			);
 			path = Ikea;
+			sourceTree = "<group>";
+		};
+		42E7384624A3B4DC00A68F37 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				42E7384424A3B31400A68F37 /* metamodel.json */,
+			);
+			path = External;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -133,6 +144,7 @@
 			files = (
 				42C919E12486F4980080EC00 /* LaunchScreen.storyboard in Resources */,
 				42C919DE2486F4980080EC00 /* Assets.xcassets in Resources */,
+				42E7384524A3B31400A68F37 /* metamodel.json in Resources */,
 				42C919DC2486F4960080EC00 /* Main.storyboard in Resources */,
 				42C919F52486FFAA0080EC00 /* Models.scnassets in Resources */,
 			);
@@ -295,6 +307,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = TEAF832HEC;
 				INFOPLIST_FILE = Ikea/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -313,6 +326,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = TEAF832HEC;
 				INFOPLIST_FILE = Ikea/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

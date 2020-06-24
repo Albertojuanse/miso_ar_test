@@ -10,8 +10,10 @@ import UIKit
 import ARKit
 
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, ARSCNViewDelegate {
+    
+    var sources: NSMutableDictionary = [:]
 
-    let itemsArray: [String] = ["cup", "vase", "boxing", "table"]
+    var itemsArray: [String] = ["vase", "boxing", "cup", "table"]
     
     @IBOutlet weak var planeDetected: UILabel!
     @IBOutlet weak var itemsCollectionView: UICollectionView!
@@ -32,6 +34,38 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         self.registerGestureRecognizers()
         self.sceneView.autoenablesDefaultLighting = true
         // Do any additional setup after loading the view.
+        
+        let url = URL(string: "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/External/metamodel.json?raw=true")
+        if (url != nil) {
+            print("URL object exists: ", url!)
+        }
+        let session = URLSession.shared
+        let task = session.dataTask(with: url!) { (data, response, error) -> Void in
+            if error != nil {
+                print(error!)
+            } else {
+                if let data = data {
+                    do {
+
+                        print("Task running")
+                        
+                        let jsonResult = try JSONSerialization.jsonObject(
+                            with: data,
+                            options: JSONSerialization.ReadingOptions.mutableContainers
+                        ) as! NSMutableDictionary
+                        
+                        self.sources = jsonResult["types"] as! NSMutableDictionary
+                        self.itemsArray = self.sources.allKeys as! [String]
+                        
+                    } catch let e{
+                        print(e)
+                    }
+                }
+            }
+        }
+        print("Task resume")
+        task.resume()
+        
     }
     
     func registerGestureRecognizers() {
@@ -86,21 +120,32 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func addItem(hitTestResult: ARHitTestResult) {
         if let selectedItem = self.selectedItem {
-            let scene = SCNScene(named: "Models.scnassets/\(selectedItem).scn")
-            let node = (scene?.rootNode.childNode(withName: selectedItem, recursively: false))!
-            let transform = hitTestResult.worldTransform
-            let thirdColumn = transform.columns.3
-            node.position = SCNVector3(thirdColumn.x, thirdColumn.y,thirdColumn.z)
-            if selectedItem == "table" {
-                self.centerPivot(for: node)
+            
+            let source = self.sources[selectedItem] as! String
+            
+            let url = URL(string: source)
+            if let scene = try? SCNScene(url: url! , options: nil) {
+                print("load \(selectedItem).scn successful")
+                
+                let node = (scene.rootNode.childNode(withName: selectedItem, recursively: false))!
+                let transform = hitTestResult.worldTransform
+                let thirdColumn = transform.columns.3
+                node.position = SCNVector3(thirdColumn.x, thirdColumn.y,thirdColumn.z)
+                if selectedItem == "table" {
+                    self.centerPivot(for: node)
+                }
+                self.sceneView.scene.rootNode.addChildNode(node)
+                
+            } else {
+                print("error loading \(selectedItem).scn")
             }
-            self.sceneView.scene.rootNode.addChildNode(node)
+            
         }
         
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return itemsArray.count
+        return self.itemsArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -111,7 +156,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
-        self.selectedItem = itemsArray[indexPath.row]
+        self.selectedItem = self.itemsArray[indexPath.row]
         cell?.backgroundColor = UIColor.green
     }
     
