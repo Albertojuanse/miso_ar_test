@@ -1,0 +1,11 @@
+
+{
+    "name": "some name";
+    "types": {
+        "cup": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/cup.scn?raw=true"
+        "vase": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/vase.scn?raw=true"
+        "boxing": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/boxing.scn?raw=true"
+        "table": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/table.scn?raw=true"
+    }
+    
+}
