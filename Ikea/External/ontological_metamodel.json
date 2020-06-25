@@ -1,0 +1,33 @@
+{
+  "name": "ikea",
+  "URI": "http://miso.es/ikea/ontological",
+  "classes": [
+      {
+          "name": "cup",
+          "abstract": "false",
+          "parents": [],
+          "attributes": [],
+          "references": []
+      },
+      {
+          "name": "vase",
+          "abstract": "false",
+          "parents": [],
+          "attributes": [],
+          "references": []
+      },
+      {
+          "name": "boxing",
+          "abstract": "false",
+          "parents": [],
+          "attributes": [],
+          "references": []
+      },
+      {
+          "name": "table",
+          "abstract": "false",
+          "parents": [],
+          "attributes": [],
+          "references": []
+      }]
+}

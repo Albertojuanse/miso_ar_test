@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4273F3C424A4ED9100170A6C /* ontological_metamodel.json in Resources */ = {isa = PBXBuildFile; fileRef = 4273F3C324A4ED9100170A6C /* ontological_metamodel.json */; };
+		4273F3C624A5017A00170A6C /* ViewControllerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4273F3C524A5017A00170A6C /* ViewControllerMenu.swift */; };
 		42C919D52486F4960080EC00 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C919D42486F4960080EC00 /* AppDelegate.swift */; };
 		42C919D72486F4960080EC00 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C919D62486F4960080EC00 /* SceneDelegate.swift */; };
 		42C919D92486F4960080EC00 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C919D82486F4960080EC00 /* ViewController.swift */; };
@@ -15,10 +17,12 @@
 		42C919E12486F4980080EC00 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42C919DF2486F4980080EC00 /* LaunchScreen.storyboard */; };
 		42C919E92486F82F0080EC00 /* itemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C919E82486F82F0080EC00 /* itemCell.swift */; };
 		42C919F52486FFAA0080EC00 /* Models.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 42C919F42486FFAA0080EC00 /* Models.scnassets */; };
-		42E7384524A3B31400A68F37 /* metamodel.json in Resources */ = {isa = PBXBuildFile; fileRef = 42E7384424A3B31400A68F37 /* metamodel.json */; };
+		42E7384524A3B31400A68F37 /* graphic_model.json in Resources */ = {isa = PBXBuildFile; fileRef = 42E7384424A3B31400A68F37 /* graphic_model.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4273F3C324A4ED9100170A6C /* ontological_metamodel.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ontological_metamodel.json; sourceTree = "<group>"; };
+		4273F3C524A5017A00170A6C /* ViewControllerMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerMenu.swift; sourceTree = "<group>"; };
 		42C919D12486F4960080EC00 /* Ikea.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ikea.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42C919D42486F4960080EC00 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42C919D62486F4960080EC00 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -29,7 +33,7 @@
 		42C919E22486F4980080EC00 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		42C919E82486F82F0080EC00 /* itemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = itemCell.swift; sourceTree = "<group>"; };
 		42C919F42486FFAA0080EC00 /* Models.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = Models.scnassets; sourceTree = "<group>"; };
-		42E7384424A3B31400A68F37 /* metamodel.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = metamodel.json; sourceTree = "<group>"; };
+		42E7384424A3B31400A68F37 /* graphic_model.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = graphic_model.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +71,7 @@
 				42C919D42486F4960080EC00 /* AppDelegate.swift */,
 				42C919D62486F4960080EC00 /* SceneDelegate.swift */,
 				42C919D82486F4960080EC00 /* ViewController.swift */,
+				4273F3C524A5017A00170A6C /* ViewControllerMenu.swift */,
 				42C919DA2486F4960080EC00 /* Main.storyboard */,
 				42C919DD2486F4980080EC00 /* Assets.xcassets */,
 				42C919DF2486F4980080EC00 /* LaunchScreen.storyboard */,
@@ -79,7 +84,8 @@
 		42E7384624A3B4DC00A68F37 /* External */ = {
 			isa = PBXGroup;
 			children = (
-				42E7384424A3B31400A68F37 /* metamodel.json */,
+				42E7384424A3B31400A68F37 /* graphic_model.json */,
+				4273F3C324A4ED9100170A6C /* ontological_metamodel.json */,
 			);
 			path = External;
 			sourceTree = "<group>";
@@ -144,8 +150,9 @@
 			files = (
 				42C919E12486F4980080EC00 /* LaunchScreen.storyboard in Resources */,
 				42C919DE2486F4980080EC00 /* Assets.xcassets in Resources */,
-				42E7384524A3B31400A68F37 /* metamodel.json in Resources */,
+				42E7384524A3B31400A68F37 /* graphic_model.json in Resources */,
 				42C919DC2486F4960080EC00 /* Main.storyboard in Resources */,
+				4273F3C424A4ED9100170A6C /* ontological_metamodel.json in Resources */,
 				42C919F52486FFAA0080EC00 /* Models.scnassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -159,6 +166,7 @@
 			files = (
 				42C919E92486F82F0080EC00 /* itemCell.swift in Sources */,
 				42C919D92486F4960080EC00 /* ViewController.swift in Sources */,
+				4273F3C624A5017A00170A6C /* ViewControllerMenu.swift in Sources */,
 				42C919D52486F4960080EC00 /* AppDelegate.swift in Sources */,
 				42C919D72486F4960080EC00 /* SceneDelegate.swift in Sources */,
 			);

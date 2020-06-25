@@ -11,9 +11,8 @@ import ARKit
 
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, ARSCNViewDelegate {
     
-    var sources: NSMutableDictionary = [:]
-
-    var itemsArray: [String] = ["vase", "boxing", "cup", "table"]
+    var itemsArray: [String] = []
+    var graphicalSyntaxSources: NSMutableDictionary = [:]
     
     @IBOutlet weak var planeDetected: UILabel!
     @IBOutlet weak var itemsCollectionView: UICollectionView!
@@ -35,37 +34,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         self.sceneView.autoenablesDefaultLighting = true
         // Do any additional setup after loading the view.
         
-        let url = URL(string: "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/External/metamodel.json?raw=true")
-        if (url != nil) {
-            print("URL object exists: ", url!)
-        }
-        let session = URLSession.shared
-        let task = session.dataTask(with: url!) { (data, response, error) -> Void in
-            if error != nil {
-                print(error!)
-            } else {
-                if let data = data {
-                    do {
-
-                        print("Task running")
-                        
-                        let jsonResult = try JSONSerialization.jsonObject(
-                            with: data,
-                            options: JSONSerialization.ReadingOptions.mutableContainers
-                        ) as! NSMutableDictionary
-                        
-                        self.sources = jsonResult["types"] as! NSMutableDictionary
-                        self.itemsArray = self.sources.allKeys as! [String]
-                        
-                    } catch let e{
-                        print(e)
-                    }
-                }
-            }
-        }
-        print("Task resume")
-        task.resume()
-        
+        print("[VC]", self.itemsArray)
+        print("[VC]", self.graphicalSyntaxSources)
     }
     
     func registerGestureRecognizers() {
@@ -121,9 +91,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func addItem(hitTestResult: ARHitTestResult) {
         if let selectedItem = self.selectedItem {
             
-            let source = self.sources[selectedItem] as! String
+            let sources = self.graphicalSyntaxSources[selectedItem] as! NSMutableDictionary
+            let firstSource = sources["v1"] as! String;
             
-            let url = URL(string: source)
+            let url = URL(string: firstSource)
             if let scene = try? SCNScene(url: url! , options: nil) {
                 print("load \(selectedItem).scn successful")
                 
