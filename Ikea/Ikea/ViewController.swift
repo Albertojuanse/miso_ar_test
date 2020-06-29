@@ -13,6 +13,19 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     var itemsArray: [String] = []
     var graphicalSyntaxSources: NSMutableDictionary = [:]
+    var model: [NSMutableDictionary] = [];
+    // -- MODEL SCHEME --
+    // [
+    //  { "name" = uuid1 : UUID
+    //    "class" = class1 : String
+    //    "current_version" = version1 : Int
+    //    "max_version" = 3
+    //   },
+    //  { "name" = uuid2 : UUID
+    //    (···)
+    //   },
+    //  (···)
+    // ]
     
     @IBOutlet weak var planeDetected: UILabel!
     @IBOutlet weak var itemsCollectionView: UICollectionView!
@@ -24,40 +37,205 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // ARKit scene view initialization
         self.sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
         self.configuration.planeDetection = .horizontal
         self.sceneView.session.run(configuration)
+        self.sceneView.delegate = self
+        self.sceneView.autoenablesDefaultLighting = true
+        
+        // Layout
         self.itemsCollectionView.dataSource = self
         self.itemsCollectionView.delegate = self
-        self.sceneView.delegate = self
-        self.registerGestureRecognizers()
-        self.sceneView.autoenablesDefaultLighting = true
-        // Do any additional setup after loading the view.
         
-        print("[VC]", self.itemsArray)
-        print("[VC]", self.graphicalSyntaxSources)
+        // Gesture recognizers
+        self.registerGestureRecognizers()
+        
     }
     
     func registerGestureRecognizers() {
+        // Tap gesture is used to add objects
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
+        self.sceneView.addGestureRecognizer(tapGestureRecognizer)
+        
+        // Pinch gesture is used to resize the object
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinch))
+        self.sceneView.addGestureRecognizer(pinchGestureRecognizer)
+        
+        // Long press gesture is used to rotate the object
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(rotate))
         longPressGestureRecognizer.minimumPressDuration = 0.1
         self.sceneView.addGestureRecognizer(longPressGestureRecognizer)
-        self.sceneView.addGestureRecognizer(pinchGestureRecognizer)
-        self.sceneView.addGestureRecognizer(tapGestureRecognizer)
+        
+        // Swipe gesture is used to change the graphic syntax version
+        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swiped))
+        self.sceneView.addGestureRecognizer(swipeGestureRecognizer)
     }
     
+    // Gestures do 2 types of raycasting
+    // - World raycasting, based on ARRaycastQuery supported by ARKit to find world surfaces, etc.
+    // - Scene raycasting, based on SCNHitTest supported by SceneKit to find virtual nodes.
+    
     @objc func tapped(sender: UITapGestureRecognizer) {
+        // Get from the scene the tapped position
         let sceneView = sender.view as! ARSCNView
         let tapLocation = sender.location(in: sceneView)
-        let hitTest = sceneView.hitTest(tapLocation, types: .existingPlaneUsingExtent)
-        if !hitTest.isEmpty {
-            self.addItem(hitTestResult: hitTest.first!)
+        
+        // Configure the world raycast query and create it
+        let estimatedPlane: ARRaycastQuery.Target = .estimatedPlane
+        let alignment: ARRaycastQuery.TargetAlignment = .any
+        let rayCastQuery = sceneView.raycastQuery(from: tapLocation,
+                                                  allowing: estimatedPlane,
+                                                  alignment: alignment)
+        // TODO: Check if sceneView.session.currentFrame.raycastQuery() does the same. Alberto J. 2020/06/29
+        
+        // Get results preventing nil responses
+        if let nonOptRayCastQuery: ARRaycastQuery = rayCastQuery {
+
+            let worldResult: [ARRaycastResult] = sceneView.session.raycast(nonOptRayCastQuery)
+
+            guard let rayCast: ARRaycastResult = worldResult.first
+            else {
+                print("[VC] World raycast over", tapLocation, "did not get any result.")
+                return
+            }
+
+            self.addItem(rayCast: rayCast)
+            
         }
     }
     
+    func addItem(rayCast: ARRaycastResult) {
+        // User wants to add an object of class selectedItem
+        if let selectedItem = self.selectedItem {
+            
+            // Create a new object in model
+            let itemDic = NSMutableDictionary()
+            let itemName = UUID().uuidString
+            itemDic["name"] = itemName
+            itemDic["class"] = selectedItem
+            itemDic["current_version"] = 1
+            itemDic["max_version"] = 3
+            model.append(itemDic)
+            
+            // Load its graphical syntax and set it in the scene
+            let sources = self.graphicalSyntaxSources[selectedItem] as! NSMutableDictionary
+            let currentVersion = 1
+            let firstSource = sources["v\(currentVersion)"] as! String;
+            let url = URL(string: firstSource)
+            if let scene = try? SCNScene(url: url! , options: nil) {
+                
+                print("[VC] Load \(selectedItem).scn successful.")
+                
+                // Get the .scn's node called 'selectedItem', since each .scn can have got several nodes
+                let node = (scene.rootNode.childNode(withName: selectedItem, recursively: false))!
+                node.name = itemName
+                let transform = rayCast.worldTransform
+                let thirdColumn = transform.columns.3
+                node.position = SCNVector3(thirdColumn.x, thirdColumn.y,thirdColumn.z)
+                if selectedItem == "table" {
+                    self.centerPivot(for: node)
+                }
+                self.sceneView.scene.rootNode.addChildNode(node)
+                
+            } else {
+                print("[VC] Error loading \(selectedItem).scn")
+            }
+            
+            print("[VC] Model", model)
+        }
+    }
+    
+    @objc func swiped(sender: UISwipeGestureRecognizer) {
+        // Get from the scene the tapped position
+        let sceneView = sender.view as! ARSCNView
+        let tapLocation = sender.location(in: sceneView)
+        
+        // Get results of a SceneKit hit testing
+        let sceneResult: [SCNHitTestResult] = sceneView.hitTest(tapLocation,
+                                                                options: [SCNHitTestOption.firstFoundOnly: true])
+
+        guard let rayCast: SCNHitTestResult = sceneResult.first
+        else {
+            print("[VC] Scene raycast over", tapLocation, "did not get any result.")
+            return
+        }
+        
+        // Change a graphical model by other
+        let oldNode = rayCast.node
+        if (oldNode.name != nil) {
+
+            let oldNodeName = oldNode.name!
+            print("[VC] Scene raycast result is node", oldNodeName)
+            
+            // Check if the result's node is in the view
+            if self.sceneView.scene.rootNode.childNodes.contains(oldNode) {
+                
+                // Search for the result's object
+                var itemDic: NSMutableDictionary = [:]
+                var itemFound = false
+                for eachItemDic in model {
+                    let eachItemName = eachItemDic["name"] as! String
+                    if eachItemName == oldNodeName {
+                        itemDic = eachItemDic
+                        itemFound = true
+                    }
+                }
+                if (itemFound) {
+                    
+                    // Update the model
+                    var currentVersion = itemDic["current_version"] as! Int
+                    let maxVersion = itemDic["max_version"] as! Int
+                    if currentVersion < maxVersion {
+                        currentVersion += 1
+                    } else {
+                        currentVersion = 1
+                    }
+                    itemDic["current_version"] = currentVersion
+                    let selectedItem = itemDic["class"] as! String
+                    let itemName = itemDic["name"] as! String
+                    
+                    // Change its graphical syntax in scene
+                    let sources = self.graphicalSyntaxSources[selectedItem] as! NSMutableDictionary
+                    let firstSource = sources["v\(currentVersion)"] as! String;
+                    let url = URL(string: firstSource)
+                    if let scene = try? SCNScene(url: url! , options: nil) {
+                        print("load \(oldNode.name!).scn successful")
+                        
+                        let oldPosition = oldNode.position
+                        let oldScale = oldNode.scale
+                        oldNode.removeFromParentNode()
+                        
+                        let newNode = (scene.rootNode.childNode(withName: selectedItem, recursively: false))!
+                        newNode.name = itemName
+                        newNode.position = oldPosition
+                        newNode.scale = oldScale
+                        if selectedItem == "table" {
+                            self.centerPivot(for: newNode)
+                        }
+                        
+                        self.sceneView.scene.rootNode.addChildNode(newNode)
+                        
+                    } else {
+                        print("error loading \(oldNode.name!).scn")
+                    }
+                    
+                } else {
+                    print("[VC] Scene raycast result not found in model", oldNodeName)
+                }
+                
+            } else {
+                // If nil, the raycast did not get a model's object
+                print("[VC] Scene raycast result is node named (null)")
+            }
+            
+        }
+        
+    }
+    
     @objc func pinch (sender: UIPinchGestureRecognizer) {
+        // TODO: Change to raycast. Alberto J. 2020/06/29
         let sceneView = sender.view as! ARSCNView
         let pinchLocation = sender.location(in: sceneView)
         let hitTest = sceneView.hitTest(pinchLocation)
@@ -70,6 +248,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
     }
     @objc func rotate(sender : UILongPressGestureRecognizer) {
+        // TODO: Change to raycast. Alberto J. 2020/06/29
         let sceneView = sender.view as! ARSCNView
         let holdLocation = sender.location(in: sceneView)
         let hitTest = sceneView.hitTest(holdLocation)
@@ -84,33 +263,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 print("release finger")
                 results.node.removeAllActions()
             }
-        }
-        
-    }
-    
-    func addItem(hitTestResult: ARHitTestResult) {
-        if let selectedItem = self.selectedItem {
-            
-            let sources = self.graphicalSyntaxSources[selectedItem] as! NSMutableDictionary
-            let firstSource = sources["v1"] as! String;
-            
-            let url = URL(string: firstSource)
-            if let scene = try? SCNScene(url: url! , options: nil) {
-                print("load \(selectedItem).scn successful")
-                
-                let node = (scene.rootNode.childNode(withName: selectedItem, recursively: false))!
-                let transform = hitTestResult.worldTransform
-                let thirdColumn = transform.columns.3
-                node.position = SCNVector3(thirdColumn.x, thirdColumn.y,thirdColumn.z)
-                if selectedItem == "table" {
-                    self.centerPivot(for: node)
-                }
-                self.sceneView.scene.rootNode.addChildNode(node)
-                
-            } else {
-                print("error loading \(selectedItem).scn")
-            }
-            
         }
         
     }
