@@ -101,11 +101,8 @@ class ViewControllerMenu: UIViewController  {
                             // Get from the JSON each class
                             let aClass = anElement as! NSMutableDictionary
                             
-                            // Sav the name in itemsArray
-                            let className = aClass["name"] as! String
-                            self.itemsArray.append(className)
-                            
                             // Define a class for the metamodel and save it
+                            let className = aClass["name"] as! String
                             let classVersions = aClass["versions"] as! NSMutableDictionary
                             let classConstraints = aClass["constraints"] as! NSMutableDictionary
                             
@@ -113,7 +110,7 @@ class ViewControllerMenu: UIViewController  {
                             graphicalSyntaxClass["name"] = className
                             graphicalSyntaxClass["versions"] = classVersions
                             graphicalSyntaxClass["constraints"] = classConstraints
-                            self.metamodel.append(graphicalSyntaxClass)
+                            self.graphicalSyntax.append(graphicalSyntaxClass)
                             
                         }
                         

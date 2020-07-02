@@ -123,7 +123,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             // Search for its graphical syntax
             var graphicalSyntaxClass = NSMutableDictionary()
             for aGraphicalSyntaxClass in self.graphicalSyntax {
-                let className = graphicalSyntaxClass["name"] as! String
+                let className = aGraphicalSyntaxClass["name"] as! String
                 if className == selectedItem {
                     graphicalSyntaxClass = aGraphicalSyntaxClass
                 }
@@ -208,7 +208,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     // Search for its graphical syntax
                     var graphicalSyntaxClass = NSMutableDictionary()
                     for aGraphicalSyntaxClass in self.graphicalSyntax {
-                        let className = graphicalSyntaxClass["name"] as! String
+                        let className = aGraphicalSyntaxClass["name"] as! String
                         if className == selectedItem {
                             graphicalSyntaxClass = aGraphicalSyntaxClass
                         }
