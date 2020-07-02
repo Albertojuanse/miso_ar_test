@@ -10,9 +10,10 @@ import UIKit
 import ARKit
 
 class ViewControllerMenu: UIViewController  {
-
+    
     var itemsArray: [String] = []
-    var graphicalSyntaxSources: NSMutableDictionary = [:]
+    var metamodel: [NSMutableDictionary] = []
+    var graphicalSyntax: [NSMutableDictionary] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,10 +45,24 @@ class ViewControllerMenu: UIViewController  {
                         let classes = jsonResult["classes"] as! NSMutableArray
                         for anElement in classes {
                             
+                            // Get from the JSON each class
                             let aClass = anElement as! NSMutableDictionary
                             
-                            let name = aClass["name"] as! String
-                            self.itemsArray.append(name)
+                            // Save the name in itemsArray
+                            let className = aClass["name"] as! String
+                            self.itemsArray.append(className)
+                            
+                            // Define a class for the metamodel and save it
+                            let classAttributes = aClass["attributes"] as! NSMutableArray
+                            let metamodelClass = NSMutableDictionary()
+                            metamodelClass["name"] = className
+                            let attributes = NSMutableArray()
+                            for anAttribute in classAttributes {
+                                let eachAttribute = anAttribute as! NSMutableDictionary
+                                attributes.add(eachAttribute)
+                            }
+                            metamodelClass["attributes"] = attributes
+                            self.metamodel.append(metamodelClass)
                             
                         }
                         
@@ -80,7 +95,27 @@ class ViewControllerMenu: UIViewController  {
                             options: JSONSerialization.ReadingOptions.mutableContainers
                         ) as! NSMutableDictionary
                         
-                        self.graphicalSyntaxSources = jsonResult["classes"] as! NSMutableDictionary
+                        let classes = jsonResult["classes"] as! NSMutableArray
+                        for anElement in classes {
+                            
+                            // Get from the JSON each class
+                            let aClass = anElement as! NSMutableDictionary
+                            
+                            // Sav the name in itemsArray
+                            let className = aClass["name"] as! String
+                            self.itemsArray.append(className)
+                            
+                            // Define a class for the metamodel and save it
+                            let classVersions = aClass["versions"] as! NSMutableDictionary
+                            let classConstraints = aClass["constraints"] as! NSMutableDictionary
+                            
+                            let graphicalSyntaxClass = NSMutableDictionary()
+                            graphicalSyntaxClass["name"] = className
+                            graphicalSyntaxClass["versions"] = classVersions
+                            graphicalSyntaxClass["constraints"] = classConstraints
+                            self.metamodel.append(graphicalSyntaxClass)
+                            
+                        }
                         
                     } catch let e{
                         print(e)
@@ -100,8 +135,9 @@ class ViewControllerMenu: UIViewController  {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "fromLoadToARView") {
             let viewController: ViewController = segue.destination as! ViewController
-            viewController.graphicalSyntaxSources = self.graphicalSyntaxSources
+            viewController.graphicalSyntax = self.graphicalSyntax
             viewController.itemsArray = self.itemsArray
+            viewController.metamodel = self.metamodel
         }
     }
 }

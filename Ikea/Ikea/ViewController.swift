@@ -12,7 +12,8 @@ import ARKit
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, ARSCNViewDelegate {
     
     var itemsArray: [String] = []
-    var graphicalSyntaxSources: NSMutableDictionary = [:]
+    var metamodel: [NSMutableDictionary] = []
+    var graphicalSyntax: [NSMutableDictionary] = []
     var model: [NSMutableDictionary] = [];
     // -- MODEL SCHEME --
     // [
@@ -119,10 +120,18 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             itemDic["max_version"] = 3
             model.append(itemDic)
             
-            // Load its graphical syntax and set it in the scene
-            let sources = self.graphicalSyntaxSources[selectedItem] as! NSMutableDictionary
+            // Search for its graphical syntax
+            var graphicalSyntaxClass = NSMutableDictionary()
+            for aGraphicalSyntaxClass in self.graphicalSyntax {
+                let className = graphicalSyntaxClass["name"] as! String
+                if className == selectedItem {
+                    graphicalSyntaxClass = aGraphicalSyntaxClass
+                }
+            }
+            // Get the version's sources and load the graphical syntax
+            let classVersions = graphicalSyntaxClass["versions"] as! NSMutableDictionary
             let currentVersion = 1
-            let firstSource = sources["v\(currentVersion)"] as! String;
+            let firstSource = classVersions["v\(currentVersion)"] as! String;
             let url = URL(string: firstSource)
             if let scene = try? SCNScene(url: url! , options: nil) {
                 
@@ -196,9 +205,18 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     let selectedItem = itemDic["class"] as! String
                     let itemName = itemDic["name"] as! String
                     
-                    // Change its graphical syntax in scene
-                    let sources = self.graphicalSyntaxSources[selectedItem] as! NSMutableDictionary
-                    let firstSource = sources["v\(currentVersion)"] as! String;
+                    // Search for its graphical syntax
+                    var graphicalSyntaxClass = NSMutableDictionary()
+                    for aGraphicalSyntaxClass in self.graphicalSyntax {
+                        let className = graphicalSyntaxClass["name"] as! String
+                        if className == selectedItem {
+                            graphicalSyntaxClass = aGraphicalSyntaxClass
+                        }
+                    }
+                    
+                    // Get the version's sources and change its graphical syntax in scene
+                    let classVersions = graphicalSyntaxClass["versions"] as! NSMutableDictionary
+                    let firstSource = classVersions["v\(currentVersion)"] as! String;
                     let url = URL(string: firstSource)
                     if let scene = try? SCNScene(url: url! , options: nil) {
                         print("load \(oldNode.name!).scn successful")
