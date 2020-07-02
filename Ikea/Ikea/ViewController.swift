@@ -17,10 +17,15 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var model: [NSMutableDictionary] = [];
     // -- MODEL SCHEME --
     // [
-    //  { "name" = uuid1 : UUID
-    //    "class" = class1 : String
-    //    "current_version" = version1 : Int
-    //    "max_version" = 3
+    //  { "name" = uuid1 : UUID,
+    //    "class" = class1 : String,
+    //    "current_version" = version1 : Int,
+    //    "max_version" = 3,
+    //    "attributes" = {
+    //        "attribute1": attribute1 : Type1,
+    //        "attribute2": attribute2 : Type2,
+    //        (···)
+    //     }
     //   },
     //  { "name" = uuid2 : UUID
     //    (···)
@@ -65,7 +70,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         self.sceneView.addGestureRecognizer(pinchGestureRecognizer)
         
         // Long press gesture is used to rotate the object
-        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(rotate))
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(showAttributes))
         longPressGestureRecognizer.minimumPressDuration = 0.1
         self.sceneView.addGestureRecognizer(longPressGestureRecognizer)
         
@@ -111,6 +116,16 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         // User wants to add an object of class selectedItem
         if let selectedItem = self.selectedItem {
             
+            // Search for the metamodel class
+            var metamodelClass = NSMutableDictionary()
+            for aMetamodelClass in self.metamodel {
+                let aClassName = aMetamodelClass["name"] as! String
+                if aClassName == selectedItem {
+                    metamodelClass = aMetamodelClass
+                }
+            }
+            let classAttributes = metamodelClass["attributes"] as! NSMutableArray
+            
             // Create a new object in model
             let itemDic = NSMutableDictionary()
             let itemName = UUID().uuidString
@@ -118,6 +133,16 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             itemDic["class"] = selectedItem
             itemDic["current_version"] = 1
             itemDic["max_version"] = 3
+            let itemAttributes = NSMutableDictionary()
+            for aClassAttribute in classAttributes {
+                let aClassAttributeDic = aClassAttribute as! NSMutableDictionary
+                let aClassAttributeName = aClassAttributeDic["name"] as! NSString
+                let aClassAttributeDefault = aClassAttributeDic["default"]
+                // TODO: Import type, max, min and default. Alberto J. 2020/07/02.
+                
+                itemAttributes.setObject(aClassAttributeDefault!, forKey: aClassAttributeName)
+            }
+            itemDic["attributes"] = itemAttributes
             model.append(itemDic)
             
             // Search for its graphical syntax
@@ -219,7 +244,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     let firstSource = classVersions["v\(currentVersion)"] as! String;
                     let url = URL(string: firstSource)
                     if let scene = try? SCNScene(url: url! , options: nil) {
-                        print("load \(oldNode.name!).scn successful")
+                        print("[VC] load \(oldNode.name!).scn successful")
                         
                         let oldPosition = oldNode.position
                         let oldScale = oldNode.scale
@@ -236,8 +261,87 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                         self.sceneView.scene.rootNode.addChildNode(newNode)
                         
                     } else {
-                        print("error loading \(oldNode.name!).scn")
+                        print("[VC] error loading \(oldNode.name!).scn")
                     }
+                    
+                } else {
+                    print("[VC] Scene raycast result not found in model", oldNodeName)
+                }
+                
+            } else {
+                // If nil, the raycast did not get a model's object
+                print("[VC] Scene raycast result is node named (null)")
+            }
+            
+        }
+        
+    }
+    
+    @objc func showAttributes(sender: UISwipeGestureRecognizer) {
+        // Get from the scene the tapped position
+        let sceneView = sender.view as! ARSCNView
+        let tapLocation = sender.location(in: sceneView)
+        
+        // Get results of a SceneKit hit testing
+        let sceneResult: [SCNHitTestResult] = sceneView.hitTest(tapLocation,
+                                                                options: [SCNHitTestOption.firstFoundOnly: true])
+
+        guard let rayCast: SCNHitTestResult = sceneResult.first
+        else {
+            print("[VC] Scene raycast over", tapLocation, "did not get any result.")
+            return
+        }
+        
+        // Change a graphical model by other
+        let oldNode = rayCast.node
+        if (oldNode.name != nil) {
+
+            let oldNodeName = oldNode.name!
+            print("[VC] Scene raycast result is node", oldNodeName)
+            
+            // Check if the result's node is in the view
+            if self.sceneView.scene.rootNode.childNodes.contains(oldNode) {
+                
+                // Search for the result's object
+                var itemDic: NSMutableDictionary = [:]
+                var itemFound = false
+                for eachItemDic in model {
+                    let eachItemName = eachItemDic["name"] as! String
+                    if eachItemName == oldNodeName {
+                        itemDic = eachItemDic
+                        itemFound = true
+                    }
+                }
+                if (itemFound) {
+                    
+                    // Get the attributes from the model
+                    let itemAttributes = itemDic["attributes"] as! NSMutableDictionary
+                    
+                    // Search for its graphical syntax
+                    var graphicalSyntaxClass = NSMutableDictionary()
+                    for aGraphicalSyntaxClass in self.graphicalSyntax {
+                        let className = aGraphicalSyntaxClass["name"] as! String
+                        if className == selectedItem {
+                            graphicalSyntaxClass = aGraphicalSyntaxClass
+                        }
+                    }
+                    
+                    // Place the attributes over the object
+                    var string = ""
+                    let allKeys = itemAttributes.allKeys
+                    for aKey in allKeys {
+                        string = string+"\(aKey): \(itemAttributes[aKey] ?? "")\n"
+                    }
+                    let text = SCNText(string: string, extrusionDepth: 0.1)
+                    text.font = UIFont.systemFont(ofSize: 1)
+                    text.flatness = 0.005
+                    let textNode = SCNNode(geometry: text)
+                    let fontScale: Float = 0.01
+                    textNode.scale = SCNVector3(fontScale, fontScale, fontScale)
+                    textNode.position = SCNVector3(0,0,0.05)
+                    oldNode.addChildNode(textNode)
+                    
+                    print("[VC] Shown attributes: ", string)
                     
                 } else {
                     print("[VC] Scene raycast result not found in model", oldNodeName)
