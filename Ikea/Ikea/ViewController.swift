@@ -15,10 +15,12 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var metamodel: [NSMutableDictionary] = []
     var graphicalSyntax: [NSMutableDictionary] = []
     var model: [NSMutableDictionary] = [];
+    var modelObjectEdited: NSMutableDictionary = [:]
     // -- MODEL SCHEME --
     // [
     //  { "name" = uuid1 : UUID,
     //    "class" = class1 : String,
+    //    "ar_facet" = ar_facet1 : NSMutableDictionary,
     //    "current_version" = version1 : Int,
     //    "max_version" = 3,
     //    "attributes" = {
@@ -26,16 +28,24 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     //        "attribute2": attribute2 : Type2,
     //        (···)
     //     }
+    //     "reference": []
     //   },
     //  { "name" = uuid2 : UUID
     //    (···)
     //   },
     //  (···)
     // ]
+    // -- AR_FACET SCHEME --
+    //
+    // { "node" = node1 : SCNNode,
+    //   "attributes_node" = attributes_node1 : SCNNode
+    //  }
     
     @IBOutlet weak var planeDetected: UILabel!
     @IBOutlet weak var itemsCollectionView: UICollectionView!
     @IBOutlet weak var sceneView: ARSCNView!
+    @IBOutlet weak var attributesView: UIView!
+    @IBOutlet weak var attributesButton: UIButton!
     
     let configuration = ARWorldTrackingConfiguration()
     
@@ -54,6 +64,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         // Layout
         self.itemsCollectionView.dataSource = self
         self.itemsCollectionView.delegate = self
+        self.attributesView.isHidden = true
+        self.attributesButton.isHidden = true
         
         // Gesture recognizers
         self.registerGestureRecognizers()
@@ -138,11 +150,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 let aClassAttributeDic = aClassAttribute as! NSMutableDictionary
                 let aClassAttributeName = aClassAttributeDic["name"] as! NSString
                 let aClassAttributeDefault = aClassAttributeDic["default"]
-                // TODO: Import type, max, min and default. Alberto J. 2020/07/02.
                 
                 itemAttributes.setObject(aClassAttributeDefault!, forKey: aClassAttributeName)
             }
             itemDic["attributes"] = itemAttributes
+            // Create an AR facet to store its representations and nodes in AR environment
+            let arFacet = NSMutableDictionary()
+            itemDic["ar_facet"] = arFacet
             model.append(itemDic)
             
             // Search for its graphical syntax
@@ -172,6 +186,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     self.centerPivot(for: node)
                 }
                 self.sceneView.scene.rootNode.addChildNode(node)
+                
+                // Update the model with the node in its AR facet
+                arFacet["node"] = node
                 
             } else {
                 print("[VC] Error loading \(selectedItem).scn")
@@ -210,11 +227,21 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 var itemDic: NSMutableDictionary = [:]
                 var itemFound = false
                 for eachItemDic in model {
+                    
+                    let eachArFacet = eachItemDic["ar_facet"] as! NSMutableDictionary
+                    let eachNode = eachArFacet["node"] as! SCNNode
+                    if eachNode == oldNode {
+                        itemDic = eachItemDic
+                        itemFound = true
+                    }
+                    
+                    /* Also items can be matched with its name
                     let eachItemName = eachItemDic["name"] as! String
                     if eachItemName == oldNodeName {
                         itemDic = eachItemDic
                         itemFound = true
                     }
+                    */
                 }
                 if (itemFound) {
                     
@@ -260,6 +287,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                         
                         self.sceneView.scene.rootNode.addChildNode(newNode)
                         
+                        // Update the facet
+                        let arFacet = itemDic["ar_facet"] as! NSMutableDictionary
+                        arFacet["node"] = newNode
+                        
                     } else {
                         print("[VC] error loading \(oldNode.name!).scn")
                     }
@@ -267,6 +298,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 } else {
                     print("[VC] Scene raycast result not found in model", oldNodeName)
                 }
+                
+                print("[VC] Model", model)
                 
             } else {
                 // If nil, the raycast did not get a model's object
@@ -292,7 +325,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             return
         }
         
-        // Change a graphical model by other
+        // Compose and show the attributes
         let oldNode = rayCast.node
         if (oldNode.name != nil) {
 
@@ -302,29 +335,44 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             // Check if the result's node is in the view
             if self.sceneView.scene.rootNode.childNodes.contains(oldNode) {
                 
-                // Search for the result's object
+                // Search for the result's object in the model, as an object or as an attributes
                 var itemDic: NSMutableDictionary = [:]
                 var itemFound = false
+                //var arfacetDic: NSMutableDictionary = [:] ->(see next /* */ block)<-
+                //var facetFound = false
                 for eachItemDic in model {
+                    
+                    let eachArFacet = eachItemDic["ar_facet"] as! NSMutableDictionary
+                    if let eachNode = eachArFacet["node"] as? SCNNode {
+                        if eachNode == oldNode {
+                            itemDic = eachItemDic
+                            itemFound = true
+                        }
+                    }
+                    
+                    /* This is not working; it's for selecting the attributes text node
+                    if let eachAttributesNode = eachArFacet["attributes_node"] as? SCNNode {
+                        print("[VC] Verifiying attribute node.")
+                        if eachAttributesNode == oldNode {
+                            arfacetDic = eachItemDic
+                            facetFound = true
+                        }
+                    }
+                    */
+                    
+                    /* Also items can be matched with its name
                     let eachItemName = eachItemDic["name"] as! String
                     if eachItemName == oldNodeName {
                         itemDic = eachItemDic
                         itemFound = true
                     }
+                    */
                 }
                 if (itemFound) {
+                    print("[VC] Object node found.")
                     
                     // Get the attributes from the model
                     let itemAttributes = itemDic["attributes"] as! NSMutableDictionary
-                    
-                    // Search for its graphical syntax
-                    var graphicalSyntaxClass = NSMutableDictionary()
-                    for aGraphicalSyntaxClass in self.graphicalSyntax {
-                        let className = aGraphicalSyntaxClass["name"] as! String
-                        if className == selectedItem {
-                            graphicalSyntaxClass = aGraphicalSyntaxClass
-                        }
-                    }
                     
                     // Place the attributes over the object
                     var string = ""
@@ -341,11 +389,35 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     textNode.position = SCNVector3(0,0,0.05)
                     oldNode.addChildNode(textNode)
                     
+                    // Update the facet
+                    
+                    
+                    let arFacet = itemDic["ar_facet"] as! NSMutableDictionary
+                    if let oldTextNode = arFacet["attributes_node"] {
+                        (oldTextNode as! SCNNode).removeFromParentNode()
+                    }
+                    arFacet["attributes_node"] = textNode
+                    itemDic["ar_facet"] = arFacet
+                    
                     print("[VC] Shown attributes: ", string)
                     
-                } else {
+                    // Show the edit interface; this was meant to be in the next else if statement                    
+                    // Show the view to edit the attributes
+                    modelObjectEdited = itemDic
+                    self.attributesView.isHidden = false
+                    self.attributesButton.isHidden = false
+                    self.show(attributes: itemAttributes)
+                
+                } /*else if (facetFound) {
+                    print("[VC] Attributes node found in facet.")
+                    
+                    
+                    
+                }*/ else {
                     print("[VC] Scene raycast result not found in model", oldNodeName)
                 }
+                
+                print("[VC] Model", model)
                 
             } else {
                 // If nil, the raycast did not get a model's object
@@ -355,6 +427,63 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
         
     }
+    
+    @IBAction func handleAttributesButton(_ sender: Any) {
+        
+        // Get the attributes from the model
+        let itemAttributes = modelObjectEdited["attributes"] as! NSMutableDictionary
+        
+        // Update the model
+        let textFields = NSMutableArray()
+        for eachSubview in self.attributesView.subviews {
+            if eachSubview is UITextField {
+                textFields.add(eachSubview)
+            }
+        }
+        var index = 0;
+        let allNames = itemAttributes.allKeys
+        for eachElement in textFields {
+            let eachTextField = eachElement as! UITextField
+            itemAttributes[allNames[index]] = eachTextField.text
+            index += 1;
+        }
+        modelObjectEdited["attributes"] = itemAttributes
+        
+        // Hide the edit interface
+        self.attributesView.isHidden = true
+        self.attributesButton.isHidden = true
+        
+        // Update the graphycal syntax
+        // Place the attributes over the object
+        var string = ""
+        let allKeys = itemAttributes.allKeys
+        for aKey in allKeys {
+            string = string+"\(aKey): \(itemAttributes[aKey] ?? "")\n"
+        }
+        let text = SCNText(string: string, extrusionDepth: 0.1)
+        text.font = UIFont.systemFont(ofSize: 1)
+        text.flatness = 0.005
+        let textNode = SCNNode(geometry: text)
+        let fontScale: Float = 0.01
+        textNode.scale = SCNVector3(fontScale, fontScale, fontScale)
+        textNode.position = SCNVector3(0,0,0.05)
+        
+        // Update the facet
+        let arFacet = modelObjectEdited["ar_facet"] as! NSMutableDictionary
+        if let oldTextNode = arFacet["attributes_node"] {
+            (oldTextNode as! SCNNode).removeFromParentNode()
+        }
+        if let oldNode = arFacet["node"] {
+            (oldNode as! SCNNode).addChildNode(textNode)
+        }
+        arFacet["attributes_node"] = textNode
+        modelObjectEdited["ar_facet"] = arFacet
+        
+        print("[VC] Shown attributes: ", string)
+        print("[VC] Model", model)
+        
+    }
+    
     
     @objc func pinch (sender: UIPinchGestureRecognizer) {
         // TODO: Change to raycast. Alberto J. 2020/06/29
@@ -428,6 +557,168 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             min.y + (max.y - min.y)/2,
             min.z + (max.z - min.z)/2
         )
+    }
+    
+    func show(attributes: NSMutableDictionary)
+    {
+        // Show attributes information
+        
+        var lastAddedElement: UIView
+        // Remove previous subviews
+        for eachView in self.attributesView.subviews {
+            if eachView is UIButton {
+                
+            } else {
+                eachView.removeFromSuperview();
+            }
+        }
+        
+        // Show attribute title label
+        if (attributes.count > 0) {
+            let attributesTitleLabel = UILabel();
+            attributesTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+            attributesTitleLabel.font = UIFont.systemFont(ofSize: 17.0)
+            attributesTitleLabel.text = "Attributes:";
+            // Add the label
+            self.attributesView.addSubview(attributesTitleLabel);
+            // Leading constraint
+            let attributesTitleLabelLeading = NSLayoutConstraint(item: attributesTitleLabel,
+                                                                 attribute: NSLayoutConstraint.Attribute.leading,
+                                                                 relatedBy: NSLayoutConstraint.Relation.equal,
+                                                                 toItem: self.attributesView,
+                                                                 attribute: NSLayoutConstraint.Attribute.leading,
+                                                                 multiplier: 1.0,
+                                                                 constant: 16.0)
+            // Trailing constraint
+            let attributesTitleLabelTrailing = NSLayoutConstraint(item: attributesTitleLabel,
+                                                                  attribute: NSLayoutConstraint.Attribute.trailing,
+                                                                  relatedBy: NSLayoutConstraint.Relation.equal,
+                                                                  toItem: self.attributesView,
+                                                                  attribute: NSLayoutConstraint.Attribute.trailing,
+                                                                  multiplier: 1.0,
+                                                                  constant: 0.0)
+            // Top constraint
+            let attributesTitleLabelTop = NSLayoutConstraint(item: attributesTitleLabel,
+                                                             attribute: NSLayoutConstraint.Attribute.top,
+                                                             relatedBy: NSLayoutConstraint.Relation.equal,
+                                                             toItem: self.attributesView,
+                                                             attribute: NSLayoutConstraint.Attribute.top,
+                                                             multiplier: 1.0,
+                                                             constant: 0.0)
+            // Height constraint
+            let attributesTitleLabelHeight = NSLayoutConstraint(item: attributesTitleLabel,
+                                                                attribute: NSLayoutConstraint.Attribute.height,
+                                                                relatedBy: NSLayoutConstraint.Relation.equal,
+                                                                toItem: nil,
+                                                                attribute: NSLayoutConstraint.Attribute.notAnAttribute,
+                                                                multiplier: 1.0,
+                                                                constant: 21.0)
+            // Add constraints to the Parent
+            self.attributesView.addConstraint(attributesTitleLabelTrailing);
+            self.attributesView.addConstraint(attributesTitleLabelLeading);
+            self.attributesView.addConstraint(attributesTitleLabelTop);
+            // Add height constraint to the subview, as subview owns it.
+            attributesTitleLabel.addConstraint(attributesTitleLabelHeight);
+
+            // Set this label as the last element added
+            lastAddedElement = attributesTitleLabel as UIView;
+            
+            
+            // For each attribute compose a layout with label and textField
+            let allNames = attributes.allKeys
+            for eachName in allNames {
+                
+                let eachAttribute = attributes[eachName] as! String
+                
+                // Set attribute's name label
+                let attributesNameLabel = UILabel();
+                attributesNameLabel.translatesAutoresizingMaskIntoConstraints = false
+                attributesNameLabel.font = UIFont.systemFont(ofSize: 17.0)
+                attributesNameLabel.text = eachName as? String;
+                // Add the label
+                self.attributesView.addSubview(attributesNameLabel);
+                // Leading constraint
+                let attributesNameLabelLeading = NSLayoutConstraint(item: attributesNameLabel,
+                                                                    attribute: NSLayoutConstraint.Attribute.leading,
+                                                                    relatedBy: NSLayoutConstraint.Relation.equal,
+                                                                    toItem: self.attributesView,
+                                                                    attribute: NSLayoutConstraint.Attribute.leading,
+                                                                    multiplier: 1.0,
+                                                                    constant: 24.0)
+                // Trailing constraint
+                let attributesNameLabelTrailing = NSLayoutConstraint(item: self.attributesView!,
+                                                                     attribute: NSLayoutConstraint.Attribute.trailing,
+                                                                     relatedBy: NSLayoutConstraint.Relation.equal,
+                                                                     toItem: attributesNameLabel,
+                                                                     attribute: NSLayoutConstraint.Attribute.trailing,
+                                                                     multiplier: 1.0,
+                                                                     constant: 24.0)
+                // Top constraint
+                let attributesNameLabelTop = NSLayoutConstraint(item: attributesNameLabel,
+                                                                attribute: NSLayoutConstraint.Attribute.top,
+                                                                relatedBy: NSLayoutConstraint.Relation.equal,
+                                                                toItem: lastAddedElement,
+                                                                attribute: NSLayoutConstraint.Attribute.bottom,
+                                                                multiplier: 1.0,
+                                                                constant: 16.0)
+                // Height constraint
+                let attributesNameLabelHeight = NSLayoutConstraint(item: attributesNameLabel,
+                                                                   attribute: NSLayoutConstraint.Attribute.height,
+                                                                   relatedBy: NSLayoutConstraint.Relation.equal,
+                                                                   toItem: nil,
+                                                                   attribute: NSLayoutConstraint.Attribute.notAnAttribute,
+                                                                   multiplier: 1.0,
+                                                                   constant: 21.0)
+                // Add constraints to the Parent
+                self.attributesView.addConstraint(attributesNameLabelLeading);
+                self.attributesView.addConstraint(attributesNameLabelTrailing);
+                self.attributesView.addConstraint(attributesNameLabelTop);
+                // Add height constraint to the subview, as subview owns it.
+                attributesNameLabel.addConstraint(attributesNameLabelHeight);
+
+                // Set this label as the last element added
+                lastAddedElement = attributesNameLabel as UIView;
+                
+                // Set attribute's textField
+                let attributesTextField = UITextField();
+                attributesTextField.translatesAutoresizingMaskIntoConstraints = false;
+                attributesTextField.borderStyle = UITextField.BorderStyle.roundedRect;
+                attributesTextField.text = eachAttribute;
+                // Add the label
+                self.attributesView.addSubview(attributesTextField);
+                // Leading constraint
+                let attributesTextFieldLeading = NSLayoutConstraint(item: attributesTextField,
+                                                                    attribute: NSLayoutConstraint.Attribute.leading,
+                                                                    relatedBy: NSLayoutConstraint.Relation.equal,
+                                                                    toItem: self.attributesView,
+                                                                    attribute: NSLayoutConstraint.Attribute.leading,
+                                                                    multiplier: 1.0,
+                                                                    constant: 24.0)
+                // Trailing constraint
+                let attributesTextFieldTrailing = NSLayoutConstraint(item: self.attributesView!,
+                                                                     attribute: NSLayoutConstraint.Attribute.trailing,
+                                                                     relatedBy: NSLayoutConstraint.Relation.equal,
+                                                                     toItem: attributesTextField,
+                                                                     attribute: NSLayoutConstraint.Attribute.trailing,
+                                                                     multiplier: 1.0,
+                                                                     constant: 24.0)
+                // Top constraint
+                let attributesTextFieldTop = NSLayoutConstraint(item: attributesTextField,
+                                                                attribute: NSLayoutConstraint.Attribute.top,
+                                                                relatedBy: NSLayoutConstraint.Relation.equal,
+                                                                toItem: lastAddedElement,
+                                                                attribute: NSLayoutConstraint.Attribute.bottom,
+                                                                multiplier: 1.0,
+                                                                constant: 8.0)
+                //Add constraints to the Parent
+                self.attributesView.addConstraint(attributesTextFieldTrailing);
+                self.attributesView.addConstraint(attributesTextFieldLeading);
+                self.attributesView.addConstraint(attributesTextFieldTop);
+                
+                // Set this label as the last element added
+                lastAddedElement = attributesTextField as UIView;
+            }
+        }
     }
 
 }
