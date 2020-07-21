@@ -9,7 +9,7 @@
 import UIKit
 import ARKit
 
-class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, ARSCNViewDelegate {
+class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, ARSCNViewDelegate, UITextFieldDelegate {
     
     var itemsArray: [String] = []
     var metamodel: [NSMutableDictionary] = []
@@ -146,14 +146,18 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             itemDic["current_version"] = 1
             itemDic["max_version"] = 3
             let itemAttributes = NSMutableDictionary()
+            let itemTypeAttributes = NSMutableDictionary()
             for aClassAttribute in classAttributes {
                 let aClassAttributeDic = aClassAttribute as! NSMutableDictionary
                 let aClassAttributeName = aClassAttributeDic["name"] as! NSString
                 let aClassAttributeDefault = aClassAttributeDic["default"]
+                let aClassAttributeType = aClassAttributeDic["type"]
                 
                 itemAttributes.setObject(aClassAttributeDefault!, forKey: aClassAttributeName)
+                itemTypeAttributes.setObject(aClassAttributeType!, forKey: aClassAttributeName)
             }
             itemDic["attributes"] = itemAttributes
+            itemDic["typeAttributes"] = itemTypeAttributes
             // Create an AR facet to store its representations and nodes in AR environment
             let arFacet = NSMutableDictionary()
             itemDic["ar_facet"] = arFacet
@@ -373,6 +377,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     
                     // Get the attributes from the model
                     let itemAttributes = itemDic["attributes"] as! NSMutableDictionary
+                    let itemTypeAttributes = itemDic["typeAttributes"] as! NSMutableDictionary
                     
                     // Place the attributes over the object
                     var string = ""
@@ -406,7 +411,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     modelObjectEdited = itemDic
                     self.attributesView.isHidden = false
                     self.attributesButton.isHidden = false
-                    self.show(attributes: itemAttributes)
+                    self.show(attributes: itemAttributes, typeAttributes: itemTypeAttributes)
                 
                 } /*else if (facetFound) {
                     print("[VC] Attributes node found in facet.")
@@ -559,7 +564,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         )
     }
     
-    func show(attributes: NSMutableDictionary)
+    func show(attributes: NSMutableDictionary, typeAttributes: NSMutableDictionary)
     {
         // Show attributes information
         
@@ -629,6 +634,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             for eachName in allNames {
                 
                 let eachAttribute = attributes[eachName] as! String
+                let eachTypeAttribute = typeAttributes[eachName] as! String
                 
                 // Set attribute's name label
                 let attributesNameLabel = UILabel();
@@ -681,6 +687,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 
                 // Set attribute's textField
                 let attributesTextField = UITextField();
+                if(eachTypeAttribute == "Int"){
+                    //change keyboard type for integers
+                    attributesTextField.keyboardType = UIKeyboardType.numberPad;
+                }
+                attributesTextField.delegate = self
                 attributesTextField.translatesAutoresizingMaskIntoConstraints = false;
                 attributesTextField.borderStyle = UITextField.BorderStyle.roundedRect;
                 attributesTextField.text = eachAttribute;
@@ -720,7 +731,28 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             }
         }
     }
-
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool{
+        
+        //if nothing changes
+        if (string.count == 0){
+            return true
+        }
+        
+        //check if is only integer, specified in keyboard type
+        if (textField.keyboardType == UIKeyboardType.numberPad){
+            let currentText = textField.text ?? ""
+            let text = (currentText as NSString).replacingCharacters(in: range, with: string)
+            //set of rest of characters that doesn't belong to number
+            let setNoNumbers = NSCharacterSet(charactersIn: "0123456789").inverted
+            //if any of the text is not a number, return false. If its full numbers, return true
+            return text.rangeOfCharacter(from: setNoNumbers) == nil
+        }
+        return true
+    }
 }
 
 extension Int {

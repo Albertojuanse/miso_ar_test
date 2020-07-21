@@ -89,14 +89,14 @@
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MB8-cd-Ub0">
                                 <rect key="frame" x="0.0" y="44" width="414" height="743"/>
                             </arscnView>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Plane Detected" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Ss-PK-QAV">
-                                <rect key="frame" x="143" y="44" width="129" height="24"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Plane Detected" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Ss-PK-QAV">
+                                <rect key="frame" x="144" y="44" width="126.5" height="24"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HnC-U6-qUg">
-                                <rect key="frame" x="0.0" y="587" width="414" height="200"/>
+                                <rect key="frame" x="0.0" y="507" width="414" height="280"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5VM-Eh-1Ef">
                                         <rect key="frame" x="356" y="8" width="50" height="30"/>
@@ -112,7 +112,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstItem="5VM-Eh-1Ef" firstAttribute="top" secondItem="HnC-U6-qUg" secondAttribute="top" constant="8" id="Pbg-rL-i1R"/>
-                                    <constraint firstAttribute="height" constant="200" id="Q6Y-7e-eLz"/>
+                                    <constraint firstAttribute="height" constant="280" id="UcS-yT-xYI"/>
                                     <constraint firstAttribute="trailing" secondItem="5VM-Eh-1Ef" secondAttribute="trailing" constant="8" id="zUF-N2-wKp"/>
                                 </constraints>
                             </view>
@@ -125,6 +125,7 @@
                             <constraint firstItem="MB8-cd-Ub0" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="5yu-fV-wNk"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="cOL-CY-c1K" secondAttribute="trailing" id="7Ka-EK-c8j"/>
                             <constraint firstItem="MB8-cd-Ub0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="LO7-Wq-lPa"/>
+                            <constraint firstItem="0Ss-PK-QAV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="NlE-bi-pe8"/>
                             <constraint firstItem="cOL-CY-c1K" firstAttribute="top" secondItem="HnC-U6-qUg" secondAttribute="bottom" id="R3f-0o-Ou8"/>
                             <constraint firstItem="HnC-U6-qUg" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="jMi-Rd-ZRN"/>
                             <constraint firstItem="cOL-CY-c1K" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="m72-70-UJm"/>
