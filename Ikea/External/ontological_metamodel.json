@@ -15,14 +15,14 @@
                   "default": "null"
               },
               {
-                  "name":"owner",
-                  "type": "String",
+                  "name":"isCold",
+                  "type": "Bool",
                   "min": "1",
                   "max": "-1",
-                  "default": "unknown"
+                  "default": "true"
               },
               {
-                  "name":"other",
+                  "name":"id",
                   "type": "Int",
                   "min": "1",
                   "max": "-1",
