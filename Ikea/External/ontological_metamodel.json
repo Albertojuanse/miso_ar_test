@@ -15,7 +15,7 @@
                   "default": "null"
               },
               {
-                  "name":"isCold",
+                  "name":"cold",
                   "type": "Bool",
                   "min": "1",
                   "max": "-1",
