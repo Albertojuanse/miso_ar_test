@@ -686,10 +686,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 lastAddedElement = attributesNameLabel as UIView;
                 
                 // Set attribute's textField
+                
                 let attributesTextField = UITextField();
                 if(eachTypeAttribute == "Int"){
                     //change keyboard type for integers
                     attributesTextField.keyboardType = UIKeyboardType.numberPad;
+                } else if (eachTypeAttribute == "Bool") {
+                    attributesTextField.keyboardType = UIKeyboardType.emailAddress;
+                    attributesTextField.addTarget(self, action: #selector(changeText(_:)), for: .touchDown)
                 }
                 attributesTextField.delegate = self
                 attributesTextField.translatesAutoresizingMaskIntoConstraints = false;
@@ -697,42 +701,57 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 attributesTextField.text = eachAttribute;
                 // Add the label
                 self.attributesView.addSubview(attributesTextField);
-                // Leading constraint
-                let attributesTextFieldLeading = NSLayoutConstraint(item: attributesTextField,
-                                                                    attribute: NSLayoutConstraint.Attribute.leading,
-                                                                    relatedBy: NSLayoutConstraint.Relation.equal,
-                                                                    toItem: self.attributesView,
-                                                                    attribute: NSLayoutConstraint.Attribute.leading,
-                                                                    multiplier: 1.0,
-                                                                    constant: 24.0)
-                // Trailing constraint
-                let attributesTextFieldTrailing = NSLayoutConstraint(item: self.attributesView!,
-                                                                     attribute: NSLayoutConstraint.Attribute.trailing,
-                                                                     relatedBy: NSLayoutConstraint.Relation.equal,
-                                                                     toItem: attributesTextField,
-                                                                     attribute: NSLayoutConstraint.Attribute.trailing,
-                                                                     multiplier: 1.0,
-                                                                     constant: 24.0)
-                // Top constraint
-                let attributesTextFieldTop = NSLayoutConstraint(item: attributesTextField,
-                                                                attribute: NSLayoutConstraint.Attribute.top,
-                                                                relatedBy: NSLayoutConstraint.Relation.equal,
-                                                                toItem: lastAddedElement,
-                                                                attribute: NSLayoutConstraint.Attribute.bottom,
-                                                                multiplier: 1.0,
-                                                                constant: 8.0)
-                //Add constraints to the Parent
-                self.attributesView.addConstraint(attributesTextFieldTrailing);
-                self.attributesView.addConstraint(attributesTextFieldLeading);
-                self.attributesView.addConstraint(attributesTextFieldTop);
-                
-                // Set this label as the last element added
+                self.addConstraints(item: attributesTextField, lastAddedElement: lastAddedElement)
                 lastAddedElement = attributesTextField as UIView;
+                
             }
         }
     }
+    @objc func changeText(_ textField: UITextField){
+        if(textField.text == "false"){
+            textField.text = "true"
+        }
+        else{
+            textField.text = "false"
+        }
+    }
+    func addConstraints(item: Any, lastAddedElement: UIView){
+        let attributesTextFieldLeading = NSLayoutConstraint(item: item,
+                                                            attribute: NSLayoutConstraint.Attribute.leading,
+                                                            relatedBy: NSLayoutConstraint.Relation.equal,
+                                                            toItem: self.attributesView,
+                                                            attribute: NSLayoutConstraint.Attribute.leading,
+                                                            multiplier: 1.0,
+                                                            constant: 24.0)
+        // Trailing constraint
+        let attributesTextFieldTrailing = NSLayoutConstraint(item: self.attributesView!,
+                                                             attribute: NSLayoutConstraint.Attribute.trailing,
+                                                             relatedBy: NSLayoutConstraint.Relation.equal,
+                                                             toItem: item,
+                                                             attribute: NSLayoutConstraint.Attribute.trailing,
+                                                             multiplier: 1.0,
+                                                             constant: 24.0)
+        // Top constraint
+        let attributesTextFieldTop = NSLayoutConstraint(item: item,
+                                                        attribute: NSLayoutConstraint.Attribute.top,
+                                                        relatedBy: NSLayoutConstraint.Relation.equal,
+                                                        toItem: lastAddedElement,
+                                                        attribute: NSLayoutConstraint.Attribute.bottom,
+                                                        multiplier: 1.0,
+                                                        constant: 8.0)
+        //Add constraints to the Parent
+        self.attributesView.addConstraint(attributesTextFieldTrailing);
+        self.attributesView.addConstraint(attributesTextFieldLeading);
+        self.attributesView.addConstraint(attributesTextFieldTop);
+    }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
+        return false
+    }
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        if(textField.keyboardType == UIKeyboardType.emailAddress){
+            self.view.endEditing(true)
+        }
         return false
     }
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool{
@@ -741,15 +760,17 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         if (string.count == 0){
             return true
         }
+        let currentText = textField.text ?? ""
+        let text = (currentText as NSString).replacingCharacters(in: range, with: string)
         
-        //check if is only integer, specified in keyboard type
+        //check if is only integer or boolean, specified in keyboard type
         if (textField.keyboardType == UIKeyboardType.numberPad){
-            let currentText = textField.text ?? ""
-            let text = (currentText as NSString).replacingCharacters(in: range, with: string)
             //set of rest of characters that doesn't belong to number
             let setNoNumbers = NSCharacterSet(charactersIn: "0123456789").inverted
             //if any of the text is not a number, return false. If its full numbers, return true
             return text.rangeOfCharacter(from: setNoNumbers) == nil
+        } else if (textField.keyboardType == UIKeyboardType.emailAddress){
+            return text == "true" || text == "false"
         }
         return true
     }
