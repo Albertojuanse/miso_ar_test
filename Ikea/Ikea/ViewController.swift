@@ -780,8 +780,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if(textField.keyboardType == UIKeyboardType.emailAddress){
             self.view.endEditing(true)
+            return false
         }
-        return false
+        return true
     }
     //disable results that not fit with especific type
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool{
