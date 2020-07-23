@@ -174,6 +174,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             // Get the version's sources and load the graphical syntax
             let classVersions = graphicalSyntaxClass["versions"] as! NSMutableDictionary
             let currentVersion = 1
+            let classVersionsNames = graphicalSyntaxClass["vname"] as! NSMutableDictionary
+            let sourceName = classVersionsNames["v\(currentVersion)"] as! String;
             let firstSource = classVersions["v\(currentVersion)"] as! String;
             let url = URL(string: firstSource)
             if let scene = try? SCNScene(url: url! , options: nil) {
@@ -193,6 +195,17 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 
                 // Update the model with the node in its AR facet
                 arFacet["node"] = node
+                
+                // Place the object version name over the object
+                
+                let text = SCNText(string: sourceName, extrusionDepth: 0.1)
+                text.font = UIFont.systemFont(ofSize: 1)
+                text.flatness = 0.005
+                let textNode = SCNNode(geometry: text)
+                let fontScale: Float = 0.01
+                textNode.scale = SCNVector3(fontScale, fontScale, fontScale)
+                textNode.position = SCNVector3(0,0.05,0.05)
+                node.addChildNode(textNode)
                 
             } else {
                 print("[VC] Error loading \(selectedItem).scn")
@@ -272,7 +285,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     
                     // Get the version's sources and change its graphical syntax in scene
                     let classVersions = graphicalSyntaxClass["versions"] as! NSMutableDictionary
+                    let classVersionsNames = graphicalSyntaxClass["vname"] as! NSMutableDictionary
                     let firstSource = classVersions["v\(currentVersion)"] as! String;
+                    let sourceName = classVersionsNames["v\(currentVersion)"] as! String;
                     let url = URL(string: firstSource)
                     if let scene = try? SCNScene(url: url! , options: nil) {
                         print("[VC] load \(oldNode.name!).scn successful")
@@ -294,6 +309,17 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                         // Update the facet
                         let arFacet = itemDic["ar_facet"] as! NSMutableDictionary
                         arFacet["node"] = newNode
+                        
+                        // Place the object version name over the object
+                        
+                        let text = SCNText(string: sourceName, extrusionDepth: 0.1)
+                        text.font = UIFont.systemFont(ofSize: 1)
+                        text.flatness = 0.005
+                        let textNode = SCNNode(geometry: text)
+                        let fontScale: Float = 0.01
+                        textNode.scale = SCNVector3(fontScale, fontScale, fontScale)
+                        textNode.position = SCNVector3(0,0.05,0.05)
+                        newNode.addChildNode(textNode)
                         
                     } else {
                         print("[VC] error loading \(oldNode.name!).scn")
