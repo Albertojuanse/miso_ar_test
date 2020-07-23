@@ -104,11 +104,13 @@ class ViewControllerMenu: UIViewController  {
                             // Define a class for the metamodel and save it
                             let className = aClass["name"] as! String
                             let classVersions = aClass["versions"] as! NSMutableDictionary
+                            let classVersionsName = aClass["vname"] as! NSMutableDictionary
                             let classConstraints = aClass["constraints"] as! NSMutableDictionary
                             
                             let graphicalSyntaxClass = NSMutableDictionary()
                             graphicalSyntaxClass["name"] = className
                             graphicalSyntaxClass["versions"] = classVersions
+                            graphicalSyntaxClass["vname"] = classVersionsName
                             graphicalSyntaxClass["constraints"] = classConstraints
                             self.graphicalSyntax.append(graphicalSyntaxClass)
                             

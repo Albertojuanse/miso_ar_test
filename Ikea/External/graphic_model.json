@@ -9,6 +9,11 @@
                 "v2": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/cup2.scn?raw=true",
                 "v3": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/cup3.scn?raw=true"
             },
+            "vname": {
+                "v1": "grey cup",
+                "v2": "pink cup",
+                "v3": "green cup",
+            },
             "constraints": {
                 "planes": "horizontal",
                 "ilumination": "any",
@@ -21,6 +26,11 @@
                 "v1": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/vase1.scn?raw=true",
                 "v2": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/vase2.scn?raw=true",
                 "v3": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/vase3.scn?raw=true"
+            },
+            "vname": {
+                "v1": "pink cup",
+                "v2": "blue cup",
+                "v3": "brown cup",
             },
             "constraints": {
                 "planes": "horizontal",
@@ -35,6 +45,11 @@
                 "v2": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/boxing2.scn?raw=true",
                 "v3": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/boxing3.scn?raw=true"
             },
+            "vname": {
+                "v1": "blue cup",
+                "v2": "purple cup",
+                "v3": "green cup",
+            },
             "constraints": {
                 "planes": "horizontal",
                 "ilumination": "any",
@@ -47,6 +62,11 @@
                 "v1": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/table1.scn?raw=true",
                 "v2": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/table2.scn?raw=true",
                 "v3": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/table3.scn?raw=true"
+            },
+            "vname": {
+                "v1": "white cup",
+                "v2": "blue cup",
+                "v3": "purple cup",
             },
             "constraints": {
                 "planes": "horizontal",
