@@ -707,6 +707,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             }
         }
     }
+    //target of Bool textField, true -> false or false -> true. Default false if another
     @objc func changeText(_ textField: UITextField){
         if(textField.text == "false"){
             textField.text = "true"
@@ -744,16 +745,19 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         self.attributesView.addConstraint(attributesTextFieldLeading);
         self.attributesView.addConstraint(attributesTextFieldTop);
     }
+    //when press return, hid the keyboard
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
+    //disable keyboard when bool type
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if(textField.keyboardType == UIKeyboardType.emailAddress){
             self.view.endEditing(true)
         }
         return false
     }
+    //disable results that not fit with especific type
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool{
         
         //if nothing changes
@@ -764,6 +768,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let text = (currentText as NSString).replacingCharacters(in: range, with: string)
         
         //check if is only integer or boolean, specified in keyboard type
+        //numberPad -> Int
+        //emailaddress -> Bool (due to func textFieldShouldBeginEditing, this won't be triggered, but there is a conditional just in case of bug)
         if (textField.keyboardType == UIKeyboardType.numberPad){
             //set of rest of characters that doesn't belong to number
             let setNoNumbers = NSCharacterSet(charactersIn: "0123456789").inverted
