@@ -7,15 +7,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "87F2A6D4-654C-4DC6-9B8B-39DA05C3740D"
+            uuid = "B64EB6C5-00EB-4A1D-B434-49D3F0ED8A0F"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Ikea/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "440"
-            endingLineNumber = "440"
+            startingLineNumber = "419"
+            endingLineNumber = "419"
             landmarkName = "showAttributes(sender:)"
             landmarkType = "7">
          </BreakpointContent>

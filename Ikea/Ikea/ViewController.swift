@@ -147,17 +147,21 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             itemDic["max_version"] = 3
             let itemAttributes = NSMutableDictionary()
             let itemTypeAttributes = NSMutableDictionary()
+            let itemShowAttributes = NSMutableDictionary()
             for aClassAttribute in classAttributes {
                 let aClassAttributeDic = aClassAttribute as! NSMutableDictionary
                 let aClassAttributeName = aClassAttributeDic["name"] as! NSString
                 let aClassAttributeDefault = aClassAttributeDic["default"]
                 let aClassAttributeType = aClassAttributeDic["type"]
+                let aClassAttributeShow = aClassAttributeDic["show"]
                 
                 itemAttributes.setObject(aClassAttributeDefault!, forKey: aClassAttributeName)
                 itemTypeAttributes.setObject(aClassAttributeType!, forKey: aClassAttributeName)
+                itemShowAttributes.setObject(aClassAttributeShow!, forKey: aClassAttributeName)
             }
             itemDic["attributes"] = itemAttributes
             itemDic["typeAttributes"] = itemTypeAttributes
+            itemDic["showAttributes"] = itemShowAttributes
             // Create an AR facet to store its representations and nodes in AR environment
             let arFacet = NSMutableDictionary()
             itemDic["ar_facet"] = arFacet
@@ -404,12 +408,18 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     // Get the attributes from the model
                     let itemAttributes = itemDic["attributes"] as! NSMutableDictionary
                     let itemTypeAttributes = itemDic["typeAttributes"] as! NSMutableDictionary
+                    let itemShowAttributes = itemDic["showAttributes"] as! NSMutableDictionary
                     
                     // Place the attributes over the object
                     var string = ""
                     let allKeys = itemAttributes.allKeys
                     for aKey in allKeys {
-                        string = string+"\(aKey): \(itemAttributes[aKey] ?? "")\n"
+                        //check if show is true
+                        let numbool = itemShowAttributes[aKey] as! NSNumber
+                        if(numbool.boolValue){
+                           string = string+"\(aKey): \(itemAttributes[aKey] ?? "")\n"
+                        }
+                        
                     }
                     let text = SCNText(string: string, extrusionDepth: 0.1)
                     text.font = UIFont.systemFont(ofSize: 1)
@@ -488,8 +498,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         // Place the attributes over the object
         var string = ""
         let allKeys = itemAttributes.allKeys
+        let itemShowAttributes = modelObjectEdited["showAttributes"] as! NSMutableDictionary
         for aKey in allKeys {
-            string = string+"\(aKey): \(itemAttributes[aKey] ?? "")\n"
+            
+            //check if show is true
+            let numbool = itemShowAttributes[aKey] as! NSNumber
+            if(numbool.boolValue){
+               string = string+"\(aKey): \(itemAttributes[aKey] ?? "")\n"
+            }
         }
         let text = SCNText(string: string, extrusionDepth: 0.1)
         text.font = UIFont.systemFont(ofSize: 1)
