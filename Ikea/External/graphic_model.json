@@ -12,7 +12,12 @@
             "vname": {
                 "v1": "grey cup",
                 "v2": "pink cup",
-                "v3": "green cup",
+                "v3": "green cup"
+            },
+            "showAttributes": {
+                "content": true,
+                "cold": true,
+                "id": false,
             },
             "constraints": {
                 "planes": "horizontal",
@@ -30,7 +35,9 @@
             "vname": {
                 "v1": "pink cup",
                 "v2": "blue cup",
-                "v3": "brown cup",
+                "v3": "brown cup"
+            },
+            "showAttributes": {
             },
             "constraints": {
                 "planes": "horizontal",
@@ -48,7 +55,9 @@
             "vname": {
                 "v1": "blue cup",
                 "v2": "purple cup",
-                "v3": "green cup",
+                "v3": "green cup"
+            },
+            "showAttributes": {
             },
             "constraints": {
                 "planes": "horizontal",
@@ -66,7 +75,9 @@
             "vname": {
                 "v1": "white cup",
                 "v2": "blue cup",
-                "v3": "purple cup",
+                "v3": "purple cup"
+            },
+            "showAttributes": {
             },
             "constraints": {
                 "planes": "horizontal",
