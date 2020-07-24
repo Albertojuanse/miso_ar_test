@@ -105,12 +105,14 @@ class ViewControllerMenu: UIViewController  {
                             let className = aClass["name"] as! String
                             let classVersions = aClass["versions"] as! NSMutableDictionary
                             let classVersionsName = aClass["vname"] as! NSMutableDictionary
+                            let classShowAttributes = aClass["showAttributes"] as! NSMutableDictionary
                             let classConstraints = aClass["constraints"] as! NSMutableDictionary
                             
                             let graphicalSyntaxClass = NSMutableDictionary()
                             graphicalSyntaxClass["name"] = className
                             graphicalSyntaxClass["versions"] = classVersions
                             graphicalSyntaxClass["vname"] = classVersionsName
+                            graphicalSyntaxClass["showAttributes"] = classShowAttributes
                             graphicalSyntaxClass["constraints"] = classConstraints
                             self.graphicalSyntax.append(graphicalSyntaxClass)
                             
