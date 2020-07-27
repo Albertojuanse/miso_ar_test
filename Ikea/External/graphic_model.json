@@ -16,7 +16,7 @@
             },
             "showAttributes": {
                 "content": true,
-                "cold": true,
+                "ingredients": true,
                 "id": false,
             },
             "constraints": {

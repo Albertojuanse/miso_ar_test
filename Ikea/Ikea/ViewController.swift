@@ -47,6 +47,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBOutlet weak var attributesView: UIView!
     @IBOutlet weak var attributesButton: UIButton!
     
+    let tableView = UITableView()
+    
     let configuration = ARWorldTrackingConfiguration()
     
     var selectedItem: String?
@@ -752,6 +754,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 let attributesTextField = UITextField();
                 if(eachMaxAttribute != "1"){
                     print("is not unique " + eachAttribute);
+                    attributesTextField.keyboardType = UIKeyboardType.emailAddress;
+                    attributesTextField.addTarget(self, action: #selector(addTable(_:)), for: .touchDown)
                 } else {
                     print("is unique " + eachAttribute);
                 }
@@ -774,6 +778,12 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             }
         }
     }
+    @objc func addTable(_ textField: UITextField){
+        let itemString = textField.text
+        let itemList = itemString?.split(separator: ",")
+        print(itemList!)
+    }
+    
     //target of Bool textField, true -> false or false -> true. Default false if another
     @objc func changeText(_ textField: UITextField){
         if(textField.text == "false"){
