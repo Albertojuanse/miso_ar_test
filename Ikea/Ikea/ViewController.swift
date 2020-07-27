@@ -9,7 +9,7 @@
 import UIKit
 import ARKit
 
-class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, ARSCNViewDelegate, UITextFieldDelegate {
+class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, ARSCNViewDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     
     var itemsArray: [String] = []
     var metamodel: [NSMutableDictionary] = []
@@ -49,9 +49,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     let tableView = UITableView()
     
+    let auxView = UIView()
+    
     let configuration = ARWorldTrackingConfiguration()
     
     var selectedItem: String?
+    
+    var dataSource = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -781,7 +785,42 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @objc func addTable(_ textField: UITextField){
         let itemString = textField.text
         let itemList = itemString?.split(separator: ",")
-        print(itemList!)
+        
+        
+        auxView.frame = self.view.frame
+        if(!auxView.isDescendant(of: self.view)){
+            self.view.addSubview(auxView)
+        }
+        auxView.isHidden = false;
+        auxView.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(returnTable))
+        auxView.addGestureRecognizer(tap);
+        
+        tableView.frame = CGRect(x: textField.frame.origin.x, y: textField.frame.origin.y - textField.frame.height, width: textField.frame.width, height: 200)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        for item in itemList! {
+            dataSource.append(String(item))
+        }
+        if(!tableView.isDescendant(of: self.view)){
+            self.view.addSubview(tableView)
+        }
+        tableView.isHidden = false;
+    }
+    @objc func returnTable(){
+        auxView.isHidden = true;
+        tableView.isHidden = true
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataSource.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        cell.textLabel?.text = dataSource[indexPath.row]
+        return cell
     }
     
     //target of Bool textField, true -> false or false -> true. Default false if another
