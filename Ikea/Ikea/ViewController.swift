@@ -147,17 +147,21 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             itemDic["max_version"] = 3
             let itemAttributes = NSMutableDictionary()
             let itemTypeAttributes = NSMutableDictionary()
+            let itemMaxAttributes = NSMutableDictionary()
             for aClassAttribute in classAttributes {
                 let aClassAttributeDic = aClassAttribute as! NSMutableDictionary
                 let aClassAttributeName = aClassAttributeDic["name"] as! NSString
                 let aClassAttributeDefault = aClassAttributeDic["default"]
+                let aClassAttributeMax = aClassAttributeDic["max"]
                 let aClassAttributeType = aClassAttributeDic["type"]
                 
                 itemAttributes.setObject(aClassAttributeDefault!, forKey: aClassAttributeName)
                 itemTypeAttributes.setObject(aClassAttributeType!, forKey: aClassAttributeName)
+                itemMaxAttributes.setObject(aClassAttributeMax!, forKey: aClassAttributeName)
             }
             itemDic["attributes"] = itemAttributes
             itemDic["typeAttributes"] = itemTypeAttributes
+            itemDic["maxAttributes"] = itemMaxAttributes
             // Create an AR facet to store its representations and nodes in AR environment
             let arFacet = NSMutableDictionary()
             itemDic["ar_facet"] = arFacet
@@ -404,6 +408,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     // Get the attributes from the model
                     let itemAttributes = itemDic["attributes"] as! NSMutableDictionary
                     let itemTypeAttributes = itemDic["typeAttributes"] as! NSMutableDictionary
+                    let itemMaxAttributes = itemDic["maxAttributes"] as! NSMutableDictionary
                     
                     //Get the graph syntax to get attributes that should be shown
                     var graphicalSyntaxClass = NSMutableDictionary()
@@ -451,7 +456,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     modelObjectEdited = itemDic
                     self.attributesView.isHidden = false
                     self.attributesButton.isHidden = false
-                    self.show(attributes: itemAttributes, typeAttributes: itemTypeAttributes)
+                    self.show(attributes: itemAttributes, typeAttributes: itemTypeAttributes, maxAttributes: itemMaxAttributes)
                 
                 } /*else if (facetFound) {
                     print("[VC] Attributes node found in facet.")
@@ -620,7 +625,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         )
     }
     
-    func show(attributes: NSMutableDictionary, typeAttributes: NSMutableDictionary)
+    func show(attributes: NSMutableDictionary, typeAttributes: NSMutableDictionary, maxAttributes: NSMutableDictionary)
     {
         // Show attributes information
         
@@ -691,6 +696,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 
                 let eachAttribute = attributes[eachName] as! String
                 let eachTypeAttribute = typeAttributes[eachName] as! String
+                let eachMaxAttribute = maxAttributes[eachName] as! String
                 
                 // Set attribute's name label
                 let attributesNameLabel = UILabel();
@@ -744,6 +750,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 // Set attribute's textField
                 
                 let attributesTextField = UITextField();
+                if(eachMaxAttribute != "1"){
+                    print("is not unique " + eachAttribute);
+                } else {
+                    print("is unique " + eachAttribute);
+                }
                 if(eachTypeAttribute == "Int"){
                     //change keyboard type for integers
                     attributesTextField.keyboardType = UIKeyboardType.numberPad;

@@ -99,7 +99,7 @@
                                 <rect key="frame" x="0.0" y="507" width="414" height="280"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5VM-Eh-1Ef">
-                                        <rect key="frame" x="356" y="8" width="50" height="30"/>
+                                        <rect key="frame" x="356" y="0.0" width="50" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="50" id="uVK-1v-Clx"/>
                                         </constraints>
@@ -111,9 +111,9 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstItem="5VM-Eh-1Ef" firstAttribute="top" secondItem="HnC-U6-qUg" secondAttribute="top" constant="8" id="Pbg-rL-i1R"/>
+                                    <constraint firstItem="5VM-Eh-1Ef" firstAttribute="trailing" secondItem="HnC-U6-qUg" secondAttribute="trailingMargin" id="OqH-Zc-ha2"/>
                                     <constraint firstAttribute="height" constant="280" id="UcS-yT-xYI"/>
-                                    <constraint firstAttribute="trailing" secondItem="5VM-Eh-1Ef" secondAttribute="trailing" constant="8" id="zUF-N2-wKp"/>
+                                    <constraint firstItem="5VM-Eh-1Ef" firstAttribute="top" secondItem="HnC-U6-qUg" secondAttribute="top" id="oW5-4y-CME"/>
                                 </constraints>
                             </view>
                         </subviews>
