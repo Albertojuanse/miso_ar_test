@@ -55,15 +55,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "17780961-EAE9-4353-802A-8ACE763E2D8B"
+            uuid = "D03119C3-1E7A-4D90-AE9C-463056E4539C"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Ikea/ViewControllerMenu.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
             landmarkName = "loadMetamodels()"
             landmarkType = "7">
          </BreakpointContent>
