@@ -494,16 +494,34 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         // Get the attributes from the model
         let itemAttributes = modelObjectEdited["attributes"] as! NSMutableDictionary
-        
+        let itemTypeAttributes = modelObjectEdited["typeAttributes"] as! NSMutableDictionary
+        let allNames = itemAttributes.allKeys
         // Update the model
         let textFields = NSMutableArray()
+        var i = 0;
         for eachSubview in self.attributesView.subviews {
             if eachSubview is UITextField {
+                let name = allNames[i]
+                let messagename = name as! String
+                let type = itemTypeAttributes[name] as! String
+                let aux = eachSubview as! UITextField
+                if(type == "Int"){
+                    if(Int(aux.text!) == nil){
+                        wrongAttrAlert(message: "Attribute " + messagename + " is integer. Correct it")
+                        return
+                    }
+                } else if (type == "Bool"){
+                    if(aux.text != "true" || aux.text != "false"){
+                        wrongAttrAlert(message: "Attribute " + messagename + " must be 'true' or 'false'. Correct it")
+                        return
+                    }
+                }
+                i+=1
                 textFields.add(eachSubview)
             }
         }
         var index = 0;
-        let allNames = itemAttributes.allKeys
+        
         for eachElement in textFields {
             let eachTextField = eachElement as! UITextField
             itemAttributes[allNames[index]] = eachTextField.text
@@ -788,6 +806,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             }
         }
     }
+    
+    //It opens the tableview to manages attributes one-to-many
     @objc func addTable(_ textField: UITextField){
         let itemString = textField.text
         let itemList = itemString?.split(separator: " ")
@@ -825,6 +845,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         addButton.isHidden = false;
     }
     
+    //exit tableview ans updates textview
     @objc func returnTable(){
         finalText = ""
         var i = 0
@@ -841,31 +862,43 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         tableView.isHidden = true
     }
     
+    //adds row when pressing add button. new by default
     @objc func addRow(){
         dataSource.append("new")
         tableView.reloadData()
     }
     
+    //number of rows in the iterable section. It must be equal to datasource. If not, exception
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource.count
     }
     
+    //fills the table with datasource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.text = dataSource[indexPath.row]
         return cell
     }
     
+    //when swipe to left, appears 2 buttons, delete and edit
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        //remove data associate with the row of the table and remove the table
         let actiondelete = UIContextualAction(style: .destructive, title: "Delete") { (_, _, _) in
+            //IMPORTANT remove data from datasource. Error if not
             self.dataSource.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
+        
+        //update data and table row with an alertAction
         let actionedit = UIContextualAction(style: .normal, title: "Edit") { (_, _, _) in
+            //build modal
             let editcontrol = UIAlertController(title: "Edit", message: "Write the new name", preferredStyle: .alert)
+            //action of the modal. User writes the word, table and data update
             let editalertaction = UIAlertAction(title: "Done", style: .default) { (action) in
                 guard let textfield = editcontrol.textFields?.first else { return }
                 let text = textfield.text
+                //use the content of textfield to update dataSource and tableView
                 if (text != nil) {
                     if(text?.count == 0){
                         return
@@ -877,11 +910,16 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     return
                 }
             }
+            //open editable textfield
             editcontrol.addTextField()
             editcontrol.addAction(editalertaction)
             self.present(editcontrol, animated: true)
         }
         return UISwipeActionsConfiguration(actions: [actiondelete, actionedit])
+    }
+    
+    func wrongAttrAlert(message: String){
+        
     }
     
     //target of Bool textField, true -> false or false -> true. Default false if another
