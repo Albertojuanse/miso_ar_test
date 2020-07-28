@@ -821,7 +821,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             i+=1
             finalText! += item
             if(i<dataSource.count){
-                finalText! += item
+                finalText! += " "
             }
         }
         currentTextField.text = finalText
@@ -840,16 +840,31 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        print("hello")
-        let actions = UIContextualAction(style: .destructive, title: "Delete") { (_, _, _) in
+        let actiondelete = UIContextualAction(style: .destructive, title: "Delete") { (_, _, _) in
             self.dataSource.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
-        return UISwipeActionsConfiguration(actions: [actions])
-    }
-    
-    func hello(){
-        print("hello there")
+        let actionedit = UIContextualAction(style: .normal, title: "Edit") { (_, _, _) in
+            let editcontrol = UIAlertController(title: "Edit", message: "Write the new name", preferredStyle: .alert)
+            let editalertaction = UIAlertAction(title: "Done", style: .default) { (action) in
+                guard let textfield = editcontrol.textFields?.first else { return }
+                let text = textfield.text
+                if (text != nil) {
+                    if(text?.count == 0){
+                        return
+                    } else {
+                        self.dataSource[indexPath.row] = text ?? "null"
+                        tableView.reloadRows(at: [indexPath], with: .automatic)
+                    }
+                } else {
+                    return
+                }
+            }
+            editcontrol.addTextField()
+            editcontrol.addAction(editalertaction)
+            self.present(editcontrol, animated: true)
+        }
+        return UISwipeActionsConfiguration(actions: [actiondelete, actionedit])
     }
     
     //target of Bool textField, true -> false or false -> true. Default false if another
