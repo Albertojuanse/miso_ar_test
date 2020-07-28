@@ -55,6 +55,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     var selectedItem: String?
     
+    var currentTextField = UITextField()
+    
+    var finalText: String?
+    
     var dataSource = [String]()
     
     override func viewDidLoad() {
@@ -800,15 +804,27 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        dataSource = []
         for item in itemList! {
             dataSource.append(String(item))
         }
         if(!tableView.isDescendant(of: self.view)){
             self.view.addSubview(tableView)
         }
+        currentTextField = textField
         tableView.isHidden = false;
     }
     @objc func returnTable(){
+        finalText = ""
+        var i = 0
+        for item in dataSource {
+            i+=1
+            finalText! += item
+            if(i<dataSource.count){
+                finalText! += item
+            }
+        }
+        currentTextField.text = finalText
         auxView.isHidden = true;
         tableView.isHidden = true
     }
@@ -821,6 +837,18 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.text = dataSource[indexPath.row]
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        print("hello")
+        let actions = UIContextualAction(style: .destructive, title: "Delete") { (_, _, _) in
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+        return UISwipeActionsConfiguration(actions: [actions])
+    }
+    
+    func hello(){
+        print("hello there")
     }
     
     //target of Bool textField, true -> false or false -> true. Default false if another
