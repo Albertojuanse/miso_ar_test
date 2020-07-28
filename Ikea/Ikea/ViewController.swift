@@ -788,7 +788,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     @objc func addTable(_ textField: UITextField){
         let itemString = textField.text
-        let itemList = itemString?.split(separator: ",")
+        let itemList = itemString?.split(separator: " ")
         
         
         auxView.frame = self.view.frame
@@ -842,6 +842,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         print("hello")
         let actions = UIContextualAction(style: .destructive, title: "Delete") { (_, _, _) in
+            self.dataSource.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         return UISwipeActionsConfiguration(actions: [actions])
