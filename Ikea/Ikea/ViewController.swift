@@ -51,6 +51,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     let auxView = UIView()
     
+    var addButton = UIButton()
+    
     let configuration = ARWorldTrackingConfiguration()
     
     var selectedItem: String?
@@ -800,7 +802,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let tap = UITapGestureRecognizer(target: self, action: #selector(returnTable))
         auxView.addGestureRecognizer(tap);
         
-        tableView.frame = CGRect(x: textField.frame.origin.x, y: textField.frame.origin.y - textField.frame.height, width: textField.frame.width, height: 200)
+        tableView.frame = CGRect(x: textField.frame.origin.x, y: 200, width: textField.frame.width, height: 200)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
@@ -813,7 +815,16 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
         currentTextField = textField
         tableView.isHidden = false;
+        addButton = UIButton(frame: CGRect(x: textField.frame.origin.x, y: 150, width: 150, height: 50))
+        addButton.setTitle("Add", for: .normal)
+        addButton.backgroundColor = .black
+        addButton.addTarget(self, action: #selector(addRow), for: .touchUpInside)
+        if(!addButton.isDescendant(of: auxView)){
+            auxView.addSubview(addButton)
+        }
+        addButton.isHidden = false;
     }
+    
     @objc func returnTable(){
         finalText = ""
         var i = 0
@@ -825,8 +836,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             }
         }
         currentTextField.text = finalText
+        addButton.isHidden = true;
         auxView.isHidden = true;
         tableView.isHidden = true
+    }
+    
+    @objc func addRow(){
+        dataSource.append("new")
+        tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
