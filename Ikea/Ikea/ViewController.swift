@@ -160,20 +160,24 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             let itemAttributes = NSMutableDictionary()
             let itemTypeAttributes = NSMutableDictionary()
             let itemMaxAttributes = NSMutableDictionary()
+            let itemMinAttributes = NSMutableDictionary()
             for aClassAttribute in classAttributes {
                 let aClassAttributeDic = aClassAttribute as! NSMutableDictionary
                 let aClassAttributeName = aClassAttributeDic["name"] as! NSString
                 let aClassAttributeDefault = aClassAttributeDic["default"]
                 let aClassAttributeMax = aClassAttributeDic["max"]
+                let aClassAttributeMin = aClassAttributeDic["min"]
                 let aClassAttributeType = aClassAttributeDic["type"]
                 
                 itemAttributes.setObject(aClassAttributeDefault!, forKey: aClassAttributeName)
                 itemTypeAttributes.setObject(aClassAttributeType!, forKey: aClassAttributeName)
                 itemMaxAttributes.setObject(aClassAttributeMax!, forKey: aClassAttributeName)
+                itemMinAttributes.setObject(aClassAttributeMin!, forKey: aClassAttributeName)
             }
             itemDic["attributes"] = itemAttributes
             itemDic["typeAttributes"] = itemTypeAttributes
             itemDic["maxAttributes"] = itemMaxAttributes
+            itemDic["minAttributes"] = itemMinAttributes
             // Create an AR facet to store its representations and nodes in AR environment
             let arFacet = NSMutableDictionary()
             itemDic["ar_facet"] = arFacet
@@ -495,6 +499,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         // Get the attributes from the model
         let itemAttributes = modelObjectEdited["attributes"] as! NSMutableDictionary
         let itemTypeAttributes = modelObjectEdited["typeAttributes"] as! NSMutableDictionary
+        let itemMaxAttributes = modelObjectEdited["maxAttributes"] as! NSMutableDictionary
+        let itemMinAttributes = modelObjectEdited["minAttributes"] as! NSMutableDictionary
         let allNames = itemAttributes.allKeys
         // Update the model
         let textFields = NSMutableArray()
@@ -505,6 +511,36 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 let messagename = name as! String
                 let type = itemTypeAttributes[name] as! String
                 let aux = eachSubview as! UITextField
+                let min = itemMinAttributes[name] as! String
+                let max = itemMaxAttributes[name] as! String
+                if(min != "0" && aux.text!.isEmpty){
+                    wrongAttrAlert(message: "Attribute " + messagename + " must have at least " + min + ". Correct it")
+                    return
+                }
+                if(max != "1"){
+                    let itemList = aux.text?.split(separator: " ")
+                    if(itemList!.count < Int(min)!){
+                        wrongAttrAlert(message: "Attribute " + messagename + " must have at least " + min + ". Correct it")
+                        return
+                    } else if(max != "-1" && itemList!.count > Int(max)!){
+                        wrongAttrAlert(message: "Attribute " + messagename + " must have less than " + max + ". Correct it")
+                        return
+                    } else if (type == "Int"){
+                        for item in itemList! {
+                            if(Int(item) == nil){
+                                wrongAttrAlert(message: "Attribute " + messagename + " is integer. Correct it")
+                                return
+                            }
+                        }
+                    } else if (type == "Bool"){
+                        for item in itemList! {
+                            if(item != "true" || item != "false"){
+                                wrongAttrAlert(message: "Attribute " + messagename + " must be 'true' or 'false'. Correct it")
+                                return
+                            }
+                        }
+                    }
+                }
                 if(type == "Int"){
                     if(Int(aux.text!) == nil){
                         wrongAttrAlert(message: "Attribute " + messagename + " is integer. Correct it")
@@ -919,7 +955,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func wrongAttrAlert(message: String){
-        
+        let alertcontrol = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        let alertaction = UIAlertAction(title: "OK", style: .default)
+        alertcontrol.addAction(alertaction)
+        self.present(alertcontrol, animated: true)
     }
     
     //target of Bool textField, true -> false or false -> true. Default false if another
