@@ -540,17 +540,19 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                             }
                         }
                     }
-                }
-                if(type == "Int"){
-                    if(Int(aux.text!) == nil){
-                        wrongAttrAlert(message: "Attribute " + messagename + " is integer. Correct it")
-                        return
+                } else {
+                    if(type == "Int"){
+                        if(Int(aux.text!) == nil){
+                            wrongAttrAlert(message: "Attribute " + messagename + " is integer. Correct it")
+                            return
+                        }
+                    } else if (type == "Bool"){
+                        if(aux.text != "true" || aux.text != "false"){
+                            wrongAttrAlert(message: "Attribute " + messagename + " must be 'true' or 'false'. Correct it")
+                            return
+                        }
                     }
-                } else if (type == "Bool"){
-                    if(aux.text != "true" || aux.text != "false"){
-                        wrongAttrAlert(message: "Attribute " + messagename + " must be 'true' or 'false'. Correct it")
-                        return
-                    }
+
                 }
                 i+=1
                 textFields.add(eachSubview)
