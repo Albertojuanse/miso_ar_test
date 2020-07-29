@@ -14,10 +14,24 @@ class ViewControllerMenu: UIViewController  {
     var itemsArray: [String] = []
     var metamodel: [NSMutableDictionary] = []
     var graphicalSyntax: [NSMutableDictionary] = []
+    var timer: Timer?
+    var second = 0
     
+    @IBOutlet weak var load: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
+        load.setTitle("Wait", for: .normal)
+        timer = Timer.scheduledTimer(timeInterval:1, target:self, selector:#selector(timeWaiting), userInfo: nil, repeats: true)
         self.loadMetamodels()
+    }
+    
+    @objc func timeWaiting(){
+        second+=1
+        if(second == 2){
+            timer?.invalidate()
+            timer = nil
+            load.setTitle("Load", for: .normal)
+        }
     }
     
     func loadMetamodels() {
@@ -130,7 +144,10 @@ class ViewControllerMenu: UIViewController  {
     }
     
     @IBAction func handleLoadButton(_ sender: Any) {
-        self.performSegue(withIdentifier: "fromLoadToARView", sender: sender)
+        if(load.titleLabel?.text == "Load"){
+            self.performSegue(withIdentifier: "fromLoadToARView", sender: sender)
+        }
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -17,8 +17,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FBr-47-fNq">
-                                <rect key="frame" x="190" y="433" width="34" height="30"/>
-                                <state key="normal" title="Load"/>
+                                <rect key="frame" x="191.5" y="433" width="31" height="30"/>
+                                <state key="normal" title="Wait"/>
                                 <connections>
                                     <action selector="handleLoadButton:" destination="iBQ-zq-EGY" eventType="touchUpInside" id="iaV-V0-xJM"/>
                                 </connections>
@@ -32,6 +32,7 @@
                         <viewLayoutGuide key="safeArea" id="Pbx-hs-avN"/>
                     </view>
                     <connections>
+                        <outlet property="load" destination="FBr-47-fNq" id="ECO-ZT-bAk"/>
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="fromLoadToARView" modalPresentationStyle="fullScreen" id="IuH-ho-Gz9"/>
                     </connections>
                 </viewController>
