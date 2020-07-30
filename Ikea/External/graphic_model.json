@@ -44,6 +44,8 @@
             "constraints": {
                 "planes": "horizontal",
                 "ilumination": "any",
+                "sizeMax": "1",
+                "sizeMin": "0.5",
                 "overlapping": "true"
             }
         },
@@ -64,6 +66,8 @@
             "constraints": {
                 "planes": "horizontal",
                 "ilumination": "any",
+                "sizeMax": "1",
+                "sizeMin": "0.5",
                 "overlapping": "true"
             }
         },
@@ -84,6 +88,8 @@
             "constraints": {
                 "planes": "horizontal",
                 "ilumination": "any",
+                "sizeMax": "1",
+                "sizeMin": "0.5",
                 "overlapping": "true"
             }
         }
