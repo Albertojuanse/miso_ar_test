@@ -628,7 +628,32 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             let results = hitTest.first!
             let node = results.node
             let pinchAction = SCNAction.scale(by: sender.scale, duration: 0)
-            node.runAction(pinchAction)
+            
+            //Get the graph syntax to get min and max measure that should be shown
+            var graphicalSyntaxClass = NSMutableDictionary()
+            for aGraphicalSyntaxClass in self.graphicalSyntax {
+                let className = aGraphicalSyntaxClass["name"] as! String
+                if className == selectedItem {
+                    graphicalSyntaxClass = aGraphicalSyntaxClass
+                }
+            }
+            let classConstraints = graphicalSyntaxClass["constraints"] as! NSMutableDictionary
+            let max = classConstraints["sizeMax"] as! String
+            let min = classConstraints["sizeMin"] as! String
+            if(node.scale.x < (max as NSString).floatValue){
+                if(node.scale.x > (min as NSString).floatValue){
+                    node.runAction(pinchAction)
+                } else {
+                    if(sender.scale > 1){
+                        node.runAction(pinchAction)
+                    }
+                }
+                
+            } else {
+                if(sender.scale < 1){
+                    node.runAction(pinchAction)
+                }
+            }
             sender.scale = 1.0
         }
     }
