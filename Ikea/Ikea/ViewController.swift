@@ -1037,6 +1037,90 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
         return true
     }
+    
+    // MARK: - PERSISTENCE
+    // https://www.appcoda.com/arkit-persistence/
+    
+    // Gives the document directory path for writing and reading the world map data
+    var worldMapURL: URL = {
+        do {
+            return try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+                .appendingPathComponent("worldMapURL")
+        } catch {
+            fatalError("Error getting world map URL from document directory.")
+        }
+    }()
+    
+    // archiver method to save the ARWorldMap object
+    func archive(worldMap: ARWorldMap) throws {
+        let data = try NSKeyedArchiver.archivedData(withRootObject: worldMap, requiringSecureCoding: true)
+        try data.write(to: self.worldMapURL, options: [.atomic])
+    }
+    
+    
+    @IBAction func resetBarButtonItemDidTouch(_ sender: UIBarButtonItem) {
+        resetTrackingConfiguration()
+    }
+    
+    @IBAction func saveBarButtonItemDidTouch(_ sender: UIBarButtonItem) {
+        sceneView.session.getCurrentWorldMap { (worldMap, error) in
+            guard let worldMap = worldMap else {
+                print("Error getting current world map.")
+                return
+            }
+            
+            do {
+                try self.archive(worldMap: worldMap)
+                DispatchQueue.main.async {
+                    print("World map is saved.")
+                }
+            } catch {
+                fatalError("Error saving world map: \(error.localizedDescription)")
+            }
+        }
+    }
+    @IBAction func loadBarButtonItemDidTouch(_ sender: UIBarButtonItem) {
+        guard let worldMapData = retrieveWorldMapData(from: worldMapURL),
+            let worldMap = unarchive(worldMapData: worldMapData) else { return }
+        resetTrackingConfiguration(with: worldMap)
+    }
+    
+    func resetTrackingConfiguration(with worldMap: ARWorldMap? = nil) {
+        let configuration = ARWorldTrackingConfiguration()
+        configuration.planeDetection = [.horizontal]
+        
+        let options: ARSession.RunOptions = [.resetTracking, .removeExistingAnchors]
+        if let worldMap = worldMap {
+            configuration.initialWorldMap = worldMap
+            print("Found saved world map.")
+        } else {
+            print("Move camera around to map your surrounding space.")
+        }
+        
+        sceneView.debugOptions = [.showFeaturePoints]
+        sceneView.session.run(configuration, options: options)
+    }
+    
+    func retrieveWorldMapData(from url: URL) -> Data? {
+        do {
+            return try Data(contentsOf: self.worldMapURL)
+        } catch {
+            print("Error retrieving world map data.")
+            return nil
+        }
+    }
+    
+    func unarchive(worldMapData data: Data) -> ARWorldMap? {
+        
+        let unarchievedObject = try? NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: data)
+        
+        let worldMap = unarchievedObject
+        
+        print("coucou")
+        
+        return worldMap
+    }
+    
 }
 
 extension Int {
