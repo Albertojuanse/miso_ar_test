@@ -22,6 +22,8 @@
             "constraints": {
                 "planes": "horizontal",
                 "ilumination": "any",
+                "sizeMax": "1",
+                "sizeMin": "0.5",
                 "overlapping": "true"
             }
         },
@@ -33,9 +35,9 @@
                 "v3": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/vase3.scn?raw=true"
             },
             "vname": {
-                "v1": "pink cup",
-                "v2": "blue cup",
-                "v3": "brown cup"
+                "v1": "pink vase",
+                "v2": "blue vase",
+                "v3": "brown vase"
             },
             "showAttributes": {
             },
