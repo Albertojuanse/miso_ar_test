@@ -442,15 +442,15 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                             graphicalSyntaxClass = aGraphicalSyntaxClass
                         }
                     }
-                    let classAttributesShow = graphicalSyntaxClass["showAttributes"] as! NSMutableDictionary
+                    let classAttributesShow = graphicalSyntaxClass["showAttributes"] as! NSMutableArray
                     
                     // Place the attributes over the object
                     var string = ""
                     let allKeys = itemAttributes.allKeys
                     for aKey in allKeys {
-                        //check if show is true
-                        let numbool = classAttributesShow[aKey] as! NSNumber
-                        if(numbool.boolValue){
+                        
+                        //check if is in the list
+                        if(classAttributesShow.contains(aKey)){
                            string = string+"\(aKey): \(itemAttributes[aKey] ?? "")\n"
                         }
                     }
@@ -592,13 +592,12 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 graphicalSyntaxClass = aGraphicalSyntaxClass
             }
         }
-        let classAttributesShow = graphicalSyntaxClass["showAttributes"] as! NSMutableDictionary
+        let classAttributesShow = graphicalSyntaxClass["showAttributes"] as! NSMutableArray
         
         for aKey in allKeys {
             
-            //check if show is true
-            let numbool = classAttributesShow[aKey] as! NSNumber
-            if(numbool.boolValue){
+            //check if is in the list
+            if(classAttributesShow.contains(aKey)){
                string = string+"\(aKey): \(itemAttributes[aKey] ?? "")\n"
             }
         }

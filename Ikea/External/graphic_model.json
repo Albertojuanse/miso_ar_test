@@ -14,11 +14,10 @@
                 "v2": "pink cup",
                 "v3": "green cup"
             },
-            "showAttributes": {
-                "content": true,
-                "ingredients": true,
-                "id": false,
-            },
+            "showAttributes": [
+                "content",
+                "ingredients"
+            ],
             "constraints": {
                 "planes": "horizontal",
                 "ilumination": "any",
@@ -39,8 +38,8 @@
                 "v2": "blue vase",
                 "v3": "brown vase"
             },
-            "showAttributes": {
-            },
+            "showAttributes": [
+            ],
             "constraints": {
                 "planes": "horizontal",
                 "ilumination": "any",
@@ -61,8 +60,8 @@
                 "v2": "purple cup",
                 "v3": "green cup"
             },
-            "showAttributes": {
-            },
+            "showAttributes": [
+            ],
             "constraints": {
                 "planes": "horizontal",
                 "ilumination": "any",
@@ -83,8 +82,8 @@
                 "v2": "blue cup",
                 "v3": "purple cup"
             },
-            "showAttributes": {
-            },
+            "showAttributes": [
+            ],
             "constraints": {
                 "planes": "horizontal",
                 "ilumination": "any",
