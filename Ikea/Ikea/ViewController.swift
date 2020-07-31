@@ -61,6 +61,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     var finalText: String?
     
+    var panZinit = CGFloat()
+    
+    var panLocation = SCNVector3()
+    
     var dataSource = [String]()
     
     override func viewDidLoad() {
@@ -101,6 +105,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         // Swipe gesture is used to change the graphic syntax version
         let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swiped))
         self.sceneView.addGestureRecognizer(swipeGestureRecognizer)
+        
+        // Pan gesture is used to move the object
+        //let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(move))
+        //self.sceneView.addGestureRecognizer(panGestureRecognizer)
     }
     
     // Gestures do 2 types of raycasting
@@ -627,7 +635,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         if !hitTest.isEmpty {
             let results = hitTest.first!
             let node = results.node
-            let pinchAction = SCNAction.scale(by: sender.scale, duration: 0)
+            
             
             //Get the graph syntax to get min and max measure that should be shown
             var graphicalSyntaxClass = NSMutableDictionary()
@@ -640,6 +648,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             let classConstraints = graphicalSyntaxClass["constraints"] as! NSMutableDictionary
             let max = classConstraints["sizeMax"] as! String
             let min = classConstraints["sizeMin"] as! String
+            if(sender.scale > 1){
+                sender.scale = 1.01
+            } else if(sender.scale < 1){
+                sender.scale = 0.99
+            }
+            
+            let pinchAction = SCNAction.scale(by: sender.scale, duration: 0)
+            
             if(node.scale.x < (max as NSString).floatValue){
                 if(node.scale.x > (min as NSString).floatValue){
                     node.runAction(pinchAction)
@@ -657,6 +673,59 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             sender.scale = 1.0
         }
     }
+    /*
+    @objc func move(sender : UIPanGestureRecognizer){
+        // Get from the scene the tapped position
+        let sceneView = sender.view as! ARSCNView
+        let tapLocation = sender.location(in: sceneView)
+        
+        // Get results of a SceneKit hit testing
+        let sceneResult: [SCNHitTestResult] = sceneView.hitTest(tapLocation,
+                                                                options: [SCNHitTestOption.firstFoundOnly: true])
+
+        guard let rayCast: SCNHitTestResult = sceneResult.first
+        else {
+            print("[VC] Scene raycast over", tapLocation, "did not get any result.")
+            return
+        }
+        let oldNode = rayCast.node
+        if (oldNode.name != nil) {
+            let oldNodeName = oldNode.name!
+            print("[VC] Scene raycast result is node", oldNodeName)
+            
+            // Check if the result's node is in the view
+            if self.sceneView.scene.rootNode.childNodes.contains(oldNode){
+                var itemDic: NSMutableDictionary = [:]
+                var itemFound = false
+                for eachItemDic in model {
+                    let eachArFacet = eachItemDic["ar_facet"] as! NSMutableDictionary
+                    if let eachNode = eachArFacet["node"] as? SCNNode {
+                        if eachNode == oldNode {
+                            itemDic = eachItemDic
+                            itemFound = true
+                        }
+                    }
+                }
+                if itemFound {
+                    //panGesture has 2 states: began(start of pan) and changed(change position)
+                    switch sender.state {
+                    case .began:
+                        //init z position
+                        panZinit = CGFloat(sceneView.projectPoint(oldNode.worldPosition).z)
+                        //pan init location
+                        panLocation = rayCast.worldCoordinates
+                    case .changed:
+                        let touchPos = sceneView.unprojectPoint(SCNVector3(tapLocation.x, tapLocation.y, panZinit))
+                        let move = SCNVector3(touchPos.x - panLocation.x, touchPos.y - panLocation.y, touchPos.z - panLocation.z)
+                        
+                    default:
+                        break
+                    }
+                }
+            }
+        }
+    }
+    */
     @objc func rotate(sender : UILongPressGestureRecognizer) {
         // TODO: Change to raycast. Alberto J. 2020/06/29
         let sceneView = sender.view as! ARSCNView
@@ -869,7 +938,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             }
         }
     }
-    
+    //MARK: - One-to-many Attributes
     //It opens the tableview to manages attributes one-to-many
     @objc func addTable(_ textField: UITextField){
         let itemString = textField.text
@@ -987,7 +1056,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         alertcontrol.addAction(alertaction)
         self.present(alertcontrol, animated: true)
     }
-    
+    //MARK: - Adjust textfield to types
     //target of Bool textField, true -> false or false -> true. Default false if another
     @objc func changeText(_ textField: UITextField){
         if(textField.text == "false"){
