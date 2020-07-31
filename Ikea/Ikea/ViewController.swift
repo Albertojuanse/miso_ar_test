@@ -107,8 +107,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         self.sceneView.addGestureRecognizer(swipeGestureRecognizer)
         
         // Pan gesture is used to move the object
-        //let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(move))
-        //self.sceneView.addGestureRecognizer(panGestureRecognizer)
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(move))
+        panGestureRecognizer.require(toFail: swipeGestureRecognizer)
+        self.sceneView.addGestureRecognizer(panGestureRecognizer)
     }
     
     // Gestures do 2 types of raycasting
@@ -244,6 +245,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     @objc func swiped(sender: UISwipeGestureRecognizer) {
+        
         // Get from the scene the tapped position
         let sceneView = sender.view as! ARSCNView
         let tapLocation = sender.location(in: sceneView)
@@ -672,7 +674,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             sender.scale = 1.0
         }
     }
-    /*
+    
     @objc func move(sender : UIPanGestureRecognizer){
         // Get from the scene the tapped position
         let sceneView = sender.view as! ARSCNView
@@ -716,7 +718,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     case .changed:
                         let touchPos = sceneView.unprojectPoint(SCNVector3(tapLocation.x, tapLocation.y, panZinit))
                         let move = SCNVector3(touchPos.x - panLocation.x, touchPos.y - panLocation.y, touchPos.z - panLocation.z)
-                        
+                        oldNode.localTranslate(by: move)
+                        panLocation = touchPos
                     default:
                         break
                     }
@@ -724,7 +727,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             }
         }
     }
-    */
+    
     @objc func rotate(sender : UILongPressGestureRecognizer) {
         // TODO: Change to raycast. Alberto J. 2020/06/29
         let sceneView = sender.view as! ARSCNView
