@@ -23,7 +23,9 @@
                 "ilumination": "any",
                 "sizeMax": "1",
                 "sizeMin": "0.5",
-                "overlapping": "true"
+                "overlapping": "true",
+                "xToOriginPos": "0.4",
+                "yToOriginPos": "0.4"
             }
         },
         {
@@ -45,7 +47,9 @@
                 "ilumination": "any",
                 "sizeMax": "1",
                 "sizeMin": "0.5",
-                "overlapping": "true"
+                "overlapping": "true",
+                "xToOriginPos": "0.4",
+                "yToOriginPos": "0.4"
             }
         },
         {
@@ -67,7 +71,9 @@
                 "ilumination": "any",
                 "sizeMax": "1",
                 "sizeMin": "0.5",
-                "overlapping": "true"
+                "overlapping": "true",
+                "xToOriginPos": "0.4",
+                "yToOriginPos": "0.4"
             }
         },
         {
