@@ -754,8 +754,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                         let ymax = classConstraints["yToOriginPos"] as! String
                         let yformat = format.number(from: ymax)
                         let touchPos = sceneView.unprojectPoint(SCNVector3(tapLocation.x, tapLocation.y, panZinit))
-                        if((xinit - CGFloat(touchPos.x - panLocation.x)) < CGFloat(truncating: xformat!) && (yinit - CGFloat(touchPos.y - panLocation.y)) < CGFloat(truncating: yformat!) && (xinit - CGFloat(touchPos.x - panLocation.x)) > -CGFloat(truncating: xformat!) && (yinit - CGFloat(touchPos.y - panLocation.y)) > -CGFloat(truncating: yformat!)){
-                            let move = SCNVector3(touchPos.x - panLocation.x, touchPos.y - panLocation.y, touchPos.z - panLocation.z)
+                        let move = SCNVector3(touchPos.x - panLocation.x, touchPos.y - panLocation.y, touchPos.z - panLocation.z)
+                        print(CGFloat(truncating: xformat!))
+                        if((xinit - CGFloat(oldNode.worldPosition.x + move.x)) < CGFloat(truncating: xformat!) && (yinit - CGFloat(oldNode.worldPosition.y + move.y)) < CGFloat(truncating: yformat!) && (xinit - CGFloat(oldNode.worldPosition.x + move.x)) > -CGFloat(truncating: xformat!) && (yinit - CGFloat(oldNode.worldPosition.y + move.y)) > -CGFloat(truncating: yformat!)){
                             oldNode.localTranslate(by: move)
                             panLocation = touchPos
                         }
