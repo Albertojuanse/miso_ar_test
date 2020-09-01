@@ -734,10 +734,31 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                         //pan init location
                         panLocation = rayCast.worldCoordinates
                     case .changed:
+                        var originPos : NSMutableDictionary = [:]
+                        originPos = self.objectsInitialPos.value(forKey: oldNodeName) as! NSMutableDictionary
+                        let xinit = originPos.value(forKey: "x") as! CGFloat
+                        let yinit = originPos.value(forKey: "y") as! CGFloat
+                        //Get the graph syntax to get x and y max distance to original position
+                        var graphicalSyntaxClass = NSMutableDictionary()
+                        for aGraphicalSyntaxClass in self.graphicalSyntax {
+                            let className = aGraphicalSyntaxClass["name"] as! String
+                            if className == selectedItem {
+                                graphicalSyntaxClass = aGraphicalSyntaxClass
+                            }
+                        }
+                        let classConstraints = graphicalSyntaxClass["constraints"] as! NSMutableDictionary
+                        let xmax = classConstraints["xToOriginPos"] as! String
+                        let format = NumberFormatter()
+                        format.decimalSeparator = "."
+                        let xformat = format.number(from: xmax)
+                        let ymax = classConstraints["yToOriginPos"] as! String
+                        let yformat = format.number(from: ymax)
                         let touchPos = sceneView.unprojectPoint(SCNVector3(tapLocation.x, tapLocation.y, panZinit))
-                        let move = SCNVector3(touchPos.x - panLocation.x, touchPos.y - panLocation.y, touchPos.z - panLocation.z)
-                        oldNode.localTranslate(by: move)
-                        panLocation = touchPos
+                        if((xinit - CGFloat(touchPos.x - panLocation.x)) < CGFloat(truncating: xformat!) && (yinit - CGFloat(touchPos.y - panLocation.y)) < CGFloat(truncating: yformat!) && (xinit - CGFloat(touchPos.x - panLocation.x)) > -CGFloat(truncating: xformat!) && (yinit - CGFloat(touchPos.y - panLocation.y)) > -CGFloat(truncating: yformat!)){
+                            let move = SCNVector3(touchPos.x - panLocation.x, touchPos.y - panLocation.y, touchPos.z - panLocation.z)
+                            oldNode.localTranslate(by: move)
+                            panLocation = touchPos
+                        }
                     default:
                         break
                     }
