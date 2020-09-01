@@ -16,6 +16,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var graphicalSyntax: [NSMutableDictionary] = []
     var model: [NSMutableDictionary] = [];
     var modelObjectEdited: NSMutableDictionary = [:]
+    var objectsInitialPos: NSMutableDictionary = [:]
     // -- MODEL SCHEME --
     // [
     //  { "name" = uuid1 : UUID,
@@ -235,6 +236,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 textNode.scale = SCNVector3(fontScale, fontScale, fontScale)
                 textNode.position = SCNVector3(0,0.05,0.05)
                 node.addChildNode(textNode)
+                let posDict :NSMutableDictionary = [:]
+                posDict.setValue(node.position.x, forKey: "x")
+                posDict.setValue(node.position.y, forKey: "y")
+                posDict.setValue(node.position.z, forKey: "z")
+                self.objectsInitialPos.setValue(posDict, forKey: node.name!)
+                print(objectsInitialPos.value(forKey: node.name!))
+                print(objectsInitialPos)
                 
             } else {
                 print("[VC] Error loading \(selectedItem).scn")
@@ -675,6 +683,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
     }
     
+    //https://medium.com/@literalpie/dragging-objects-in-scenekit-and-arkit-3568212a90e5
     @objc func move(sender : UIPanGestureRecognizer){
         // Get from the scene the tapped position
         let sceneView = sender.view as! ARSCNView
@@ -693,7 +702,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         if (oldNode.name != nil) {
             let oldNodeName = oldNode.name!
             print("[VC] Scene raycast result is node", oldNodeName)
-            
+            print(oldNode.worldPosition)
             // Check if the result's node is in the view
             if self.sceneView.scene.rootNode.childNodes.contains(oldNode){
                 var itemDic: NSMutableDictionary = [:]
