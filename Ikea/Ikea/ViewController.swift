@@ -17,6 +17,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var model: [NSMutableDictionary] = [];
     var modelObjectEdited: NSMutableDictionary = [:]
     var objectsInitialPos: NSMutableDictionary = [:]
+    var nodeToDelete: SCNNode? = nil
     // -- MODEL SCHEME --
     // [
     //  { "name" = uuid1 : UUID,
@@ -42,11 +43,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     //   "attributes_node" = attributes_node1 : SCNNode
     //  }
     
-    @IBOutlet weak var planeDetected: UILabel!
+    //@IBOutlet weak var planeDetected: UILabel!
     @IBOutlet weak var itemsCollectionView: UICollectionView!
     @IBOutlet weak var sceneView: ARSCNView!
     @IBOutlet weak var attributesView: UIView!
     @IBOutlet weak var attributesButton: UIButton!
+    @IBOutlet weak var trashButton: UIButton!
+    
     
     let tableView = UITableView()
     
@@ -83,6 +86,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         self.itemsCollectionView.delegate = self
         self.attributesView.isHidden = true
         self.attributesButton.isHidden = true
+        self.trashButton.isHidden = true
         
         // Gesture recognizers
         self.registerGestureRecognizers()
@@ -403,6 +407,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             // Check if the result's node is in the view
             if self.sceneView.scene.rootNode.childNodes.contains(oldNode) {
                 
+                // LEA: "save" the node for potential deletion
+                nodeToDelete = oldNode
+                
                 // Search for the result's object in the model, as an object or as an attributes
                 var itemDic: NSMutableDictionary = [:]
                 var itemFound = false
@@ -490,6 +497,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     modelObjectEdited = itemDic
                     self.attributesView.isHidden = false
                     self.attributesButton.isHidden = false
+                    self.trashButton.isHidden = false
                     self.show(attributes: itemAttributes, typeAttributes: itemTypeAttributes, maxAttributes: itemMaxAttributes)
                 
                 } /*else if (facetFound) {
@@ -588,6 +596,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         // Hide the edit interface
         self.attributesView.isHidden = true
         self.attributesButton.isHidden = true
+        self.trashButton.isHidden = true
         
         // Update the graphycal syntax
         // Place the attributes over the object
@@ -780,12 +789,12 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard anchor is ARPlaneAnchor else {return}
-        DispatchQueue.main.async {
+        /*DispatchQueue.main.async {
             self.planeDetected.isHidden = false
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 self.planeDetected.isHidden = true
             }
-        }
+        }*/
     }
     
     func centerPivot(for node: SCNNode) {
@@ -1221,10 +1230,22 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         let worldMap = unarchievedObject
         
-        print("coucou")
-        
         return worldMap
     }
+    
+    // MARK: - DELETE NODE
+    @IBAction func handleDeletion(_ sender: Any) {
+        NSLog("delete tapped")
+        
+        // Hide the edit interface
+        self.attributesView.isHidden = true
+        self.attributesButton.isHidden = true
+        self.trashButton.isHidden = true
+        
+        nodeToDelete?.removeFromParentNode()
+    }
+    
+    
     
 }
 
