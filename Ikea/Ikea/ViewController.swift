@@ -755,7 +755,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                         let yformat = format.number(from: ymax)
                         let touchPos = sceneView.unprojectPoint(SCNVector3(tapLocation.x, tapLocation.y, panZinit))
                         let move = SCNVector3(touchPos.x - panLocation.x, touchPos.y - panLocation.y, touchPos.z - panLocation.z)
-                        print(CGFloat(truncating: xformat!))
+                        
+                        //don't move if x and/or y are over limits
                         if((xinit - CGFloat(oldNode.worldPosition.x + move.x)) < CGFloat(truncating: xformat!) && (yinit - CGFloat(oldNode.worldPosition.y + move.y)) < CGFloat(truncating: yformat!) && (xinit - CGFloat(oldNode.worldPosition.x + move.x)) > -CGFloat(truncating: xformat!) && (yinit - CGFloat(oldNode.worldPosition.y + move.y)) > -CGFloat(truncating: yformat!)){
                             oldNode.localTranslate(by: move)
                             panLocation = touchPos
