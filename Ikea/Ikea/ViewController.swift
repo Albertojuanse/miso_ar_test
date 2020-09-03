@@ -77,7 +77,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         // ARKit scene view initialization
         self.sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
-        self.configuration.planeDetection = .horizontal
+        self.configuration.planeDetection = [.horizontal, .vertical]
         self.sceneView.session.run(configuration)
         self.sceneView.delegate = self
         self.sceneView.autoenablesDefaultLighting = true
@@ -127,9 +127,24 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let sceneView = sender.view as! ARSCNView
         let tapLocation = sender.location(in: sceneView)
         
+        var graphicalSyntaxClass = NSMutableDictionary()
+        for aGraphicalSyntaxClass in self.graphicalSyntax {
+            let className = aGraphicalSyntaxClass["name"] as! String
+            if className == selectedItem {
+                graphicalSyntaxClass = aGraphicalSyntaxClass
+            }
+        }
+        let classConstraints = graphicalSyntaxClass["constraints"] as! NSMutableDictionary
+        let plane = classConstraints["planes"] as! String
+        
         // Configure the world raycast query and create it
         let estimatedPlane: ARRaycastQuery.Target = .estimatedPlane
-        let alignment: ARRaycastQuery.TargetAlignment = .any
+        var alignment: ARRaycastQuery.TargetAlignment = .any
+        if(plane == "horizontal"){
+            alignment = .horizontal
+        } else if plane == "vertical" {
+            alignment = .vertical
+        }
         let rayCastQuery = sceneView.raycastQuery(from: tapLocation,
                                                   allowing: estimatedPlane,
                                                   alignment: alignment)
@@ -1269,7 +1284,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func resetTrackingConfiguration(with worldMap: ARWorldMap? = nil) {
         let configuration = ARWorldTrackingConfiguration()
-        configuration.planeDetection = [.horizontal]
+        configuration.planeDetection = [.horizontal, .vertical]
         
         let options: ARSession.RunOptions = [.resetTracking, .removeExistingAnchors]
         if let worldMap = worldMap {
