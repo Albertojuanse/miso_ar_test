@@ -17,6 +17,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var model: [NSMutableDictionary] = [];
     var modelObjectEdited: NSMutableDictionary = [:]
     var objectsInitialPos: NSMutableDictionary = [:]
+    var objectsBoundingBox: NSMutableDictionary = [:]
     var nodeToDelete: SCNNode? = nil
     // -- MODEL SCHEME --
     // [
@@ -225,28 +226,38 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 if selectedItem == "table" {
                     self.centerPivot(for: node)
                 }
-                self.sceneView.scene.rootNode.addChildNode(node)
+                if checkOverLapping(node: node){
+                    self.sceneView.scene.rootNode.addChildNode(node)
+                    
+                    // Update the model with the node in its AR facet
+                    arFacet["node"] = node
+                    print(node.boundingBox)
+                    let box :NSMutableDictionary = [:]
+                    box.setValue(node.boundingBox.min, forKey: "min")
+                    box.setValue(node.boundingBox.max, forKey: "max")
+                    self.objectsBoundingBox.setValue(box, forKey: node.name!)
+                    // Place the object version name over the object
+                    
+                    let text = SCNText(string: sourceName, extrusionDepth: 0.1)
+                    text.font = UIFont.systemFont(ofSize: 1)
+                    text.flatness = 0.005
+                    let textNode = SCNNode(geometry: text)
+                    let fontScale: Float = 0.01
+                    textNode.scale = SCNVector3(fontScale, fontScale, fontScale)
+                    textNode.position = SCNVector3(0,0.05,0.05)
+                    node.addChildNode(textNode)
+                    
+                    let posDict :NSMutableDictionary = [:]
+                    posDict.setValue(node.position.x, forKey: "x")
+                    posDict.setValue(node.position.y, forKey: "y")
+                    posDict.setValue(node.position.z, forKey: "z")
+                    self.objectsInitialPos.setValue(posDict, forKey: node.name!)
+                    print(objectsInitialPos.value(forKey: node.name!))
+                } else {
+                    wrongAttrAlert(message: "The object is overlapping. Try another place")
+                    model.popLast()
+                }
                 
-                // Update the model with the node in its AR facet
-                arFacet["node"] = node
-                
-                // Place the object version name over the object
-                
-                let text = SCNText(string: sourceName, extrusionDepth: 0.1)
-                text.font = UIFont.systemFont(ofSize: 1)
-                text.flatness = 0.005
-                let textNode = SCNNode(geometry: text)
-                let fontScale: Float = 0.01
-                textNode.scale = SCNVector3(fontScale, fontScale, fontScale)
-                textNode.position = SCNVector3(0,0.05,0.05)
-                node.addChildNode(textNode)
-                let posDict :NSMutableDictionary = [:]
-                posDict.setValue(node.position.x, forKey: "x")
-                posDict.setValue(node.position.y, forKey: "y")
-                posDict.setValue(node.position.z, forKey: "z")
-                self.objectsInitialPos.setValue(posDict, forKey: node.name!)
-                print(objectsInitialPos.value(forKey: node.name!))
-                print(objectsInitialPos)
                 
             } else {
                 print("[VC] Error loading \(selectedItem).scn")
@@ -254,6 +265,40 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             
             print("[VC] Model", model)
         }
+    }
+    
+    func checkOverLapping(node: SCNNode) -> Bool{
+        if(self.objectsInitialPos.count < 1) {return true}
+        let keys = self.objectsInitialPos.allKeys
+        for key in keys {
+            let box = self.objectsBoundingBox.value(forKey: key as! String) as! NSMutableDictionary
+            let min = box.value(forKey: "min") as! SCNVector3
+            let max = box.value(forKey: "max") as! SCNVector3
+            let originPos = self.objectsInitialPos.value(forKey: key as! String) as! NSMutableDictionary
+            
+            //get max and min from current node
+            let xmax = node.boundingBox.max.x + node.position.x
+            let xmin = node.boundingBox.min.x + node.position.x
+            let ymax = node.boundingBox.max.y + node.position.y
+            let ymin = node.boundingBox.min.y + node.position.y
+            let zmax = node.boundingBox.max.z + node.position.z
+            let zmin = node.boundingBox.min.z + node.position.z
+            
+            //get max and min from previous existing node
+            let originxmax = max.x + (originPos.value(forKey: "x") as! Float)
+            let originxmin = min.x + (originPos.value(forKey: "x") as! Float)
+            let originymax = max.y + (originPos.value(forKey: "y") as! Float)
+            let originymin = min.y + (originPos.value(forKey: "y") as! Float)
+            let originzmax = max.z + (originPos.value(forKey: "z") as! Float)
+            let originzmin = min.z + (originPos.value(forKey: "z") as! Float)
+            
+            //overlapping if x y and z (max or min) is between max and min of existing node
+            if(((xmax < originxmax && xmax > originxmin) || (xmin < originxmax && xmin > originxmin)) && ((ymax < originymax && ymax > originymin) || (ymin < originymax && xmin > originymin)) && ((zmax < originzmax && zmax > originzmin) || (zmin < originzmax && zmin > originzmin))){
+                
+                return false
+            }
+        }
+        return true;
     }
     
     @objc func swiped(sender: UISwipeGestureRecognizer) {
