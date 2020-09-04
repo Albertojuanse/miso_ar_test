@@ -241,6 +241,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 if selectedItem == "table" {
                     self.centerPivot(for: node)
                 }
+                node.physicsBody = SCNPhysicsBody(type: .static, shape: SCNPhysicsShape(node: node, options: nil))
                 if checkOverLapping(node: node){
                     self.sceneView.scene.rootNode.addChildNode(node)
                     
