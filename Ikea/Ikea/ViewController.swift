@@ -1327,6 +1327,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         self.trashButton.isHidden = true
         
         nodeToDelete?.removeFromParentNode()
+        self.objectsInitialPos.removeObject(forKey: nodeToDelete?.name)
+        self.objectsBoundingBox.removeObject(forKey: nodeToDelete?.name)
     }
     
     
