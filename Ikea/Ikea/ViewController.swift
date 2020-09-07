@@ -799,6 +799,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                         originPos = self.objectsInitialPos.value(forKey: oldNodeName) as! NSMutableDictionary
                         let xinit = originPos.value(forKey: "x") as! CGFloat
                         let yinit = originPos.value(forKey: "y") as! CGFloat
+                        let zinit = originPos.value(forKey: "z") as! CGFloat
                         //Get the graph syntax to get x and y max distance to original position
                         var graphicalSyntaxClass = NSMutableDictionary()
                         for aGraphicalSyntaxClass in self.graphicalSyntax {
@@ -814,11 +815,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                         let xformat = format.number(from: xmax)
                         let ymax = classConstraints["yToOriginPos"] as! String
                         let yformat = format.number(from: ymax)
+                        let zmax = classConstraints["zToOriginPos"] as! String
+                        let zformat = format.number(from: zmax)
                         let touchPos = sceneView.unprojectPoint(SCNVector3(tapLocation.x, tapLocation.y, panZinit))
                         let move = SCNVector3(touchPos.x - panLocation.x, touchPos.y - panLocation.y, touchPos.z - panLocation.z)
                         
                         //don't move if x and/or y are over limits
-                        if((xinit - CGFloat(oldNode.worldPosition.x + move.x)) < CGFloat(truncating: xformat!) && (yinit - CGFloat(oldNode.worldPosition.y + move.y)) < CGFloat(truncating: yformat!) && (xinit - CGFloat(oldNode.worldPosition.x + move.x)) > -CGFloat(truncating: xformat!) && (yinit - CGFloat(oldNode.worldPosition.y + move.y)) > -CGFloat(truncating: yformat!)){
+                        if((xinit - CGFloat(oldNode.worldPosition.x + move.x)) < CGFloat(truncating: xformat!) && (yinit - CGFloat(oldNode.worldPosition.y + move.y)) < CGFloat(truncating: yformat!) && (zinit - CGFloat(oldNode.worldPosition.z + move.z)) < CGFloat(truncating: zformat!) && (xinit - CGFloat(oldNode.worldPosition.x + move.x)) > -CGFloat(truncating: xformat!) && (yinit - CGFloat(oldNode.worldPosition.y + move.y)) > -CGFloat(truncating: yformat!) && (zinit - CGFloat(oldNode.worldPosition.z + move.z)) > -CGFloat(truncating: zformat!)){
                             oldNode.localTranslate(by: move)
                             panLocation = touchPos
                         }

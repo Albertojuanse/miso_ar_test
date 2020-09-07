@@ -25,7 +25,8 @@
                 "sizeMin": "0.5",
                 "overlapping": "true",
                 "xToOriginPos": "0.2",
-                "yToOriginPos": "0.2"
+                "yToOriginPos": "0.2",
+                "zToOriginPos": "0.2"
             }
         },
         {
@@ -49,7 +50,8 @@
                 "sizeMin": "0.5",
                 "overlapping": "true",
                 "xToOriginPos": "0.2",
-                "yToOriginPos": "0.2"
+                "yToOriginPos": "0.2",
+                "zToOriginPos": "0.2"
             }
         },
         {
@@ -73,7 +75,8 @@
                 "sizeMin": "0.5",
                 "overlapping": "true",
                 "xToOriginPos": "0.2",
-                "yToOriginPos": "0.2"
+                "yToOriginPos": "0.2",
+                "zToOriginPos": "0.2"
             }
         },
         {
@@ -97,7 +100,8 @@
                 "sizeMin": "0.5",
                 "overlapping": "true",
                 "xToOriginPos": "0.2",
-                "yToOriginPos": "0.2"
+                "yToOriginPos": "0.2",
+                "zToOriginPos": "0.2"
             }
         }
     ]
