@@ -47,9 +47,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     //@IBOutlet weak var planeDetected: UILabel!
     @IBOutlet weak var itemsCollectionView: UICollectionView!
     @IBOutlet weak var sceneView: ARSCNView!
-    @IBOutlet weak var attributesView: UIView!
+    @IBOutlet weak var attributesView: UIScrollView!
     @IBOutlet weak var attributesButton: UIButton!
     @IBOutlet weak var trashButton: UIButton!
+    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var contentView: UIView!
     
     
     let tableView = UITableView()
@@ -86,6 +88,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         self.itemsCollectionView.dataSource = self
         self.itemsCollectionView.delegate = self
         self.attributesView.isHidden = true
+        self.contentView.isHidden = true
         self.attributesButton.isHidden = true
         self.trashButton.isHidden = true
         
@@ -557,6 +560,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     // Show the view to edit the attributes
                     modelObjectEdited = itemDic
                     self.attributesView.isHidden = false
+                    self.contentView.isHidden = false
                     self.attributesButton.isHidden = false
                     self.trashButton.isHidden = false
                     self.show(attributes: itemAttributes, typeAttributes: itemTypeAttributes, maxAttributes: itemMaxAttributes)
@@ -898,9 +902,24 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     {
         // Show attributes information
         
-        var lastAddedElement: UIView
         // Remove previous subviews
         for eachView in self.attributesView.subviews {
+            if eachView is UIButton || eachView is UIStackView ||  eachView == contentView {
+                
+            } else {
+                eachView.removeFromSuperview();
+            }
+        }
+        
+        for eachView in self.contentView.subviews {
+            if eachView is UIButton || eachView is UIStackView {
+                
+            } else {
+                eachView.removeFromSuperview();
+            }
+        }
+        
+        for eachView in self.stackView.subviews {
             if eachView is UIButton {
                 
             } else {
@@ -915,54 +934,12 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             attributesTitleLabel.font = UIFont.systemFont(ofSize: 17.0)
             attributesTitleLabel.text = "Attributes:";
             // Add the label
-            self.attributesView.addSubview(attributesTitleLabel);
-            // Leading constraint
-            let attributesTitleLabelLeading = NSLayoutConstraint(item: attributesTitleLabel,
-                                                                 attribute: NSLayoutConstraint.Attribute.leading,
-                                                                 relatedBy: NSLayoutConstraint.Relation.equal,
-                                                                 toItem: self.attributesView,
-                                                                 attribute: NSLayoutConstraint.Attribute.leading,
-                                                                 multiplier: 1.0,
-                                                                 constant: 16.0)
-            // Trailing constraint
-            let attributesTitleLabelTrailing = NSLayoutConstraint(item: attributesTitleLabel,
-                                                                  attribute: NSLayoutConstraint.Attribute.trailing,
-                                                                  relatedBy: NSLayoutConstraint.Relation.equal,
-                                                                  toItem: self.attributesView,
-                                                                  attribute: NSLayoutConstraint.Attribute.trailing,
-                                                                  multiplier: 1.0,
-                                                                  constant: 0.0)
-            // Top constraint
-            let attributesTitleLabelTop = NSLayoutConstraint(item: attributesTitleLabel,
-                                                             attribute: NSLayoutConstraint.Attribute.top,
-                                                             relatedBy: NSLayoutConstraint.Relation.equal,
-                                                             toItem: self.attributesView,
-                                                             attribute: NSLayoutConstraint.Attribute.top,
-                                                             multiplier: 1.0,
-                                                             constant: 0.0)
-            // Height constraint
-            let attributesTitleLabelHeight = NSLayoutConstraint(item: attributesTitleLabel,
-                                                                attribute: NSLayoutConstraint.Attribute.height,
-                                                                relatedBy: NSLayoutConstraint.Relation.equal,
-                                                                toItem: nil,
-                                                                attribute: NSLayoutConstraint.Attribute.notAnAttribute,
-                                                                multiplier: 1.0,
-                                                                constant: 21.0)
-            // Add constraints to the Parent
-            self.attributesView.addConstraint(attributesTitleLabelTrailing);
-            self.attributesView.addConstraint(attributesTitleLabelLeading);
-            self.attributesView.addConstraint(attributesTitleLabelTop);
-            // Add height constraint to the subview, as subview owns it.
-            attributesTitleLabel.addConstraint(attributesTitleLabelHeight);
-
-            // Set this label as the last element added
-            lastAddedElement = attributesTitleLabel as UIView;
+            self.stackView.addArrangedSubview(attributesTitleLabel)
             
             
             // For each attribute compose a layout with label and textField
             let allNames = attributes.allKeys
             for eachName in allNames {
-                
                 let eachAttribute = attributes[eachName] as! String
                 let eachTypeAttribute = typeAttributes[eachName] as! String
                 let eachMaxAttribute = maxAttributes[eachName] as! String
@@ -973,48 +950,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 attributesNameLabel.font = UIFont.systemFont(ofSize: 17.0)
                 attributesNameLabel.text = eachName as? String;
                 // Add the label
-                self.attributesView.addSubview(attributesNameLabel);
-                // Leading constraint
-                let attributesNameLabelLeading = NSLayoutConstraint(item: attributesNameLabel,
-                                                                    attribute: NSLayoutConstraint.Attribute.leading,
-                                                                    relatedBy: NSLayoutConstraint.Relation.equal,
-                                                                    toItem: self.attributesView,
-                                                                    attribute: NSLayoutConstraint.Attribute.leading,
-                                                                    multiplier: 1.0,
-                                                                    constant: 24.0)
-                // Trailing constraint
-                let attributesNameLabelTrailing = NSLayoutConstraint(item: self.attributesView!,
-                                                                     attribute: NSLayoutConstraint.Attribute.trailing,
-                                                                     relatedBy: NSLayoutConstraint.Relation.equal,
-                                                                     toItem: attributesNameLabel,
-                                                                     attribute: NSLayoutConstraint.Attribute.trailing,
-                                                                     multiplier: 1.0,
-                                                                     constant: 24.0)
-                // Top constraint
-                let attributesNameLabelTop = NSLayoutConstraint(item: attributesNameLabel,
-                                                                attribute: NSLayoutConstraint.Attribute.top,
-                                                                relatedBy: NSLayoutConstraint.Relation.equal,
-                                                                toItem: lastAddedElement,
-                                                                attribute: NSLayoutConstraint.Attribute.bottom,
-                                                                multiplier: 1.0,
-                                                                constant: 16.0)
-                // Height constraint
-                let attributesNameLabelHeight = NSLayoutConstraint(item: attributesNameLabel,
-                                                                   attribute: NSLayoutConstraint.Attribute.height,
-                                                                   relatedBy: NSLayoutConstraint.Relation.equal,
-                                                                   toItem: nil,
-                                                                   attribute: NSLayoutConstraint.Attribute.notAnAttribute,
-                                                                   multiplier: 1.0,
-                                                                   constant: 21.0)
-                // Add constraints to the Parent
-                self.attributesView.addConstraint(attributesNameLabelLeading);
-                self.attributesView.addConstraint(attributesNameLabelTrailing);
-                self.attributesView.addConstraint(attributesNameLabelTop);
-                // Add height constraint to the subview, as subview owns it.
-                attributesNameLabel.addConstraint(attributesNameLabelHeight);
-
-                // Set this label as the last element added
-                lastAddedElement = attributesNameLabel as UIView;
+                self.stackView.addArrangedSubview(attributesNameLabel)
                 
                 // Set attribute's textField
                 
@@ -1038,11 +974,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 attributesTextField.borderStyle = UITextField.BorderStyle.roundedRect;
                 attributesTextField.text = eachAttribute;
                 // Add the label
-                self.attributesView.addSubview(attributesTextField);
-                self.addConstraints(item: attributesTextField, lastAddedElement: lastAddedElement)
-                lastAddedElement = attributesTextField as UIView;
-                
-            }
+                self.stackView.addArrangedSubview(attributesTextField)            }
         }
     }
     //MARK: - One-to-many Attributes
@@ -1172,35 +1104,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         else{
             textField.text = "false"
         }
-    }
-    func addConstraints(item: Any, lastAddedElement: UIView){
-        let attributesTextFieldLeading = NSLayoutConstraint(item: item,
-                                                            attribute: NSLayoutConstraint.Attribute.leading,
-                                                            relatedBy: NSLayoutConstraint.Relation.equal,
-                                                            toItem: self.attributesView,
-                                                            attribute: NSLayoutConstraint.Attribute.leading,
-                                                            multiplier: 1.0,
-                                                            constant: 24.0)
-        // Trailing constraint
-        let attributesTextFieldTrailing = NSLayoutConstraint(item: self.attributesView!,
-                                                             attribute: NSLayoutConstraint.Attribute.trailing,
-                                                             relatedBy: NSLayoutConstraint.Relation.equal,
-                                                             toItem: item,
-                                                             attribute: NSLayoutConstraint.Attribute.trailing,
-                                                             multiplier: 1.0,
-                                                             constant: 24.0)
-        // Top constraint
-        let attributesTextFieldTop = NSLayoutConstraint(item: item,
-                                                        attribute: NSLayoutConstraint.Attribute.top,
-                                                        relatedBy: NSLayoutConstraint.Relation.equal,
-                                                        toItem: lastAddedElement,
-                                                        attribute: NSLayoutConstraint.Attribute.bottom,
-                                                        multiplier: 1.0,
-                                                        constant: 8.0)
-        //Add constraints to the Parent
-        self.attributesView.addConstraint(attributesTextFieldTrailing);
-        self.attributesView.addConstraint(attributesTextFieldLeading);
-        self.attributesView.addConstraint(attributesTextFieldTop);
     }
     //when press return, hid the keyboard
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

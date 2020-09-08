@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="iBQ-zq-EGY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="iBQ-zq-EGY">
     <device id="ipad12_9rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -27,9 +27,9 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="FBr-47-fNq" firstAttribute="centerY" secondItem="vMV-rl-uVq" secondAttribute="centerY" id="vJY-rt-4Mq"/>
-                            <constraint firstItem="FBr-47-fNq" firstAttribute="centerX" secondItem="vMV-rl-uVq" secondAttribute="centerX" id="vmh-S3-WYi"/>
+                            <constraint firstItem="FBr-47-fNq" firstAttribute="centerX" secondItem="d5r-Iw-fCu" secondAttribute="centerX" id="vmh-S3-WYi"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="Pbx-hs-avN"/>
+                        <viewLayoutGuide key="safeArea" id="d5r-Iw-fCu"/>
                     </view>
                     <connections>
                         <outlet property="load" destination="FBr-47-fNq" id="ECO-ZT-bAk"/>
@@ -90,34 +90,58 @@
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MB8-cd-Ub0">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="1271"/>
                             </arscnView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HnC-U6-qUg">
+                            <scrollView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HnC-U6-qUg">
                                 <rect key="frame" x="0.0" y="991" width="1024" height="280"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5VM-Eh-1Ef">
-                                        <rect key="frame" x="967" y="0.0" width="49" height="30"/>
-                                        <state key="normal" title="Submit"/>
-                                        <connections>
-                                            <action selector="handleAttributesButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1br-me-1er"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="57q-Ua-w5t">
-                                        <rect key="frame" x="8" y="5" width="73.5" height="22"/>
-                                        <state key="normal" title="Button" image="trash" catalog="system"/>
-                                        <connections>
-                                            <action selector="handleDeletion:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FLg-Wm-RZR"/>
-                                        </connections>
-                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3we-Ec-ned">
+                                        <rect key="frame" x="0.0" y="0.0" width="1016" height="280"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="sci-Zb-aMq">
+                                                <rect key="frame" x="0.0" y="0.0" width="1016" height="280"/>
+                                            </stackView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="57q-Ua-w5t">
+                                                <rect key="frame" x="8" y="5" width="73.5" height="22"/>
+                                                <state key="normal" title="Button" image="trash" catalog="system"/>
+                                                <connections>
+                                                    <action selector="handleDeletion:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FLg-Wm-RZR"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5VM-Eh-1Ef">
+                                                <rect key="frame" x="967" y="0.0" width="49" height="30"/>
+                                                <state key="normal" title="Submit"/>
+                                                <connections>
+                                                    <action selector="handleAttributesButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1br-me-1er"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="sci-Zb-aMq" secondAttribute="trailing" id="0Rs-JY-YDG"/>
+                                            <constraint firstItem="5VM-Eh-1Ef" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="57q-Ua-w5t" secondAttribute="trailing" constant="8" symbolic="YES" id="0mM-Oe-e3L"/>
+                                            <constraint firstAttribute="trailing" secondItem="5VM-Eh-1Ef" secondAttribute="trailing" id="Gsu-Bd-Nlw"/>
+                                            <constraint firstAttribute="bottom" secondItem="sci-Zb-aMq" secondAttribute="bottom" id="K0J-aN-caO"/>
+                                            <constraint firstItem="sci-Zb-aMq" firstAttribute="top" secondItem="3we-Ec-ned" secondAttribute="top" id="WGD-Sa-lu2"/>
+                                            <constraint firstItem="sci-Zb-aMq" firstAttribute="leading" secondItem="3we-Ec-ned" secondAttribute="leading" id="aVj-x8-Kac"/>
+                                            <constraint firstItem="5VM-Eh-1Ef" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3we-Ec-ned" secondAttribute="leading" symbolic="YES" id="bJK-dI-koq"/>
+                                            <constraint firstAttribute="bottom" secondItem="5VM-Eh-1Ef" secondAttribute="bottom" constant="250" id="rHM-hV-FM7"/>
+                                            <constraint firstItem="57q-Ua-w5t" firstAttribute="leading" secondItem="3we-Ec-ned" secondAttribute="leading" constant="8" id="rPH-Io-GZq"/>
+                                            <constraint firstItem="5VM-Eh-1Ef" firstAttribute="top" secondItem="3we-Ec-ned" secondAttribute="top" id="sfN-EQ-j2M"/>
+                                            <constraint firstItem="57q-Ua-w5t" firstAttribute="top" secondItem="3we-Ec-ned" secondAttribute="top" constant="5" id="yGy-Js-1b9"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstItem="5VM-Eh-1Ef" firstAttribute="trailing" secondItem="HnC-U6-qUg" secondAttribute="trailingMargin" id="OqH-Zc-ha2"/>
-                                    <constraint firstItem="57q-Ua-w5t" firstAttribute="top" secondItem="HnC-U6-qUg" secondAttribute="top" constant="5" id="TTv-l6-gNz"/>
+                                    <constraint firstItem="Q9z-cs-Ezd" firstAttribute="trailing" secondItem="3we-Ec-ned" secondAttribute="trailing" constant="8" id="UAM-yW-mR5"/>
                                     <constraint firstAttribute="height" constant="280" id="UcS-yT-xYI"/>
-                                    <constraint firstItem="57q-Ua-w5t" firstAttribute="leading" secondItem="HnC-U6-qUg" secondAttribute="leading" constant="8" id="a9c-yG-HcY"/>
-                                    <constraint firstItem="5VM-Eh-1Ef" firstAttribute="top" secondItem="HnC-U6-qUg" secondAttribute="top" id="oW5-4y-CME"/>
-                                    <constraint firstItem="5VM-Eh-1Ef" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="HnC-U6-qUg" secondAttribute="leading" constant="20" symbolic="YES" id="tAI-gN-D0t"/>
+                                    <constraint firstItem="O7n-Kl-MNj" firstAttribute="trailing" secondItem="3we-Ec-ned" secondAttribute="trailing" id="dMJ-OU-Jt0"/>
+                                    <constraint firstItem="3we-Ec-ned" firstAttribute="leading" secondItem="O7n-Kl-MNj" secondAttribute="leading" id="eko-ev-Tx6"/>
+                                    <constraint firstItem="O7n-Kl-MNj" firstAttribute="bottom" secondItem="3we-Ec-ned" secondAttribute="bottom" id="qbH-F7-ju8"/>
+                                    <constraint firstItem="3we-Ec-ned" firstAttribute="top" secondItem="O7n-Kl-MNj" secondAttribute="top" id="skt-yt-I4V"/>
                                 </constraints>
-                            </view>
+                                <viewLayoutGuide key="contentLayoutGuide" id="O7n-Kl-MNj"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="Q9z-cs-Ezd"/>
+                            </scrollView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DBY-Ur-o6x">
                                 <rect key="frame" x="0.0" y="-6" width="1024" height="50"/>
                                 <items>
@@ -143,27 +167,29 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="cOL-CY-c1K" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="1bT-4O-Yko"/>
-                            <constraint firstItem="HnC-U6-qUg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="2CR-WC-wd2"/>
-                            <constraint firstItem="MB8-cd-Ub0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="4sf-8r-rmv"/>
-                            <constraint firstItem="MB8-cd-Ub0" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="5yu-fV-wNk"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="cOL-CY-c1K" secondAttribute="trailing" id="7Ka-EK-c8j"/>
+                            <constraint firstItem="cOL-CY-c1K" firstAttribute="bottom" secondItem="7gC-bi-Zpv" secondAttribute="bottom" id="1bT-4O-Yko"/>
+                            <constraint firstItem="HnC-U6-qUg" firstAttribute="leading" secondItem="7gC-bi-Zpv" secondAttribute="leading" id="2CR-WC-wd2"/>
+                            <constraint firstItem="MB8-cd-Ub0" firstAttribute="leading" secondItem="7gC-bi-Zpv" secondAttribute="leading" id="4sf-8r-rmv"/>
+                            <constraint firstItem="MB8-cd-Ub0" firstAttribute="trailing" secondItem="7gC-bi-Zpv" secondAttribute="trailing" id="5yu-fV-wNk"/>
+                            <constraint firstItem="7gC-bi-Zpv" firstAttribute="trailing" secondItem="cOL-CY-c1K" secondAttribute="trailing" id="7Ka-EK-c8j"/>
                             <constraint firstItem="DBY-Ur-o6x" firstAttribute="leading" secondItem="HnC-U6-qUg" secondAttribute="leading" id="IcY-6v-rRo"/>
-                            <constraint firstItem="MB8-cd-Ub0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="LO7-Wq-lPa"/>
+                            <constraint firstItem="MB8-cd-Ub0" firstAttribute="top" secondItem="7gC-bi-Zpv" secondAttribute="top" id="LO7-Wq-lPa"/>
                             <constraint firstItem="cOL-CY-c1K" firstAttribute="top" secondItem="HnC-U6-qUg" secondAttribute="bottom" id="R3f-0o-Ou8"/>
-                            <constraint firstItem="HnC-U6-qUg" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="jMi-Rd-ZRN"/>
+                            <constraint firstItem="HnC-U6-qUg" firstAttribute="trailing" secondItem="7gC-bi-Zpv" secondAttribute="trailing" id="jMi-Rd-ZRN"/>
                             <constraint firstItem="DBY-Ur-o6x" firstAttribute="trailing" secondItem="MB8-cd-Ub0" secondAttribute="trailing" id="kiM-tQ-KjM"/>
-                            <constraint firstItem="cOL-CY-c1K" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="m72-70-UJm"/>
+                            <constraint firstItem="cOL-CY-c1K" firstAttribute="leading" secondItem="7gC-bi-Zpv" secondAttribute="leading" id="m72-70-UJm"/>
                             <constraint firstItem="cOL-CY-c1K" firstAttribute="top" secondItem="MB8-cd-Ub0" secondAttribute="bottom" id="mII-Xw-DYq"/>
                             <constraint firstItem="MB8-cd-Ub0" firstAttribute="top" secondItem="DBY-Ur-o6x" secondAttribute="bottom" constant="-44" id="qMY-0R-akr"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <viewLayoutGuide key="safeArea" id="7gC-bi-Zpv"/>
                     </view>
                     <connections>
                         <outlet property="attributesButton" destination="5VM-Eh-1Ef" id="AX9-4L-mOu"/>
                         <outlet property="attributesView" destination="HnC-U6-qUg" id="XrP-Hn-OLB"/>
+                        <outlet property="contentView" destination="3we-Ec-ned" id="fzp-Qr-qKt"/>
                         <outlet property="itemsCollectionView" destination="cOL-CY-c1K" id="Ay7-XS-WXu"/>
                         <outlet property="sceneView" destination="MB8-cd-Ub0" id="0Qe-co-Zl3"/>
+                        <outlet property="stackView" destination="sci-Zb-aMq" id="LbJ-Wv-4jC"/>
                         <outlet property="trashButton" destination="57q-Ua-w5t" id="fOJ-0d-8tD"/>
                     </connections>
                 </viewController>
@@ -173,6 +199,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="trash" catalog="system" width="121" height="128"/>
+        <image name="trash" catalog="system" width="60" height="64"/>
     </resources>
 </document>
