@@ -245,7 +245,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     self.centerPivot(for: node)
                 }
                 node.physicsBody = SCNPhysicsBody(type: .static, shape: SCNPhysicsShape(node: node, options: nil))
-                if checkOverLapping(node: node){
+                let classConstraints = graphicalSyntaxClass["constraints"] as! NSMutableDictionary
+                let overlapping = classConstraints["overlapping"] as! String
+                if checkOverLapping(node: node) && overlapping == "false" {
                     self.sceneView.scene.rootNode.addChildNode(node)
                     
                     // Update the model with the node in its AR facet
