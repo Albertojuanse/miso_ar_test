@@ -18,6 +18,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var modelObjectEdited: NSMutableDictionary = [:]
     var objectsInitialPos: NSMutableDictionary = [:]
     var objectsBoundingBox: NSMutableDictionary = [:]
+    var objectsList: NSMutableDictionary = [:]
+    var objectsIdName: NSMutableDictionary = [:]
     var nodeToDelete: SCNNode? = nil
     // -- MODEL SCHEME --
     // [
@@ -300,6 +302,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     posDict.setValue(node.position.x, forKey: "x")
                     posDict.setValue(node.position.y, forKey: "y")
                     posDict.setValue(node.position.z, forKey: "z")
+                    self.objectsInitialPos.setValue(posDict, forKey: node.name!)
+                    self.objectsList.setValue(self.selectedItem, forKey: self.newItem!)
+                    self.objectsIdName.setValue(self.newItem, forKey: node.name!)
                 } else {
                     model.popLast()
                     wrongAttrAlert(message: "The object is overlapping. Try another place")
