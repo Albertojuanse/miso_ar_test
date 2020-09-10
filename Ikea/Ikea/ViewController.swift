@@ -64,6 +64,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     var selectedItem: String?
     
+    var newItem: String?
+    
     var currentTextField = UITextField()
     
     var finalText: String?
@@ -126,9 +128,35 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     // - Scene raycasting, based on SCNHitTest supported by SceneKit to find virtual nodes.
     
     @objc func tapped(sender: UITapGestureRecognizer) {
-        // Get from the scene the tapped position
         let sceneView = sender.view as! ARSCNView
         let tapLocation = sender.location(in: sceneView)
+        let editcontrol = UIAlertController(title: "Edit", message: "Write the new name", preferredStyle: .alert)
+        //action of the modal. User writes the word, table and data update
+        let editalertaction = UIAlertAction(title: "Done", style: .default) { (action) in
+            guard let textfield = editcontrol.textFields?.first else { return }
+            let text = textfield.text
+            //use the content of textfield to update dataSource and tableView
+            if (text != nil) {
+                if(text?.count == 0){
+                    self.configurePos(tapLocation: tapLocation, sceneView: sceneView)
+                } else {
+                    self.newItem = text
+                    self.configurePos(tapLocation: tapLocation, sceneView: sceneView)
+                }
+            } else {
+                self.configurePos(tapLocation: tapLocation, sceneView: sceneView)
+            }
+        }
+        //open editable textfield
+        editcontrol.addTextField()
+        editcontrol.addAction(editalertaction)
+        self.present(editcontrol, animated: true)
+        
+    }
+    
+    func configurePos(tapLocation: CGPoint, sceneView: ARSCNView) {
+        // Get from the scene the tapped position
+        
         
         var graphicalSyntaxClass = NSMutableDictionary()
         for aGraphicalSyntaxClass in self.graphicalSyntax {
@@ -247,7 +275,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 node.physicsBody = SCNPhysicsBody(type: .static, shape: SCNPhysicsShape(node: node, options: nil))
                 let classConstraints = graphicalSyntaxClass["constraints"] as! NSMutableDictionary
                 let overlapping = classConstraints["overlapping"] as! String
-                if checkOverLapping(node: node) && overlapping == "false" {
+                if checkOverLapping(node: node) || overlapping == "true" {
                     self.sceneView.scene.rootNode.addChildNode(node)
                     
                     // Update the model with the node in its AR facet
@@ -259,7 +287,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     self.objectsBoundingBox.setValue(box, forKey: node.name!)
                     // Place the object version name over the object
                     
-                    let text = SCNText(string: sourceName, extrusionDepth: 0.1)
+                    let text = SCNText(string: self.newItem, extrusionDepth: 0.1)
                     text.font = UIFont.systemFont(ofSize: 1)
                     text.flatness = 0.005
                     let textNode = SCNNode(geometry: text)
@@ -272,11 +300,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     posDict.setValue(node.position.x, forKey: "x")
                     posDict.setValue(node.position.y, forKey: "y")
                     posDict.setValue(node.position.z, forKey: "z")
-                    self.objectsInitialPos.setValue(posDict, forKey: node.name!)
-                    print(objectsInitialPos.value(forKey: node.name!))
                 } else {
-                    wrongAttrAlert(message: "The object is overlapping. Try another place")
                     model.popLast()
+                    wrongAttrAlert(message: "The object is overlapping. Try another place")
                 }
                 
                 
