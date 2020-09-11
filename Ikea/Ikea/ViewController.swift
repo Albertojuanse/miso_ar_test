@@ -212,6 +212,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 }
             }
             let classAttributes = metamodelClass["attributes"] as! NSMutableArray
+            let classReferences = metamodelClass["references"] as! NSMutableArray
             
             // Create a new object in model
             let itemDic = NSMutableDictionary()
@@ -241,6 +242,27 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             itemDic["typeAttributes"] = itemTypeAttributes
             itemDic["maxAttributes"] = itemMaxAttributes
             itemDic["minAttributes"] = itemMinAttributes
+            
+            let itemReferences = NSMutableDictionary()
+            let itemTargetReferences = NSMutableDictionary()
+            let itemMaxReferences = NSMutableDictionary()
+            let itemMinReferences = NSMutableDictionary()
+            for aClassReference in classReferences {
+                let aClassReferenceDic = aClassReference as! NSMutableDictionary
+                let aClassReferenceName = aClassReferenceDic["name"] as! NSString
+                let aClassReferenceMax = aClassReferenceDic["max"]
+                let aClassReferenceMin = aClassReferenceDic["min"]
+                let aClassReferenceTarget = aClassReferenceDic["target"]
+                
+                itemReferences.setObject(aClassReferenceName, forKey: aClassReferenceName)
+                itemTargetReferences.setObject(aClassReferenceTarget!, forKey: aClassReferenceName)
+                itemMaxReferences.setObject(aClassReferenceMax!, forKey: aClassReferenceName)
+                itemMinReferences.setObject(aClassReferenceMin!, forKey: aClassReferenceName)
+            }
+            itemDic["references"] = itemReferences
+            itemDic["targetReferences"] = itemTargetReferences
+            itemDic["maxReferences"] = itemMaxReferences
+            itemDic["minReferences"] = itemMinReferences
             // Create an AR facet to store its representations and nodes in AR environment
             let arFacet = NSMutableDictionary()
             itemDic["ar_facet"] = arFacet
@@ -1007,7 +1029,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 attributesTextField.borderStyle = UITextField.BorderStyle.roundedRect;
                 attributesTextField.text = eachAttribute;
                 // Add the label
-                self.stackView.addArrangedSubview(attributesTextField)            }
+                self.stackView.addArrangedSubview(attributesTextField)
+            }
+            
         }
     }
     //MARK: - One-to-many Attributes
