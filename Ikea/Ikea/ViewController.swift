@@ -254,7 +254,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 let aClassReferenceMin = aClassReferenceDic["min"]
                 let aClassReferenceTarget = aClassReferenceDic["target"]
                 
-                itemReferences.setObject(aClassReferenceName, forKey: aClassReferenceName)
+                itemReferences.setObject("", forKey: aClassReferenceName)
                 itemTargetReferences.setObject(aClassReferenceTarget!, forKey: aClassReferenceName)
                 itemMaxReferences.setObject(aClassReferenceMax!, forKey: aClassReferenceName)
                 itemMinReferences.setObject(aClassReferenceMin!, forKey: aClassReferenceName)
@@ -569,6 +569,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     let itemAttributes = itemDic["attributes"] as! NSMutableDictionary
                     let itemTypeAttributes = itemDic["typeAttributes"] as! NSMutableDictionary
                     let itemMaxAttributes = itemDic["maxAttributes"] as! NSMutableDictionary
+                    let itemReferences = itemDic["references"] as! NSMutableDictionary
+                    let itemTargetReferences = itemDic["targetReferences"] as! NSMutableDictionary
+                    let itemMaxReferences = itemDic["maxReferences"] as! NSMutableDictionary
                     
                     //Get the graph syntax to get attributes that should be shown
                     var graphicalSyntaxClass = NSMutableDictionary()
@@ -618,7 +621,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     self.contentView.isHidden = false
                     self.attributesButton.isHidden = false
                     self.trashButton.isHidden = false
-                    self.show(attributes: itemAttributes, typeAttributes: itemTypeAttributes, maxAttributes: itemMaxAttributes)
+                    self.show(attributes: itemAttributes, typeAttributes: itemTypeAttributes, maxAttributes: itemMaxAttributes, references: itemReferences, targetReferences: itemTargetReferences, maxReferences: itemMaxReferences)
                 
                 } /*else if (facetFound) {
                     print("[VC] Attributes node found in facet.")
@@ -953,7 +956,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         )
     }
     
-    func show(attributes: NSMutableDictionary, typeAttributes: NSMutableDictionary, maxAttributes: NSMutableDictionary)
+    func show(attributes: NSMutableDictionary, typeAttributes: NSMutableDictionary, maxAttributes: NSMutableDictionary, references: NSMutableDictionary, targetReferences: NSMutableDictionary, maxReferences: NSMutableDictionary)
     {
         // Show attributes information
         
@@ -1032,6 +1035,41 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 self.stackView.addArrangedSubview(attributesTextField)
             }
             
+        }
+        //add references label
+        if (references.count > 0) {
+            let referencesTitleLabel = UILabel();
+            referencesTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+            referencesTitleLabel.font = UIFont.systemFont(ofSize: 17.0)
+            referencesTitleLabel.text = "Attributes:";
+            // Add the label
+            self.stackView.addArrangedSubview(referencesTitleLabel)
+            // For each reference compose a layout with label and textField
+            let allNames = references.allKeys
+            for eachName in allNames {
+                let eachReference = references[eachName] as! String
+                let eachTargetReference = targetReferences[eachName] as! String
+                let eachMaxReference = maxReferences[eachName] as! String
+                
+                // Set reference's name label
+                let referencesNameLabel = UILabel();
+                referencesNameLabel.translatesAutoresizingMaskIntoConstraints = false
+                referencesNameLabel.font = UIFont.systemFont(ofSize: 17.0)
+                referencesNameLabel.text = eachName as? String;
+                // Add the label
+                self.stackView.addArrangedSubview(referencesNameLabel)
+                
+                // Set reference's textField
+                
+                let referencesTextField = UITextField();
+                //referencesTextField.addTarget(self, action: #selector(addTable(_:)), for: .touchDown)
+                referencesTextField.delegate = self
+                referencesTextField.translatesAutoresizingMaskIntoConstraints = false;
+                referencesTextField.borderStyle = UITextField.BorderStyle.roundedRect;
+                referencesTextField.text = eachReference ;
+                // Add the label
+                self.stackView.addArrangedSubview(referencesTextField)
+            }
         }
     }
     //MARK: - One-to-many Attributes

@@ -76,6 +76,13 @@ class ViewControllerMenu: UIViewController  {
                                 attributes.add(eachAttribute)
                             }
                             metamodelClass["attributes"] = attributes
+                            let classReferences = aClass["references"] as! NSMutableArray
+                            let references = NSMutableArray()
+                            for anReference in classReferences {
+                                let eachReference = anReference as! NSMutableDictionary
+                                references.add(eachReference)
+                            }
+                            metamodelClass["references"] = references
                             self.metamodel.append(metamodelClass)
                             
                         }
