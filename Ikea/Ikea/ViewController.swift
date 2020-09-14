@@ -60,6 +60,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     let auxView = UIView()
     
+    var referencesDelegate: RelationsDelegate?
+    
+    var eachTargetReference: String?
+    
     var addButton = UIButton()
     
     let configuration = ARWorldTrackingConfiguration()
@@ -1055,14 +1059,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 let referencesNameLabel = UILabel();
                 referencesNameLabel.translatesAutoresizingMaskIntoConstraints = false
                 referencesNameLabel.font = UIFont.systemFont(ofSize: 17.0)
-                referencesNameLabel.text = eachName as? String;
+                referencesNameLabel.text = eachTargetReference as? String;
                 // Add the label
                 self.stackView.addArrangedSubview(referencesNameLabel)
                 
                 // Set reference's textField
                 
                 let referencesTextField = UITextField();
-                //referencesTextField.addTarget(self, action: #selector(addTable(_:)), for: .touchDown)
+                referencesTextField.addTarget(self, action: #selector(addReferencesTable(_:)), for: .touchDown)
                 referencesTextField.delegate = self
                 referencesTextField.translatesAutoresizingMaskIntoConstraints = false;
                 referencesTextField.borderStyle = UITextField.BorderStyle.roundedRect;
@@ -1072,6 +1076,54 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             }
         }
     }
+    //MARK: - References
+    @objc func addReferencesTable(_ textField: UITextField){
+        auxView.frame = self.view.frame
+        if(!auxView.isDescendant(of: self.view)){
+            self.view.addSubview(auxView)
+        }
+        auxView.isHidden = false;
+        auxView.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(returnReferences))
+        auxView.addGestureRecognizer(tap);
+        tableView.frame = CGRect(x: textField.frame.origin.x, y: 200, width: textField.frame.width, height: 200)
+        tableView.delegate = referencesDelegate
+        tableView.dataSource = referencesDelegate
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        dataSource = []
+        let allName = objectsList.allKeys
+        var type = ""
+        let subviews = self.stackView.subviews
+        for sub in subviews{
+            if sub == textField {
+                break
+            } else {
+                if sub is UILabel {
+                    let aux = sub as! UILabel
+                    type = aux.text!
+                }
+            }
+        }
+        
+        for eachName in allName {
+            if(objectsList.value(forKey: eachName as! String) as! String == type){
+                dataSource.append(eachName as! String)
+            }
+        }
+        referencesDelegate?.dataSource = dataSource
+        tableView.reloadData()
+        if(!tableView.isDescendant(of: self.view)){
+            self.view.addSubview(tableView)
+        }
+        currentTextField = textField
+        tableView.isHidden = false;
+    }
+    //exit tableview and updates reference
+    @objc func returnReferences(){
+        auxView.isHidden = true;
+        tableView.isHidden = true
+    }
+    
     //MARK: - One-to-many Attributes
     //It opens the tableview to manages attributes one-to-many
     @objc func addTable(_ textField: UITextField){
@@ -1096,6 +1148,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         for item in itemList! {
             dataSource.append(String(item))
         }
+        tableView.reloadData()
         if(!tableView.isDescendant(of: self.view)){
             self.view.addSubview(tableView)
         }
