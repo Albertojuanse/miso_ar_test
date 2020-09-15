@@ -103,6 +103,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         // Gesture recognizers
         self.registerGestureRecognizers()
         
+        self.referencesDelegate = RelationsDelegate(dataSource: dataSource)
     }
     
     func registerGestureRecognizers() {
@@ -222,6 +223,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             let itemDic = NSMutableDictionary()
             let itemName = UUID().uuidString
             itemDic["name"] = itemName
+            itemDic["nick"] = self.newItem
             itemDic["class"] = selectedItem
             itemDic["current_version"] = 1
             itemDic["max_version"] = 3
@@ -651,15 +653,19 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         // Get the attributes from the model
         let itemAttributes = modelObjectEdited["attributes"] as! NSMutableDictionary
+        let itemReferences = modelObjectEdited["references"] as! NSMutableDictionary
         let itemTypeAttributes = modelObjectEdited["typeAttributes"] as! NSMutableDictionary
         let itemMaxAttributes = modelObjectEdited["maxAttributes"] as! NSMutableDictionary
         let itemMinAttributes = modelObjectEdited["minAttributes"] as! NSMutableDictionary
         let allNames = itemAttributes.allKeys
+        let allReferences = itemReferences.allKeys
         // Update the model
         let textFields = NSMutableArray()
+        let textReferencesFields = NSMutableArray()
         var i = 0;
-        for eachSubview in self.attributesView.subviews {
-            if eachSubview is UITextField {
+        var j = 0;
+        for eachSubview in self.stackView.subviews {
+            if eachSubview is UITextField && i < allNames.count {
                 let name = allNames[i]
                 let messagename = name as! String
                 let type = itemTypeAttributes[name] as! String
@@ -709,6 +715,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 }
                 i+=1
                 textFields.add(eachSubview)
+            } else if eachSubview is UITextField {
+                //let name = allReferences[j]
+                textReferencesFields.add(eachSubview)
+                //j+=1
             }
         }
         var index = 0;
@@ -719,6 +729,15 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             index += 1;
         }
         modelObjectEdited["attributes"] = itemAttributes
+        
+        index = 0;
+        
+        for eachElement in textReferencesFields {
+            let eachTextField = eachElement as! UITextField
+            itemReferences[allReferences[index]] = eachTextField.text
+            index += 1;
+        }
+        modelObjectEdited["references"] = itemReferences
         
         // Hide the edit interface
         self.attributesView.isHidden = true
@@ -1078,6 +1097,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     //MARK: - References
     @objc func addReferencesTable(_ textField: UITextField){
+        let itemString = textField.text
+        let itemList = itemString?.split(separator: " ")
         auxView.frame = self.view.frame
         if(!auxView.isDescendant(of: self.view)){
             self.view.addSubview(auxView)
@@ -1106,20 +1127,47 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
         
         for eachName in allName {
-            if(objectsList.value(forKey: eachName as! String) as! String == type){
+            if(objectsList.value(forKey: eachName as! String) as! String == type && eachName as! String != modelObjectEdited["nick"] as! String){
                 dataSource.append(eachName as! String)
             }
         }
-        referencesDelegate?.dataSource = dataSource
+        referencesDelegate?.setData(dataSource: dataSource)
         tableView.reloadData()
         if(!tableView.isDescendant(of: self.view)){
             self.view.addSubview(tableView)
+        }
+        let cells = tableView.visibleCells
+        for cell in cells {
+            for str in itemList! {
+                if(cell.textLabel?.text == String(str)) {
+                    cell.backgroundColor = UIColor.green
+                    break
+                }
+            }
         }
         currentTextField = textField
         tableView.isHidden = false;
     }
     //exit tableview and updates reference
     @objc func returnReferences(){
+        let cells = tableView.visibleCells
+        var selectedRows = [String]()
+        for cell in cells {
+            if cell.backgroundColor == UIColor.green {
+                selectedRows.append(cell.textLabel!.text!)
+                cell.backgroundColor = UIColor.systemBackground
+            }
+        }
+        finalText = ""
+        var i = 0
+        for item in selectedRows {
+            i+=1
+            finalText! += item
+            if(i<selectedRows.count){
+                finalText! += " "
+            }
+        }
+        currentTextField.text = finalText
         auxView.isHidden = true;
         tableView.isHidden = true
     }

@@ -12,6 +12,14 @@ class RelationsDelegate: NSObject, UITableViewDelegate, UITableViewDataSource {
     
     var dataSource = [String]()
     
+    init(dataSource: [String]) {
+        self.dataSource = dataSource
+    }
+    
+    func setData(dataSource: [String]) {
+        self.dataSource = dataSource
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource.count
     }
@@ -22,6 +30,12 @@ class RelationsDelegate: NSObject, UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        
+        let cell = tableView.cellForRow(at: indexPath)
+        cell!.selectionStyle = .none
+        if cell?.backgroundColor == UIColor.green {
+            cell?.backgroundColor = UIColor.systemBackground
+        } else {
+            cell?.backgroundColor = UIColor.green
+        }
     }
 }
