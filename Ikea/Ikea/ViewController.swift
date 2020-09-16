@@ -1431,6 +1431,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         nodeToDelete?.removeFromParentNode()
         self.objectsInitialPos.removeObject(forKey: nodeToDelete?.name)
         self.objectsBoundingBox.removeObject(forKey: nodeToDelete?.name)
+        let nick = self.objectsIdName.value(forKey: nodeToDelete!.name!)
+        self.objectsIdName.removeObject(forKey: nodeToDelete?.name)
+        self.objectsList.removeObject(forKey: nick)
     }
     
     
