@@ -94,10 +94,10 @@
                                 <rect key="frame" x="0.0" y="991" width="1024" height="280"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3we-Ec-ned">
-                                        <rect key="frame" x="0.0" y="0.0" width="1016" height="280"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="280"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="sci-Zb-aMq">
-                                                <rect key="frame" x="0.0" y="0.0" width="1016" height="280"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="1024" height="280"/>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="57q-Ua-w5t">
                                                 <rect key="frame" x="8" y="5" width="73.5" height="22"/>
@@ -118,11 +118,11 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="sci-Zb-aMq" secondAttribute="trailing" id="0Rs-JY-YDG"/>
                                             <constraint firstItem="5VM-Eh-1Ef" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="57q-Ua-w5t" secondAttribute="trailing" constant="8" symbolic="YES" id="0mM-Oe-e3L"/>
-                                            <constraint firstAttribute="trailing" secondItem="5VM-Eh-1Ef" secondAttribute="trailing" id="Gsu-Bd-Nlw"/>
+                                            <constraint firstAttribute="trailing" secondItem="5VM-Eh-1Ef" secondAttribute="trailing" constant="8" id="Gsu-Bd-Nlw"/>
                                             <constraint firstAttribute="bottom" secondItem="sci-Zb-aMq" secondAttribute="bottom" id="K0J-aN-caO"/>
                                             <constraint firstItem="sci-Zb-aMq" firstAttribute="top" secondItem="3we-Ec-ned" secondAttribute="top" id="WGD-Sa-lu2"/>
                                             <constraint firstItem="sci-Zb-aMq" firstAttribute="leading" secondItem="3we-Ec-ned" secondAttribute="leading" id="aVj-x8-Kac"/>
-                                            <constraint firstItem="5VM-Eh-1Ef" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3we-Ec-ned" secondAttribute="leading" symbolic="YES" id="bJK-dI-koq"/>
+                                            <constraint firstItem="5VM-Eh-1Ef" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3we-Ec-ned" secondAttribute="leading" constant="20" symbolic="YES" id="bJK-dI-koq"/>
                                             <constraint firstAttribute="bottom" secondItem="5VM-Eh-1Ef" secondAttribute="bottom" constant="250" id="rHM-hV-FM7"/>
                                             <constraint firstItem="57q-Ua-w5t" firstAttribute="leading" secondItem="3we-Ec-ned" secondAttribute="leading" constant="8" id="rPH-Io-GZq"/>
                                             <constraint firstItem="5VM-Eh-1Ef" firstAttribute="top" secondItem="3we-Ec-ned" secondAttribute="top" id="sfN-EQ-j2M"/>
@@ -132,9 +132,9 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstItem="Q9z-cs-Ezd" firstAttribute="trailing" secondItem="3we-Ec-ned" secondAttribute="trailing" constant="8" id="UAM-yW-mR5"/>
+                                    <constraint firstItem="Q9z-cs-Ezd" firstAttribute="trailing" secondItem="3we-Ec-ned" secondAttribute="trailing" id="UAM-yW-mR5"/>
                                     <constraint firstAttribute="height" constant="280" id="UcS-yT-xYI"/>
-                                    <constraint firstItem="O7n-Kl-MNj" firstAttribute="trailing" secondItem="3we-Ec-ned" secondAttribute="trailing" id="dMJ-OU-Jt0"/>
+                                    <constraint firstItem="O7n-Kl-MNj" firstAttribute="trailing" secondItem="3we-Ec-ned" secondAttribute="trailing" constant="-8" id="dMJ-OU-Jt0"/>
                                     <constraint firstItem="3we-Ec-ned" firstAttribute="leading" secondItem="O7n-Kl-MNj" secondAttribute="leading" id="eko-ev-Tx6"/>
                                     <constraint firstItem="O7n-Kl-MNj" firstAttribute="bottom" secondItem="3we-Ec-ned" secondAttribute="bottom" id="qbH-F7-ju8"/>
                                     <constraint firstItem="3we-Ec-ned" firstAttribute="top" secondItem="O7n-Kl-MNj" secondAttribute="top" id="skt-yt-I4V"/>
