@@ -1064,7 +1064,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             let referencesTitleLabel = UILabel();
             referencesTitleLabel.translatesAutoresizingMaskIntoConstraints = false
             referencesTitleLabel.font = UIFont.systemFont(ofSize: 17.0)
-            referencesTitleLabel.text = "Attributes:";
+            referencesTitleLabel.text = "References:";
             // Add the label
             self.stackView.addArrangedSubview(referencesTitleLabel)
             // For each reference compose a layout with label and textField
