@@ -9,20 +9,40 @@
 import UIKit
 import ARKit
 
-class ViewControllerMenu: UIViewController  {
+class ViewControllerMenu: UIViewController, UITableViewDelegate, UITableViewDataSource  {
+    //https://www.ioscreator.com/tutorials/prototype-cells-table-view-ios-tutorial
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.modelsArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "modelCell", for: indexPath)
+        cell.textLabel?.text = self.modelsArray[indexPath.row]
+        
+        return cell
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
     
     var itemsArray: [String] = []
     var metamodel: [NSMutableDictionary] = []
     var graphicalSyntax: [NSMutableDictionary] = []
+    var cellToMetamodel: [NSMutableDictionary] = []
+    var cellToGraph: [NSMutableDictionary] = []
     var timer: Timer?
     var second = 0
+    var modelsArray: [String] = []
     
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var load: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         load.setTitle("Wait", for: .normal)
         timer = Timer.scheduledTimer(timeInterval:1, target:self, selector:#selector(timeWaiting), userInfo: nil, repeats: true)
         self.loadMetamodels()
+        self.tableView.dataSource = self
     }
     
     @objc func timeWaiting(){
@@ -40,6 +60,7 @@ class ViewControllerMenu: UIViewController  {
         let url = URL(string: "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/External/ontological_metamodel.json?raw=true")
         if (url != nil) {
             print("[VCM] URL object exists: ", url!)
+            self.modelsArray.append("main")
         }
         let session = URLSession.shared
         let task = session.dataTask(with: url!) { (data, response, error) -> Void in
@@ -147,7 +168,7 @@ class ViewControllerMenu: UIViewController  {
         }
         print("[VCM] graphic_Task resume")
         graphic_task.resume()
-        
+        self.tableView.reloadData()
     }
     
     @IBAction func handleLoadButton(_ sender: Any) {

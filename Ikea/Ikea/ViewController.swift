@@ -1127,7 +1127,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
         
         for eachName in allName {
-            if(objectsList.value(forKey: eachName as! String) as! String == type && eachName as! String != modelObjectEdited["nick"] as! String){
+            if(objectsList.value(forKey: eachName as! String) as! String == type){
                 dataSource.append(eachName as! String)
             }
         }

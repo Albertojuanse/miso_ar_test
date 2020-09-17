@@ -17,22 +17,52 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FBr-47-fNq">
-                                <rect key="frame" x="496.5" y="668" width="31" height="30"/>
+                                <rect key="frame" x="496.5" y="1296" width="31" height="30"/>
                                 <state key="normal" title="Wait"/>
                                 <connections>
                                     <action selector="handleLoadButton:" destination="iBQ-zq-EGY" eventType="touchUpInside" id="iaV-V0-xJM"/>
                                 </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7cM-eM-lae">
+                                <rect key="frame" x="392" y="250" width="240" height="866"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="866" id="B3c-Fe-5xJ"/>
+                                    <constraint firstAttribute="width" constant="240" id="BVy-Ap-fsn"/>
+                                </constraints>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="modelCell" textLabel="5Rg-3F-ZWx" style="IBUITableViewCellStyleDefault" id="OpH-ER-Vef">
+                                        <rect key="frame" x="0.0" y="28" width="240" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OpH-ER-Vef" id="WMY-6R-9WH">
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Hola" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5Rg-3F-ZWx">
+                                                    <rect key="frame" x="15" y="0.0" width="210" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="FBr-47-fNq" firstAttribute="centerY" secondItem="vMV-rl-uVq" secondAttribute="centerY" id="vJY-rt-4Mq"/>
-                            <constraint firstItem="FBr-47-fNq" firstAttribute="centerX" secondItem="d5r-Iw-fCu" secondAttribute="centerX" id="vmh-S3-WYi"/>
+                            <constraint firstItem="FBr-47-fNq" firstAttribute="centerX" secondItem="vMV-rl-uVq" secondAttribute="centerX" id="CHA-O4-SaK"/>
+                            <constraint firstItem="d5r-Iw-fCu" firstAttribute="bottom" secondItem="FBr-47-fNq" secondAttribute="bottom" constant="20" id="YJ0-Yg-NeB"/>
+                            <constraint firstItem="7cM-eM-lae" firstAttribute="centerX" secondItem="vMV-rl-uVq" secondAttribute="centerX" id="ZM8-ea-UvK"/>
+                            <constraint firstItem="7cM-eM-lae" firstAttribute="centerY" secondItem="vMV-rl-uVq" secondAttribute="centerY" id="h9y-hY-UOF"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="d5r-Iw-fCu"/>
                     </view>
                     <connections>
                         <outlet property="load" destination="FBr-47-fNq" id="ECO-ZT-bAk"/>
+                        <outlet property="tableView" destination="7cM-eM-lae" id="r3l-gF-5Qx"/>
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="fromLoadToARView" modalPresentationStyle="fullScreen" id="IuH-ho-Gz9"/>
                     </connections>
                 </viewController>
