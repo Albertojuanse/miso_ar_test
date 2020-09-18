@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		42317BE12514D65A00363315 /* model.json in Resources */ = {isa = PBXBuildFile; fileRef = 42317BE02514D65A00363315 /* model.json */; };
 		4273F3C424A4ED9100170A6C /* ontological_metamodel.json in Resources */ = {isa = PBXBuildFile; fileRef = 4273F3C324A4ED9100170A6C /* ontological_metamodel.json */; };
 		4273F3C624A5017A00170A6C /* ViewControllerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4273F3C524A5017A00170A6C /* ViewControllerMenu.swift */; };
 		42C919D52486F4960080EC00 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C919D42486F4960080EC00 /* AppDelegate.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		42317BE02514D65A00363315 /* model.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = model.json; sourceTree = "<group>"; };
 		4273F3C324A4ED9100170A6C /* ontological_metamodel.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ontological_metamodel.json; sourceTree = "<group>"; };
 		4273F3C524A5017A00170A6C /* ViewControllerMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerMenu.swift; sourceTree = "<group>"; };
 		42C919D12486F4960080EC00 /* Ikea.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ikea.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,6 +91,7 @@
 			children = (
 				42E7384424A3B31400A68F37 /* graphic_model.json */,
 				4273F3C324A4ED9100170A6C /* ontological_metamodel.json */,
+				42317BE02514D65A00363315 /* model.json */,
 			);
 			path = External;
 			sourceTree = "<group>";
@@ -153,6 +156,7 @@
 			files = (
 				42C919E12486F4980080EC00 /* LaunchScreen.storyboard in Resources */,
 				42C919DE2486F4980080EC00 /* Assets.xcassets in Resources */,
+				42317BE12514D65A00363315 /* model.json in Resources */,
 				42E7384524A3B31400A68F37 /* graphic_model.json in Resources */,
 				42C919DC2486F4960080EC00 /* Main.storyboard in Resources */,
 				4273F3C424A4ED9100170A6C /* ontological_metamodel.json in Resources */,
