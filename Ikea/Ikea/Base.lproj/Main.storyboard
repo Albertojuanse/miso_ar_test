@@ -17,15 +17,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FBr-47-fNq">
-                                <rect key="frame" x="496.5" y="1296" width="31" height="30"/>
-                                <state key="normal" title="Wait"/>
+                                <rect key="frame" x="456.5" y="1296" width="111" height="30"/>
+                                <state key="normal" title="Choose a model"/>
                                 <connections>
                                     <action selector="handleLoadButton:" destination="iBQ-zq-EGY" eventType="touchUpInside" id="iaV-V0-xJM"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7cM-eM-lae">
                                 <rect key="frame" x="392" y="250" width="240" height="866"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="866" id="B3c-Fe-5xJ"/>
                                     <constraint firstAttribute="width" constant="240" id="BVy-Ap-fsn"/>
@@ -47,6 +47,7 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>

@@ -26,11 +26,16 @@ class ViewControllerMenu: UIViewController, UITableViewDelegate, UITableViewData
         return 1
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let model = self.modelsArray[indexPath.row]
+        self.loadMetamodels(model: model)
+    }
+    
     var itemsArray: [String] = []
     var metamodel: [NSMutableDictionary] = []
     var graphicalSyntax: [NSMutableDictionary] = []
-    var cellToMetamodel: [NSMutableDictionary] = []
-    var cellToGraph: [NSMutableDictionary] = []
+    var cellToMetamodel: NSMutableDictionary = [:]
+    var cellToGraph: NSMutableDictionary = [:]
     var timer: Timer?
     var second = 0
     var modelsArray: [String] = []
@@ -39,10 +44,10 @@ class ViewControllerMenu: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var load: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        load.setTitle("Wait", for: .normal)
-        timer = Timer.scheduledTimer(timeInterval:1, target:self, selector:#selector(timeWaiting), userInfo: nil, repeats: true)
-        self.loadMetamodels()
+        load.setTitle("Choose a model", for: .normal)
+        self.loadTypeModels()
         self.tableView.dataSource = self
+        self.tableView.delegate = self
     }
     
     @objc func timeWaiting(){
@@ -53,14 +58,22 @@ class ViewControllerMenu: UIViewController, UITableViewDelegate, UITableViewData
             load.setTitle("Load", for: .normal)
         }
     }
-    
-    func loadMetamodels() {
+    func loadTypeModels() {
+        let metamodelString = "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/External/ontological_metamodel.json?raw=true"
+        let graphicModelString = "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/External/graphic_model.json?raw=true"
+        let key = "main"
+        self.modelsArray.append(key)
+        self.cellToGraph.setValue(graphicModelString, forKey: "main")
+        self.cellToMetamodel.setValue(metamodelString, forKey: "main")
+        self.tableView.reloadData()
+    }
+    func loadMetamodels(model: String) {
+        
         
         // Load the metamodel
-        let url = URL(string: "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/External/ontological_metamodel.json?raw=true")
+        let url = URL(string: self.cellToMetamodel.value(forKey: model) as! String)
         if (url != nil) {
             print("[VCM] URL object exists: ", url!)
-            self.modelsArray.append("main")
         }
         let session = URLSession.shared
         let task = session.dataTask(with: url!) { (data, response, error) -> Void in
@@ -118,7 +131,7 @@ class ViewControllerMenu: UIViewController, UITableViewDelegate, UITableViewData
         task.resume()
         
         // Load the graphic syntax
-        let graphic_url = URL(string: "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/External/graphic_model.json?raw=true")
+        let graphic_url = URL(string: self.cellToGraph.value(forKey: model) as! String)
         if (graphic_url != nil) {
             print("[VCM] graphic_URL object exists: ", graphic_url!)
         }
@@ -168,7 +181,8 @@ class ViewControllerMenu: UIViewController, UITableViewDelegate, UITableViewData
         }
         print("[VCM] graphic_Task resume")
         graphic_task.resume()
-        self.tableView.reloadData()
+        load.setTitle("Wait", for: .normal)
+        timer = Timer.scheduledTimer(timeInterval:1, target:self, selector:#selector(timeWaiting), userInfo: nil, repeats: true)
     }
     
     @IBAction func handleLoadButton(_ sender: Any) {
