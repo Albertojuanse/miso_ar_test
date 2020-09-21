@@ -37,6 +37,7 @@ class ViewControllerMenu: UIViewController, UITableViewDelegate, UITableViewData
     var cellToMetamodel: NSMutableDictionary = [:]
     var cellToGraph: NSMutableDictionary = [:]
     var timer: Timer?
+    var updateTimer: Timer?
     var second = 0
     var modelsArray: [String] = []
     
@@ -59,12 +60,49 @@ class ViewControllerMenu: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     func loadTypeModels() {
-        let metamodelString = "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/External/ontological_metamodel.json?raw=true"
-        let graphicModelString = "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/External/graphic_model.json?raw=true"
-        let key = "main"
-        self.modelsArray.append(key)
-        self.cellToGraph.setValue(graphicModelString, forKey: "main")
-        self.cellToMetamodel.setValue(metamodelString, forKey: "main")
+        let url = URL(string: "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/External/model.json?raw=true")
+        if (url != nil) {
+            print("[VCM] URL object exists: ", url!)
+        }
+        let session = URLSession.shared
+        let task = session.dataTask(with: url!) { (data, response, error) -> Void in
+            if error != nil {
+                print(error!)
+            } else {
+                if let data = data {
+                    do {
+
+                        print("[VCM] Task running")
+                        
+                        let jsonResult = try JSONSerialization.jsonObject(
+                            with: data,
+                            options: JSONSerialization.ReadingOptions.mutableContainers
+                        ) as! NSMutableDictionary
+                        let files = jsonResult["files"] as! NSMutableArray
+                        for anElement in files {
+                            // Get from the JSON each class
+                            let aFile = anElement as! NSMutableDictionary
+                            
+                            // Save the name in itemsArray
+                            let key = aFile["name"] as! String
+                            
+                            let metamodelString = aFile["ontological"] as! String
+                            let graphicModelString = aFile["graphic"] as! String
+                            
+                            self.modelsArray.append(key)
+                            self.cellToGraph.setValue(graphicModelString, forKey: key)
+                            self.cellToMetamodel.setValue(metamodelString, forKey: key)
+                        }
+                    } catch let e{
+                        print(e)
+                    }
+                }
+            }
+        }
+        task.resume()
+        timer = Timer.scheduledTimer(timeInterval:1, target:self, selector:#selector(update), userInfo: nil, repeats: true)
+    }
+    @objc func update(){
         self.tableView.reloadData()
     }
     func loadMetamodels(model: String) {
