@@ -452,16 +452,15 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     
                     // Get the version's sources and change its graphical syntax in scene
                     let classVersions = graphicalSyntaxClass["versions"] as! NSMutableDictionary
-                    let classVersionsNames = graphicalSyntaxClass["vname"] as! NSMutableDictionary
                     let firstSource = classVersions["v\(currentVersion)"] as! String;
-                    let sourceName = classVersionsNames["v\(currentVersion)"] as! String;
                     let url = URL(string: firstSource)
                     if let scene = try? SCNScene(url: url! , options: nil) {
                         print("[VC] load \(oldNode.name!).scn successful")
-                        
+                        let nick = self.objectsIdName.value(forKey: oldNode.name!)
                         let oldPosition = oldNode.position
                         let oldScale = oldNode.scale
                         oldNode.removeFromParentNode()
+                        self.objectsIdName.removeObject(forKey: oldNode.name!)
                         
                         let newNode = (scene.rootNode.childNode(withName: selectedItem, recursively: false))!
                         newNode.name = itemName
@@ -479,7 +478,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                         
                         // Place the object version name over the object
                         
-                        let text = SCNText(string: sourceName, extrusionDepth: 0.1)
+                        
+                        let text = SCNText(string: nick, extrusionDepth: 0.1)
                         text.font = UIFont.systemFont(ofSize: 1)
                         text.flatness = 0.005
                         let textNode = SCNNode(geometry: text)
@@ -487,6 +487,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                         textNode.scale = SCNVector3(fontScale, fontScale, fontScale)
                         textNode.position = SCNVector3(0,0.05,0.05)
                         newNode.addChildNode(textNode)
+                        self.objectsIdName.setValue(nick, forKey: newNode.name!)
                         
                     } else {
                         print("[VC] error loading \(oldNode.name!).scn")

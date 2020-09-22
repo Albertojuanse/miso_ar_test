@@ -32,7 +32,7 @@ class ViewControllerMenu: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let model = self.modelsArray[indexPath.row]
+        let model = self.modelsArray[indexPath.row - 1]
         self.loadMetamodels(model: model)
     }
     
@@ -42,6 +42,7 @@ class ViewControllerMenu: UIViewController, UITableViewDelegate, UITableViewData
     var cellToMetamodel: NSMutableDictionary = [:]
     var cellToGraph: NSMutableDictionary = [:]
     var timer: Timer?
+    var fireTimer: Bool = false
     var updateTimer: Timer?
     var second = 0
     var modelsArray: [String] = []
@@ -57,11 +58,13 @@ class ViewControllerMenu: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     @objc func timeWaiting(){
-        second+=1
-        if(second == 2){
-            timer?.invalidate()
-            timer = nil
-            load.setTitle("Load", for: .normal)
+        if(self.fireTimer) {
+            second+=1
+            if(second >= 2 && self.fireTimer == true){
+                self.fireTimer = false
+                second = 0
+                load.setTitle("Load", for: .normal)
+            }
         }
     }
     func loadTypeModels() {
@@ -225,6 +228,7 @@ class ViewControllerMenu: UIViewController, UITableViewDelegate, UITableViewData
         print("[VCM] graphic_Task resume")
         graphic_task.resume()
         load.setTitle("Wait", for: .normal)
+        self.fireTimer = true
         timer = Timer.scheduledTimer(timeInterval:1, target:self, selector:#selector(timeWaiting), userInfo: nil, repeats: true)
     }
     
