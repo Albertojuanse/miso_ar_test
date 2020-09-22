@@ -1,7 +1,7 @@
 {
     "files": [
         {
-            "name": "main",
+            "name": "ikea",
             "ontological": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/External/ontological_metamodel.json?raw=true",
             "graphic": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/External/graphic_model.json?raw=true"
         },
