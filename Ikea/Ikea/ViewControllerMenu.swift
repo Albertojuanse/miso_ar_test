@@ -32,8 +32,10 @@ class ViewControllerMenu: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let model = self.modelsArray[indexPath.row - 1]
-        self.loadMetamodels(model: model)
+        if(indexPath.row != 0) {
+            let model = self.modelsArray[indexPath.row - 1]
+            self.loadMetamodels(model: model)
+        }
     }
     
     var itemsArray: [String] = []
@@ -108,7 +110,7 @@ class ViewControllerMenu: UIViewController, UITableViewDelegate, UITableViewData
             }
         }
         task.resume()
-        timer = Timer.scheduledTimer(timeInterval:1, target:self, selector:#selector(update), userInfo: nil, repeats: true)
+        updateTimer = Timer.scheduledTimer(timeInterval:1, target:self, selector:#selector(update), userInfo: nil, repeats: true)
     }
     @objc func update(){
         self.tableView.reloadData()
@@ -135,6 +137,10 @@ class ViewControllerMenu: UIViewController, UITableViewDelegate, UITableViewData
                             with: data,
                             options: JSONSerialization.ReadingOptions.mutableContainers
                         ) as! NSMutableDictionary
+                        
+                        self.itemsArray.removeAll()
+                        self.metamodel.removeAll()
+                        self.graphicalSyntax.removeAll()
                         
                         let classes = jsonResult["classes"] as! NSMutableArray
                         for anElement in classes {
