@@ -1,0 +1,19 @@
+{
+    "name": "big",
+    "classes": [
+        {
+            "name": "boxing",
+            "abstract": "false",
+            "parents": [],
+            "attributes": [],
+            "references": []
+        },
+        {
+            "name": "table",
+            "abstract": "false",
+            "parents": [],
+            "attributes": [],
+            "references": []
+        }
+    ]
+}

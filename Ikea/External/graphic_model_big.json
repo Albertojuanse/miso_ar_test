@@ -1,0 +1,56 @@
+{
+    "name": "big",
+    "classes": [
+        {
+            "name": "boxing",
+            "versions": {
+                "v1": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/boxing1.scn?raw=true",
+                "v2": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/boxing2.scn?raw=true",
+                "v3": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/boxing3.scn?raw=true"
+            },
+            "vname": {
+                "v1": "blue cup",
+                "v2": "purple cup",
+                "v3": "green cup"
+            },
+            "showAttributes": [
+            ],
+            "constraints": {
+                "planes": "horizontal",
+                "ilumination": "any",
+                "sizeMax": "1",
+                "sizeMin": "0.5",
+                "overlapping": "true",
+                "xToOriginPos": "0.2",
+                "yToOriginPos": "0.2",
+                "zToOriginPos": "0.2"
+            }
+        },
+        {
+            "name": "table",
+            "versions": {
+                "v1": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/table1.scn?raw=true",
+                "v2": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/table2.scn?raw=true",
+                "v3": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/table3.scn?raw=true"
+            },
+            "vname": {
+                "v1": "white cup",
+                "v2": "blue cup",
+                "v3": "purple cup"
+            },
+            "showAttributes": [
+            ],
+            "constraints": {
+                "planes": "horizontal",
+                "ilumination": "any",
+                "sizeMax": "1",
+                "sizeMin": "0.5",
+                "overlapping": "true",
+                "xToOriginPos": "0.2",
+                "yToOriginPos": "0.2",
+                "zToOriginPos": "0.2"
+            }
+        }
+    ]
+}
+
