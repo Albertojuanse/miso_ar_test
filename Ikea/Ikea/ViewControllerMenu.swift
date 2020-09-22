@@ -12,12 +12,17 @@ import ARKit
 class ViewControllerMenu: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     //https://www.ioscreator.com/tutorials/prototype-cells-table-view-ios-tutorial
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.modelsArray.count
+        return self.modelsArray.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "headCell", for: indexPath)
+            
+            return cell
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: "modelCell", for: indexPath)
-        cell.textLabel?.text = self.modelsArray[indexPath.row]
+        cell.textLabel?.text = self.modelsArray[indexPath.row - 1]
         
         return cell
     }
