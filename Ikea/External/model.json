@@ -9,6 +9,11 @@
             "name": "big",
             "ontological": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/External/ontological_metamodel_big.json?raw=true",
             "graphic": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/External/graphic_model_big.json?raw=true"
+        },
+        {
+            "name": "Tourism",
+            "ontological": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/External/tourism_metamodel.json?raw=true",
+            "graphic": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/External/tourism_graphical_syntax.json?raw=true"
         }
     ]
 }
