@@ -30,7 +30,7 @@
             },
             "connections": [
                 {
-                    "name": "blue line"
+                    "name": "blue line",
                     "type": "line",
                     "color": "blue",
                     "decorator": "none",
@@ -39,7 +39,7 @@
                     "position": "default"
                 },
                 {
-                    "name": "red gross line"
+                    "name": "red gross line",
                     "type": "line",
                     "color": "red",
                     "decorator": "none",
