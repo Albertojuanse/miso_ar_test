@@ -5,7 +5,7 @@
         {
             "name": "Route",
             "versions": {
-                "v1": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/cup1.scn?raw=true",
+                "v1": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/arrow.scn?raw=true",
                 "v2": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/cup2.scn?raw=true",
                 "v3": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/cup3.scn?raw=true"
             },
