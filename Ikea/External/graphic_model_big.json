@@ -24,7 +24,9 @@
                 "xToOriginPos": "0.2",
                 "yToOriginPos": "0.2",
                 "zToOriginPos": "0.2"
-            }
+            },
+            "connections": [
+            ]
         },
         {
             "name": "table",
@@ -49,7 +51,9 @@
                 "xToOriginPos": "0.2",
                 "yToOriginPos": "0.2",
                 "zToOriginPos": "0.2"
-            }
+            },
+            "connections": [
+            ]
         }
     ]
 }
