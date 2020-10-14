@@ -76,7 +76,7 @@
                 "yToOriginPos": "0.2",
                 "zToOriginPos": "0.2"
             },
-            "connections": []
+            "connections": {}
         },
         {
             "name": "boxing",
@@ -102,7 +102,7 @@
                 "yToOriginPos": "0.2",
                 "zToOriginPos": "0.2"
             },
-            "connections": []
+            "connections": {}
         },
         {
             "name": "table",
@@ -128,7 +128,7 @@
                 "yToOriginPos": "0.2",
                 "zToOriginPos": "0.2"
             },
-            "connections": []
+            "connections": {}
         }
     ]
 }
