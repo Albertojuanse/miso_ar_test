@@ -28,26 +28,29 @@
                 "yToOriginPos": "0.2",
                 "zToOriginPos": "0.2"
             },
-            "connections": [
-                {
-                    "name": "blue line",
-                    "type": "line",
-                    "color": "blue",
-                    "decorator": "none",
-                    "pattern": "none",
-                    "width": "0.001",
-                    "position": "default"
-                },
-                {
-                    "name": "red gross line",
-                    "type": "line",
-                    "color": "red",
-                    "decorator": "none",
-                    "pattern": "none",
-                    "width": "0.01",
-                    "position": "default"
-                }
-            ]
+            "connections": {
+                "cups": [
+                    {
+                        "name": "blue line",
+                        "type": "line",
+                        "color": "blue",
+                        "decorator": "none",
+                        "pattern": "none",
+                        "width": "0.001",
+                        "position": "default"
+                    },
+                    {
+                        "name": "red gross line",
+                        "type": "line",
+                        "color": "red",
+                        "decorator": "none",
+                        "pattern": "none",
+                        "width": "0.01",
+                        "position": "default"
+                    }
+                ]
+            }
+            
         },
         {
             "name": "vase",
