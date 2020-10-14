@@ -76,7 +76,9 @@
                 "yToOriginPos": "0.2",
                 "zToOriginPos": "0.2"
             },
-            "connections": {}
+            "connections": {
+                "vases" : []
+            }
         },
         {
             "name": "boxing",
@@ -102,7 +104,9 @@
                 "yToOriginPos": "0.2",
                 "zToOriginPos": "0.2"
             },
-            "connections": {}
+            "connections": {
+                "boxings" : []
+            }
         },
         {
             "name": "table",
@@ -128,7 +132,9 @@
                 "yToOriginPos": "0.2",
                 "zToOriginPos": "0.2"
             },
-            "connections": {}
+            "connections": {
+                "tables" : []
+            }
         }
     ]
 }
