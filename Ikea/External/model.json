@@ -14,6 +14,11 @@
             "name": "Tourism",
             "ontological": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/External/tourism_metamodel.json?raw=true",
             "graphic": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/External/tourism_graphical_syntax.json?raw=true"
+        },
+        {
+            "name": "Telecom",
+            "ontological": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/External/telecom_mm.json?raw=true",
+            "graphic": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/External/telecom_graphical_syntax.json?raw=true"
         }
     ]
 }

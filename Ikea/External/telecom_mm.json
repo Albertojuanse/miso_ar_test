@@ -1,0 +1,143 @@
+{
+  "name": "Telecom",
+  "URI": "http://miso.es/telecom/",
+  "classes": [
+      {
+          "name": "router",
+          "abstract": "false",
+          "parents": [],
+          "attributes": [
+              {
+                  "name":"@IP",
+                  "type": "String",
+                  "min": "1",
+                  "max": "1",
+                  "default": "0.0.0.0"
+              },
+              {
+                  "name":"Serial No",
+                  "type": "String",
+                  "min": "1",
+                  "max": "1",
+                  "default": "X00XX000XXXX"
+              }
+          ],
+          "references": [
+              {
+                  "name": "routeurWifi",
+                  "containment": "",
+                  "target": "wifi",
+                  "min": "0",
+                  "max": "-1",
+                  "opposite": "null"
+              }
+          ]
+      },
+      {
+          "name": "desktop",
+          "abstract": "false",
+          "parents": [],
+          "attributes": [
+              {
+                  "name":"@IP",
+                  "type": "String",
+                  "min": "1",
+                  "max": "1",
+                  "default": "192.168.0.28"
+              },
+              {
+                  "name":"Serial No",
+                  "type": "String",
+                  "min": "1",
+                  "max": "1",
+                  "default": "C00XX999DIPX"
+              },
+              {
+                  "name":"@Mac",
+                  "type": "String",
+                  "min": "1",
+                  "max": "1",
+                  "default": "00-10-5A-44-12-B5"
+              }
+          ],
+          "references": [
+              {
+                  "name": "desktopToRouter",
+                  "containment": "",
+                  "target": "router",
+                  "min": "0",
+                  "max": "-1",
+                  "opposite": "null"
+              },
+              {
+                  "name": "desktopToWifi",
+                  "containment": "",
+                  "target": "wifi",
+                  "min": "0",
+                  "max": "-1",
+                  "opposite": "null"
+              }
+          ]
+      },
+      {
+          "name": "wifi",
+          "abstract": "false",
+          "parents": [],
+          "attributes": [
+              {
+                  "name":"Name",
+                  "type": "String",
+                  "min": "1",
+                  "max": "1",
+                  "default": "WiFi_5Gh"
+              }
+          ],
+          "references": []
+      },
+      {
+          "name": "smartphone",
+          "abstract": "false",
+          "parents": [],
+          "attributes": [
+              {
+                  "name":"Phone No",
+                  "type": "String",
+                  "min": "1",
+                  "max": "1",
+                  "default": "+00 6 00 00 00 00"
+              },
+              {
+                  "name":"@IP",
+                  "type": "String",
+                  "min": "1",
+                  "max": "1",
+                  "default": "192.168.0.64"
+              },
+              {
+                  "name":"Serial No",
+                  "type": "String",
+                  "min": "1",
+                  "max": "1",
+                  "default": "O6TXAAOP1T06"
+              },
+              {
+                  "name":"@Mac",
+                  "type": "String",
+                  "min": "1",
+                  "max": "1",
+                  "default": "00-19-5A-30-57-B9"
+              }
+          ],
+          "references": [
+              {
+                  "name": "smartphoneToWifi",
+                  "containment": "",
+                  "target": "wifi",
+                  "min": "0",
+                  "max": "-1",
+                  "opposite": "null"
+              }
+          ]
+      }
+  ]
+}
