@@ -5,7 +5,7 @@
         {
             "name": "router",
             "versions": {
-                "v1": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/cup1.scn?raw=true",
+                "v1": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/router.scn?raw=true",
                 "v2": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/cup2.scn?raw=true",
                 "v3": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/cup3.scn?raw=true"
             },
@@ -55,7 +55,7 @@
         {
             "name": "desktop",
             "versions": {
-                "v1": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/vase1.scn?raw=true",
+                "v1": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/desktop.scn?raw=true",
                 "v2": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/vase2.scn?raw=true",
                 "v3": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/vase3.scn?raw=true"
             },
@@ -87,7 +87,7 @@
         {
             "name": "wifi",
             "versions": {
-                "v1": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/boxing1.scn?raw=true",
+                "v1": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/wifi.scn?raw=true",
                 "v2": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/boxing2.scn?raw=true",
                 "v3": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/boxing3.scn?raw=true"
             },
@@ -114,7 +114,7 @@
         {
             "name": "smartphone",
             "versions": {
-                "v1": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/table1.scn?raw=true",
+                "v1": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/smartphone.scn?raw=true",
                 "v2": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/table2.scn?raw=true",
                 "v3": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/table3.scn?raw=true"
             },
