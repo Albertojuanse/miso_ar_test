@@ -92,7 +92,16 @@
                   "default": "WiFi_5Gh"
               }
           ],
-          "references": []
+          "references": [
+            {
+                "name": "wifiToWifi",
+                "containment": "",
+                "target": "wifi",
+                "min": "0",
+                "max": "-1",
+                "opposite": "null"
+            }
+          ]
       },
       {
           "name": "smartphone",

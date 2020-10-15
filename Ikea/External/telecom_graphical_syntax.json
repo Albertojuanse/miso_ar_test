@@ -109,7 +109,9 @@
                 "yToOriginPos": "0.2",
                 "zToOriginPos": "0.2"
             },
-            "connections": { }
+            "connections": {
+              "wifiToWifi" : []
+            }
         },
         {
             "name": "smartphone",
