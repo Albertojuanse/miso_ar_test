@@ -53,7 +53,7 @@
 
         },
         {
-            "name": "desktop",
+            "name": "computer",
             "versions": {
                 "v1": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/desktop.scn?raw=true",
                 "v2": "https://github.com/Albertojuanse/miso_ar_test/blob/master/Ikea/Ikea/Models.scnassets/vase2.scn?raw=true",

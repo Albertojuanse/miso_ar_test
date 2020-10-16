@@ -34,7 +34,7 @@
           ]
       },
       {
-          "name": "desktop",
+          "name": "computer",
           "abstract": "false",
           "parents": [],
           "attributes": [
