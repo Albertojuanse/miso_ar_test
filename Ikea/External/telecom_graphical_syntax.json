@@ -80,8 +80,28 @@
                 "zToOriginPos": "0.2"
             },
             "connections": {
-                "desktopToRouter" : [],
-                "desktopToWifi" : []
+                "desktopToRouter" : [
+                  {
+                      "name": "green gross line",
+                      "type": "line",
+                      "color": "green",
+                      "decorator": "none",
+                      "pattern": "none",
+                      "width": "0.01",
+                      "position": "default"
+                  }
+                ],
+                "desktopToWifi" : [
+                  {
+                      "name": "red gross line",
+                      "type": "line",
+                      "color": "red",
+                      "decorator": "none",
+                      "pattern": "none",
+                      "width": "0.01",
+                      "position": "default"
+                  }
+                ]
             }
         },
         {
@@ -139,7 +159,17 @@
                 "zToOriginPos": "0.2"
             },
             "connections": {
-                "smartphoneToWifi" : []
+                "smartphoneToWifi" : [
+                  {
+                      "name": "red gross line",
+                      "type": "line",
+                      "color": "red",
+                      "decorator": "none",
+                      "pattern": "none",
+                      "width": "0.01",
+                      "position": "default"
+                  }
+                ]
             }
         }
     ]
