@@ -164,7 +164,9 @@
                       "name": "red gross line",
                       "type": "line",
                       "color": "red",
-                      "decorator": "none",
+                      "decorator": "sphere",
+                      "decoratorColor": "blue",
+                      "decoratorWidth": "0.02",
                       "pattern": "none",
                       "width": "0.01",
                       "position": "default"
